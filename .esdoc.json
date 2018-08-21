@@ -1,0 +1,18 @@
+{
+  "source": "./src/main/api",
+  "destination": "./dist/docs",
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin"
+    },
+    {
+      "name": "esdoc-importpath-plugin",
+      "option": {
+        "stripPackageName": true,
+        "replaces": [
+          {"from": "^", "to": "js-scenery/src/main/"}
+        ]
+      }
+    }
+  ]
+}
