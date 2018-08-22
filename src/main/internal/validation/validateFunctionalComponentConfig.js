@@ -1,37 +1,20 @@
-import { REGEX_DISPLAY_NAME } from '../constant/constants'
-import { Spec } from 'js-spec'
+import configSpec from '../spec/specOfFunctionalComponentConfig'
+import isValidDisplayName from '../helper/isValidDisplayName'
 
-const configSpec =
-  Spec.shape({
-    displayName: Spec.match(REGEX_DISPLAY_NAME),
-    validate: Spec.optional(Spec.function),
-    render: Spec.function
-  })
-
-export function validateFunctionalComponentConfig(config) {
+export default function validateFunctionalComponentConfig(config) {
+  let ret = null
   const error = configSpec.validate(config)
 
   if (error) {
-    throw new Error(
-      `Invalid configuration for functional component: ${error.message}`)
-  }
+    let errorMsg = 'Invalid configuration for functional component'
 
-  const ret = function() {
-    return config.render.apply(null, arguments)
-  }
+    if (config && isValidDisplayName(config.displayName)) {
+      errorMsg += ` "${config.displayName}"`
+    }
 
-  ret.displayName = config.displayName
+    errorMsg += `: ${error.message}`
 
-  const
-    defaultProps = determineDefaultProps(config),
-    propTypes = determinePropTypes(config)
-
-  if (defaultProps) {
-    ret.defaultProps = defaultProps
-  }
-
-  if (propTypes) {
-    ret.propTypes = propTypes
+    ret = new Error(errorMsg)
   }
 
   return ret

@@ -1,5 +1,5 @@
-// will be set in file "js-compo-*.js"
-export const Platform = {
+// will be set in file "js-scenery-*.js"
+export default {
   createContext: null,
   createElement: null,
   isValidElement: null,

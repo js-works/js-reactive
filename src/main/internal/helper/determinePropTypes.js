@@ -1,12 +1,20 @@
-export default function determinePropTypes(config) {
+import validateProperties from '../validation/validateProperties'
+
+export default function determinePropTypes(
+  propsConfig, propsValidator, componentName) {
+
   let ret = null
-  const properties = config.properties
   
-  if (properties) {
-    for (const propName in properties) {
-      if (properties.hasOwnProperty(propName)) {
-        const
-          propConfig = properties[propName],
+  if (propsConfig) {
+    for (const propName in propsConfig) {
+      if (propsConfig.hasOwnProperty(propName)) {
+        ret = {
+          '*': props => {
+            return validateProperties(props, propsConfig, propsValidator, componentName)
+          }
+        }
+
+        break
       }
     }
   }

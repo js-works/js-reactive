@@ -2,7 +2,6 @@
   "parserOptions": {
     "ecmaVersion": 8,
     "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
       "jsx": true
     },
     "sourceType": "module"
@@ -24,7 +23,7 @@
   "extends": "eslint:recommended",
 
   "rules": {
-    "indent": ["error", 2, { "switchCase": 1}],
+    "indent": ["error", 2, { "SwitchCase": 1}],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "never"],
     "no-console": ["off"]

@@ -9,7 +9,7 @@ export default function isNode(it) {
     || it === null
     || (type !== 'object' && type !== 'symbol')
     || typeof it[SYMBOL_ITERATOR] === 'function'
-    || Platform.isValidElement(it);
+    || Platform.isValidElement(it)
 }
 
 setJsSpecValidator(isNode, it =>

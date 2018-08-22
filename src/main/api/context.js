@@ -1,7 +1,9 @@
-import Platform from 'internal/platform/Platform'
+import Platform from '../internal/platform/Platform'
 
 import validateContextConfig
-  from './internal/validation/validateContextConfig'
+  from '../internal/validation/validateContextConfig'
+
+import determinePropTypes from '../internal/helper/determinePropTypes'
 
 export default function context(config) {
   const error = validateContextConfig(config)

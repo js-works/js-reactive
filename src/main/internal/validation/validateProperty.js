@@ -58,14 +58,14 @@ export default function validateProperty(
           errMsg = `The property ${propInfo} must be of type `
             + (typeConstructor.name || '<nameless>')
         }
-      }
+    }
   }
   
   if (!errMsg && !(nullable && value === null) && constraint) {
     let err =
       typeof constraint === 'function' 
-        ? constraint(it)
-        : constraint.validate(it)
+        ? constraint(value)
+        : constraint.validate(value)
       
     if (err === undefined || err === null || err === true) {
       // everything fine

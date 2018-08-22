@@ -6,12 +6,12 @@ import isElement from './api/isElement'
 import isElementOfType from './api/isElementOfType'
 import isNode from './api/isNode'
 
-import dio from 'dio.js'
+import React from 'react'
 
-Platform.createContext = dio.createContext
-Platform.createElement = dio.createElement
-Platform.isValidElement = dio.isValidElement
-Platform.Component = dio.Component
+Platform.createContext = React.createContext
+Platform.createElement = React.createElement
+Platform.isValidElement = React.isValidElement
+Platform.Component = React.Component
 
 export {
   functionalComponent,
@@ -21,12 +21,3 @@ export {
   isElementOfType,
   isNode
 }
-
-export default Object.freeze({
-  functionalComponent,
-  classComponent,
-  context,
-  isElement,
-  isElementOfType,
-  isNode
-})
