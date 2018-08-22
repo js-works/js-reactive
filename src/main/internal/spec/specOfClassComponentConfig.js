@@ -9,9 +9,10 @@ export default Spec.shape({
   validate: Spec.optional(Spec.function),
 
   methods:
-    Spec.and(
-      Spec.arrayOf(Spec.string),
-      Spec.unique),
+    Spec.optional(
+      Spec.and(
+        Spec.arrayOf(Spec.string),
+        Spec.unique)),
 
-  base: Spec.lazy(() => Spec.instanceOf(Platform.Component))
+  base: Spec.any// Spec.lazy(() => Spec.instanceOf(Platform.Component))
 })

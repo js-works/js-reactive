@@ -12,7 +12,7 @@ export default function validateClassComponentConfig(config) {
       errorMsg += ` "${config.displayName}"`
     }
 
-    errorMsg += `: ${error.message}`
+    errorMsg += ` => ${error.message}`
 
     ret = new Error(errorMsg)
   }

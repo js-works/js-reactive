@@ -29,4 +29,6 @@ export default function functionalComponent(config) {
   }
 
   ret.displayName = config.displayName
+
+  return ret
 }
