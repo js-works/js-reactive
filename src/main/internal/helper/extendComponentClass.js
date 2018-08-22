@@ -1,11 +1,21 @@
 export default function extendComponentClass(componentClass) {
   let ret
+
+  //const constr = componentClass.bind.call(componentClass, null)
   
-  const constr = Function.prototype.bind.call(componentClass, null)
+  // constructor for proxy
+  const constr =  Function.prototype.bind.call(componentClass, null)
 
   if (typeof Proxy === 'function') {
+    /*
+    ret = function (props, ctx) {
+      return new constr(props, ctx)
+    }
+
+    ret.prototype = Object.create(componentClass.prototype)
+    */
     ret = new Proxy(componentClass, {
-      apply (target, self, args) {console.log(self)
+      apply (target, self, args) {
         constr.call(self, args[0], args[1])
 
         return self
@@ -18,6 +28,6 @@ export default function extendComponentClass(componentClass) {
 
     ret.prototype = Object.create(componentClass.prototype)
   }
-console.log(ret)
+
   return ret
 }

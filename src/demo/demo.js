@@ -45,4 +45,7 @@ const
   })
 
 render(h(Demo), document.getElementById('app'))
-console.log(new Counter(333) instanceof Counter)
+
+const x = new Counter({ x: 42 })
+console.log(Counter)
+console.log(x instanceof Counter, Counter.prototype instanceof Component)
