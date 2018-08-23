@@ -1,12 +1,11 @@
-export default function determineDefaultProps(config) {
+export default function determineDefaultProps(propsConfig) {
   let ret = null
-  const properties = config.properties
   
-  if (properties) {
-    for (const propName in properties) {
-      if (properties.hasOwnProperty(propName)) {
+  if (propsConfig) {
+    for (const propName in propsConfig) {
+      if (propsConfig.hasOwnProperty(propName)) {
         const
-          propConfig = properties[propName],
+          propConfig = propsConfig[propName],
           defaultValueDescriptor =
             Object.getOwnPropertyDescriptor(propConfig, 'defaultValue'),
           hasDefaultValue = !!defaultValueDescriptor

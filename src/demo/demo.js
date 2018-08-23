@@ -12,7 +12,7 @@ const
     displayName: 'Counter',
 
     base: class extends Component {
-      constructor(props) {console.log(props)
+      constructor(props) {
         super(props)
         this.state = { counter: 0 }
       }
@@ -25,7 +25,7 @@ const
         return (
           h('div', null,
             h('button', { onClick: () => this.increaseCounter(-1) }, '-'),
-            h('span', null, this.state.counter),
+            h('span', null, ' ', this.state.counter, ' '),
             h('button', { onClick: () => this.increaseCounter(1) }, '+'))
         )
       }
@@ -45,7 +45,3 @@ const
   })
 
 render(h(Demo), document.getElementById('app'))
-
-const x = new Counter({ x: 42 })
-console.log(Counter)
-console.log(x instanceof Counter, Counter.prototype instanceof Component)

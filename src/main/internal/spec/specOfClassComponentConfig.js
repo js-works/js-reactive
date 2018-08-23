@@ -14,5 +14,5 @@ export default Spec.shape({
         Spec.arrayOf(Spec.string),
         Spec.unique)),
 
-  base: Spec.any// Spec.lazy(() => Spec.instanceOf(Platform.Component))
+  base: Spec.lazy(() => Spec.extends(Platform.Component))
 })

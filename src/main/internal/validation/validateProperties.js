@@ -1,8 +1,7 @@
 import validateProperty from './validateProperty'
 
 export default function validateProperties(
-  props, propsConfig, propsValidator, componentName) {
-  
+  props, propsConfig, propsValidator, componentName, isCtxProvider) {
   let ret = null
 
   const
@@ -15,7 +14,8 @@ export default function validateProperties(
         propName = propNames[i],
         propValue = props[propName],
         propConfig = propsConfig[propName],
-        ret = validateProperty(propValue, propName, propConfig, componentName)
+        ret = validateProperty(
+          propValue, propName, propConfig, componentName, isCtxProvider)
 
       if (ret) {
         messages.push(ret.message)

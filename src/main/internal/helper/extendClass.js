@@ -1,24 +1,24 @@
-let extendClass = null
+const hasReflect =
+  typeof Reflect === 'object'
+    && Reflect
+    && typeof Reflect.construct === 'function'
 
-if (typeof Proxy === 'function') {
-  try {
-    extendClass =
-      new Function('baseClass', 'return class extends baseClass {}')
-  } catch (e) {
-    // ignore
-  }
-}
-
-if (!extendClass) {
-  extendClass = function (baseClass) {
-    const ret = function () {
-      baseClass.apply(this, arguments)
+export default function extendClass(baseClass) {
+  const ret = function () {
+    if (!(this instanceof ret)) {
+      throw new Error("Class constructor cannot be invoked without 'new'")
     }
-
-    ret.prototype = Object.create(baseClass.prototype)
-
-    return ret
+    
+    return hasReflect
+      ? Reflect.construct(baseClass, arguments, this.constructor)
+      : void(baseClass.apply(this, arguments))
   }
-}
 
-export default extendClass
+  ret.prototype = Object.create(baseClass.prototype, {
+    constructor: {
+      value: ret,
+    }
+  })
+
+  return ret
+}

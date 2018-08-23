@@ -17,18 +17,30 @@ export default function functionalComponent(config) {
       return config.render.apply(null, arguments)
     },
 
-    propTypes = determinePropTypes(config),
-    defaultProps = determineDefaultProps(config)
-
-  if (propTypes) {
-    ret.propTypes = propTypes
-  }
+    defaultProps = determineDefaultProps(
+      config.properties),
+ 
+    propTypes = determinePropTypes(
+      config.properties,
+      config.validate,
+      config.displayName,
+      false)
+  
+  Object.defineProperty(ret, 'displayName', {
+    value: config.displayName
+  })
 
   if (defaultProps) {
-    ret.defaultProps
+    Object.defineProperty(ret, 'defaultProps', {
+      value: defaultProps
+    })
   }
-
-  ret.displayName = config.displayName
+  
+  if (propTypes) {
+    Object.defineProperty(ret, 'propTypes', {
+      value: propTypes
+    })
+  }
 
   return ret
 }

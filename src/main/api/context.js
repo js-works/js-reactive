@@ -19,7 +19,13 @@ export default function context(config) {
     hasDefaultValue = config.hasOwnProperty('defaultValue')
 
   if (hasType || hasConstraint || !hasDefaultValue) {
-    ret.Provider.propTypes = determinePropTypes({ value: config })
+    Object.defineProperty(ret.Provider, 'propTypes', {
+      value: determinePropTypes(
+        { value: config },
+        null,
+        config.displayName,
+        true)
+    })
   }
 
   return ret

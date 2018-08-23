@@ -13,10 +13,38 @@ export default function classComponent(config) {
       `[classComponent] ${error.message}`)
   }
 
-  let ret = extendClass(config.base)
-  ret.displayName = config.displayName
-  ret.defaultProps = determineDefaultProps(config),
-  ret.propTypes = determinePropTypes(config)
+  const
+    ret = extendClass(config.base),
+    displayName = config.displayName,
+    defaultProps = determineDefaultProps(config.properties),
+
+    propTypes = determinePropTypes(
+      config.properties,
+      config.validate,
+      config.displayName,
+      false)
+
+  Object.defineProperties(ret, {
+    displayName: {
+      value: displayName
+    },
+
+    defaultProps: {
+      value: defaultProps,
+    },
+
+    propTypes: {
+      value: propTypes
+    },
+
+    contextTypes: {
+      value: null
+    },
+
+    childContextTypes: {
+      value: null
+    }
+  })
 
   return ret
 }

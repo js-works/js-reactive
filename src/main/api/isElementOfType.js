@@ -4,21 +4,27 @@ import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
 export default function isElementOfType(type, it) {
   let ret = null
 
-  if (arguments.length > 1) {
-    const types =
-      type !== null && typeof type === 'object'
-        && typeof type[Symbol.iterator] === 'function'
-        ? (Array.isArray(type) ? type : Array.from(type))
-        : null 
+  const
+    typeOfType = typeof type,
+    typeIsFunction = typeOfType === 'function',
+    typeIsArray = Array.isArray(type)
 
-    ret = Platform.isValidElement(it)
-      && types === null && it.type === type
-        || types !== null && types.indexOf(it.type) >= 0
+  if (!typeIsFunction && !typeIsArray) {
+    throw new TypeError(
+      '[isElementOfType] First argument "type" must either be a function '
+        + ' or an array of functions')
+  }
+
+  if (arguments.length > 1) {
+    ret =
+      typeof it === 'function'
+        && Platform.isValidElement(it)
+        && (typeIsFunction ? it.type === type : type.indexOf(it.type) >= 0)
   } else {
-    ret = (it = null) => isElementOfType(type, it)
+    ret = it => isElementOfType(type, it)
   
     setJsSpecValidator(isElementOfType, it =>
-      isElementOfType(it)
+      isElementOfType(type, it)
         ? null
         : new Error('Invalid type of virtual element'))
   }

@@ -5,6 +5,7 @@ import replace from 'rollup-plugin-replace'
 import babel from 'rollup-plugin-babel'
 import { uglify as uglifyJS} from 'rollup-plugin-uglify'
 import uglifyES from 'rollup-plugin-uglify-es'
+import gzip from 'rollup-plugin-gzip'
 
 function createRollupConfig(platform, moduleFormat, productive, customDest = null) {
   return {
@@ -53,7 +54,8 @@ function createRollupConfig(platform, moduleFormat, productive, customDest = nul
         exclude: 'node_modules/**',
         ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       }),
-      productive && (moduleFormat === 'esm' ? uglifyES() : uglifyJS())
+      productive && (moduleFormat === 'esm' ? uglifyES() : uglifyJS()),
+      productive && gzip()
     ],
   }
 }
