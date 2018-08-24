@@ -1,5 +1,5 @@
 import Platform from './internal/platform/Platform'
-import functionalComponent from './api/functionalComponent'
+import funcComponent from './api/funcComponent'
 import classComponent from './api/classComponent'
 import context from './api/context'
 import isElement from './api/isElement'
@@ -14,7 +14,7 @@ Platform.isValidElement = dio.isValidElement
 Platform.Component = dio.Component
 
 export {
-  functionalComponent,
+  funcComponent,
   classComponent,
   context,
   isElement,

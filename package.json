@@ -48,7 +48,7 @@
     "clean": "shx rm -rf ./build ./dist",
     "build": "rollup --c rollup.config.js",
     "build-watch": "rollup -w --c rollup.config.js &",
-    "test": "mocha src/test/**/*.js",
+    "test": "rollup --c rollup.test.config.js",
     "test-watch": "mocha -w src/test/**/*.js",
     "docs": "shx rm -rf ./dist/docs && esdoc",
     "dist": "npm run clean && npm run test && npm run build && npm run docs"

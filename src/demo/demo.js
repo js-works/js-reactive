@@ -5,16 +5,25 @@ const
   platformName = isReact ? 'React' : 'DIO',
   render = isReact ? window.ReactDOM.render : window.dio.render,
   { createElement: h, Component, Fragment } = platform,
-  { functionalComponent, classComponent } = scenery
+  { funcComponent, classComponent } = scenery,
+  { Spec } = window.jsSpec
 
 const
   Counter = classComponent({
     displayName: 'Counter',
 
+    properties: {
+      initialValue: {
+        type: Number,
+        constraint: Spec.integer,
+        defaultValue: 0
+      }
+    },
+
     base: class extends Component {
       constructor(props) {
         super(props)
-        this.state = { counter: 0 }
+        this.state = { counter: props.initialValue }
       }
 
       increaseCounter(delta) {
@@ -32,14 +41,14 @@ const
     }
   }),
 
-  Demo = functionalComponent({
+  Demo = funcComponent({
     displayName: 'Demo',
 
     render() {
       return (
         h(Fragment, null,
           h('h3', null, 'jsScenery demo (', platformName, ')'),
-          h(Counter, { x: 3})
+          h(Counter)
         ))
     }
   })

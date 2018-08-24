@@ -1,5 +1,5 @@
 export default function validateProperty(
-  value, propConfig, propName, componentName, isContext) {
+  value, propConfig, propName, componentName, isCtxProvider) {
   
   let
     ret = null,
@@ -11,7 +11,7 @@ export default function validateProperty(
     constraint = propConfig.constraint || null,
 
     propInfo = `'${propName}' of `
-      + `${isContext ? 'context' : 'component '} '${componentName}'`
+      + `${isCtxProvider ? 'context provider for ' : 'component '} '${componentName}'`
 
   if (value === undefined) {
     if (!propConfig.hasOwnProperty('defaultValue')) {
@@ -56,7 +56,7 @@ export default function validateProperty(
       default:
         if (typeConstructor && !(value instanceof typeConstructor)) {
           errMsg = `The property ${propInfo} must be of type `
-            + (typeConstructor.name || '<nameless>')
+            + typeConstructor.name 
         }
     }
   }

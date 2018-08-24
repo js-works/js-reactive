@@ -5,18 +5,10 @@ export default function determinePropTypes(
 
   let ret = null
   
-  if (propsConfig || propsValidator) {
-    for (const propName in propsConfig) {
-      if (propsConfig.hasOwnProperty(propName)) {
-        ret = {
-          '*': props => {
-            return validateProperties(
-              props, propsConfig, propsValidator, componentName, isCtxProvider)
-          }
-        }
-
-        break
-      }
+  ret = {
+    '*': props => {
+      return validateProperties(
+        props, propsConfig, propsValidator, componentName, isCtxProvider)
     }
   }
 

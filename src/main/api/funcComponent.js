@@ -1,15 +1,15 @@
-import validateFunctionalComponentConfig
-  from '../internal/validation/validateFunctionalComponentConfig'
+import validateFuncComponentConfig
+  from '../internal/validation/validateFuncComponentConfig'
 
 import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
 
-export default function functionalComponent(config) {
-  const error = validateFunctionalComponentConfig(config)
+export default function funcComponent(config) {
+  const error = validateFuncComponentConfig(config)
 
   if (error) {
     throw new Error(
-      `[functionalComponent] ${error.message}`)
+      `[funcComponent] ${error.message}`)
   }
 
   const

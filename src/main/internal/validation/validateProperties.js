@@ -8,7 +8,7 @@ export default function validateProperties(
     propNames = propsConfig ? Object.keys(propsConfig) : [],
     messages = []
 
-  if (propsConfig.properties) {
+  if (propsConfig) {
     for (let i = 0; i < propNames.length; ++i) {
       const
         propName = propNames[i],
@@ -30,7 +30,7 @@ export default function validateProperties(
   for (let i = 0; i < usedPropNames.length; ++i) {
     const usedPropName = usedPropNames[i]
 
-    if (propsConfig && propsConfig.hasOwnProperty(usedPropName)) {
+    if (!propsConfig || !propsConfig.hasOwnProperty(usedPropName)) {
       if (usedPropName !== 'key' && usedPropName !=='ref') { // TODO: => DIO bug
         invalidPropNames.push(usedPropName)
       }
@@ -54,10 +54,18 @@ export default function validateProperties(
     }
   }
 
-  if (messages.length === 1) {
-    ret = new Error(messages[0])
-  } else if (messages.length > 1) {
-    ret = new Error(`\n- ${messages.join('\n- ')}`)
+  if (messages.length > 0) {
+    const errorMsgIntro =
+      'Prop validation error for '
+        + (isCtxProvider ? 'provider of context ' : 'component ')
+        + `"${componentName}"`
+        + ':'
+
+    if (messages.length === 1) {
+      ret = new Error(`${errorMsgIntro} ${messages[0]}`)
+    } else if (messages.length > 1) {
+      ret = new Error(`\n- ${messages.join('\n- ')}`)
+    }
   }
 
   return ret
