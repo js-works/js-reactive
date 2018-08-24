@@ -12,10 +12,9 @@ export default function validateProperties(
     for (let i = 0; i < propNames.length; ++i) {
       const
         propName = propNames[i],
-        propValue = props[propName],
         propConfig = propsConfig[propName],
         ret = validateProperty(
-          propValue, propName, propConfig, componentName, isCtxProvider)
+          props, propConfig, propName, componentName, isCtxProvider)
 
       if (ret) {
         messages.push(ret.message)

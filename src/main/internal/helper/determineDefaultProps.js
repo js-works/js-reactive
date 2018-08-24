@@ -14,11 +14,8 @@ export default function determineDefaultProps(propsConfig) {
           if (defaultValueDescriptor.hasOwnProperty('value')) {
             const defaultValue = propConfig.defaultValue
 
-            if (defaultValue !== undefined) {
-              ret = ret || {}
-
-              ret[propName] = defaultValue
-            }
+            ret = ret || {}
+            ret[propName] = defaultValue
           } else {
             ret = ret || {}
 

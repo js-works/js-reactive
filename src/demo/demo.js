@@ -16,7 +16,7 @@ const
       initialValue: {
         type: Number,
         constraint: Spec.integer,
-        defaultValue: 0
+        optional: true
       }
     },
 

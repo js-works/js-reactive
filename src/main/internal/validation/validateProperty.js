@@ -1,11 +1,13 @@
 export default function validateProperty(
-  value, propConfig, propName, componentName, isCtxProvider) {
+  props, propConfig, propName, componentName, isCtxProvider) {
   
   let
     ret = null,
     errMsg = null
 
   const
+    valueIsSet = props.hasOwnProperty(propName),
+    value = valueIsSet ? props[propName] : undefined,
     nullable = propConfig.nullable === true,
     typeConstructor = propConfig.type || null,
     constraint = propConfig.constraint || null,
@@ -13,16 +15,16 @@ export default function validateProperty(
     propInfo = `'${propName}' of `
       + `${isCtxProvider ? 'context provider for ' : 'component '} '${componentName}'`
 
-  if (value === undefined) {
-    if (!propConfig.hasOwnProperty('defaultValue')) {
+  if (!valueIsSet) {
+    if (!propConfig.hasOwnProperty('defaultValue') && propConfig.optional !== true) {
       errMsg = `Missing mandatory property ${propInfo}`
     }
-  } else if (value === null && nullable === true) {
+  } else if (value === null && nullable === true || value === undefined && propConfig.optional === true) {
     // Perfectly fine
   } else if (value === null && nullable === false) {
     errMsg = `Property ${propInfo} must not be null`
   } else if (typeConstructor !== undefined && typeConstructor !== null) {
-    const type = typeof it
+    const type = typeof value
 
     switch (typeConstructor) {
       case Boolean:
@@ -61,7 +63,9 @@ export default function validateProperty(
     }
   }
   
-  if (!errMsg && !(nullable && value === null) && constraint) {
+  if (!errMsg && !(nullable && value === null)
+    && (valueIsSet || propConfig.optional !== true) && constraint) {
+
     let err =
       typeof constraint === 'function' 
         ? constraint(value)
