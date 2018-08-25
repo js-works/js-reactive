@@ -29,7 +29,7 @@ function createRollupConfig(platform, moduleFormat, productive, customDest = nul
       }
     },
 
-    external: ['js-spec', 'react', 'dio.js'],
+    external: ['react', 'dio.js'],
 
     plugins: [
       resolve({
@@ -52,7 +52,10 @@ function createRollupConfig(platform, moduleFormat, productive, customDest = nul
       }),
       replace({
         exclude: 'node_modules/**',
-        ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        
+        values: {
+          'process.env.NODE_ENV': productive ? "'production'" : "'development'"
+        }
       }),
       productive && (moduleFormat === 'esm' ? uglifyES() : uglifyJS()),
       productive && gzip()

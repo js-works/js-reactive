@@ -47,7 +47,10 @@ function createRollupJsSceneryConfig(platform, productive) {
       }),
       replace({
         exclude: 'node_modules/**',
-        ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+
+        values: {
+          'process.env.NODE_ENV': productive ? "'production'" : "'development'"
+        }
       })
     ],
   }

@@ -6,23 +6,29 @@ import determinePropTypes from '../internal/helper/determinePropTypes'
 import extendClass from '../internal/helper/extendClass'
 
 export default function classComponent(config) {
-  const error = validateClassComponentConfig(config)
+  if (process.env.NODE_ENV === 'development') {
+    const error = validateClassComponentConfig(config)
 
-  if (error) {
-    throw new Error(
-      `[classComponent] ${error.message}`)
+    if (error) {
+      throw new Error(
+        `[classComponent] ${error.message}`)
+    }
   }
 
   const
     ret = extendClass(config.base),
     displayName = config.displayName,
-    defaultProps = determineDefaultProps(config.properties),
+    defaultProps = determineDefaultProps(config.properties)
 
+  let propTypes = null
+
+  if (process.env.NODE_ENV === 'development') {
     propTypes = determinePropTypes(
       config.properties,
       config.validate,
       config.displayName,
       false)
+  }
 
   Object.defineProperties(ret, {
     displayName: {

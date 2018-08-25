@@ -5,11 +5,13 @@ import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
 
 export default function funcComponent(config) {
-  const error = validateFuncComponentConfig(config)
+  if (process.env.NODE_ENV === 'development') {
+    const error = validateFuncComponentConfig(config)
 
-  if (error) {
-    throw new Error(
-      `[funcComponent] ${error.message}`)
+    if (error) {
+      throw new Error(
+        `[funcComponent] ${error.message}`)
+    }
   }
 
   const
@@ -18,14 +20,18 @@ export default function funcComponent(config) {
     },
 
     defaultProps = determineDefaultProps(
-      config.properties),
- 
+      config.properties)
+
+  let propTypes = null
+
+  if (process.env.NODE_ENV === 'development') {
     propTypes = determinePropTypes(
       config.properties,
       config.validate,
       config.displayName,
       false)
-  
+  }
+
   Object.defineProperty(ret, 'displayName', {
     value: config.displayName
   })
