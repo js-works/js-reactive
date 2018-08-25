@@ -1,11 +1,11 @@
 import Platform from '../internal/platform/Platform'
 
-import validateCtxAssignmentsConfig
-  from '../internal/validation/validateCtxAssignmentsConfig'
+import validateCtxConnectionConfig
+  from '../internal/validation/validateCtxConnectionConfig'
 
-export default function assignContexts(componentType, assignments) {
+export default function connectContext(componentType, ctxConnections) {
   if (process.env.NODE_ENV === 'development') {
-    const error = validateCtxAssignmentsConfig(assignments, componentType.displayName)
+    const error = validateCtxConnectionConfig(ctxConnections, componentType.displayName)
 
     if (error) {
       throw new Error(
@@ -14,17 +14,17 @@ export default function assignContexts(componentType, assignments) {
   }
 
   const
-    keys = Object.keys(assignments),
+    keys = Object.keys(ctxConnections),
     involvedContexts = [],
     contextData = []
 
   for (let i = 0; i < keys.length; ++i) {
     const
       key = keys[i],
-      assignment = assignments[key],
-      ctx = assignment.context,
-      map = assignment.map || null,
-      getDefaultValue = () => assignment.defaultValue
+      ctxConnection = ctxConnections[key],
+      ctx = ctxConnection.context,
+      map = ctxConnection.map || null,
+      getDefaultValue = () => ctxConnection.defaultValue
 
     let idx = involvedContexts.indexOf(ctx)
 

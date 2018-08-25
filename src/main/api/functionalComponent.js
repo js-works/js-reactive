@@ -1,16 +1,16 @@
-import validateFuncComponentConfig
-  from '../internal/validation/validateFuncComponentConfig'
+import validateFunctionalComponentConfig
+  from '../internal/validation/validateFunctionalComponentConfig'
 
 import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
 
-export default function funcComponent(config) {
+export default function functionalComponent(config) {
   if (process.env.NODE_ENV === 'development') {
-    const error = validateFuncComponentConfig(config)
+    const error = validateFunctionalComponentConfig(config)
 
     if (error) {
       throw new Error(
-        `[funcComponent] ${error.message}`)
+        `[functionalComponent] ${error.message}`)
     }
   }
 

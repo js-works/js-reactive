@@ -1,11 +1,12 @@
 import Platform from './internal/platform/Platform'
-import funcComponent from './api/funcComponent'
+import functionalComponent from './api/functionalComponent'
 import classComponent from './api/classComponent'
 import context from './api/context'
 import isElement from './api/isElement'
-import isElementOfType from './api/isElementOfType'
+import isElementOf from './api/isElementOf'
 import isNode from './api/isNode'
-import assignContexts from './api/assignContexts'
+import isElementsOf from './api/isNode'
+import connectContext from './api/connectContext'
 
 import React from 'react'
 
@@ -17,13 +18,14 @@ Platform.Component = React.Component
 Platform.isContext = isContext
 
 export {
-  funcComponent,
+  functionalComponent,
   classComponent,
   context,
   isElement,
-  isElementOfType,
+  isElementOf,
   isNode,
-  assignContexts
+  isElementsOf,
+  connectContext
 }
 
 // --- locals -------------------------------------------------------

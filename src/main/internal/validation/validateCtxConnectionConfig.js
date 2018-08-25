@@ -1,7 +1,7 @@
-import configSpec from '../spec/specOfCtxAssignmentsConfig'
+import configSpec from '../spec/specOfCtxConnectionConfig'
 import isValidDisplayName from '../helper/isValidDisplayName'
 
-export default function validateCtxAssignmentsConfig(config, componentName) {
+export default function validateCtxConnectionConfig(config, componentName) {
   let ret = null
   const error = configSpec.validate(config)
 
