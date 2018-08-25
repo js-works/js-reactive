@@ -30,7 +30,7 @@ export default function isElementsOf(type, it)  {
     setJsSpecValidator(ret, it =>
       isElementOf(type, it)
         ? null
-        : new Error('Invalid children types'))
+        : new Error('Invalid element type(s)'))
   }
 
   return ret
