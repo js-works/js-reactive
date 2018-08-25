@@ -5,7 +5,7 @@ import context from './api/context'
 import isElement from './api/isElement'
 import isElementOfType from './api/isElementOfType'
 import isNode from './api/isNode'
-import assignContext from './api/assignContext'
+import assignContexts from './api/assignContexts'
 
 import React from 'react'
 
@@ -23,7 +23,7 @@ export {
   isElement,
   isElementOfType,
   isNode,
-  assignContext
+  assignContexts
 }
 
 // --- locals -------------------------------------------------------

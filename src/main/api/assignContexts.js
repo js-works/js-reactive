@@ -3,7 +3,7 @@ import Platform from '../internal/platform/Platform'
 import validateCtxAssignmentsConfig
   from '../internal/validation/validateCtxAssignmentsConfig'
 
-export default function assignContext(componentType, assignments) {
+export default function assignContexts(componentType, assignments) {
   if (process.env.NODE_ENV === 'development') {
     const error = validateCtxAssignmentsConfig(assignments, componentType.displayName)
 
