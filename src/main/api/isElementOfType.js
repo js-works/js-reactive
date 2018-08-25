@@ -23,7 +23,7 @@ export default function isElementOfType(type, it) {
   } else {
     ret = it => isElementOfType(type, it)
   
-    setJsSpecValidator(isElementOfType, it =>
+    setJsSpecValidator(ret, it =>
       isElementOfType(type, it)
         ? null
         : new Error('Invalid type of virtual element'))

@@ -43,10 +43,7 @@ export default function validateProperties(
   }
 
   if (propsValidator) {
-    const error =
-      typeof propsValidator === 'function'
-        ? propsValidator(props)
-        : propsValidator.validate(props)
+    const error = propsValidator(props)
 
     if (error) {
       messages.push(error instanceof Error ? error.message : String(error))

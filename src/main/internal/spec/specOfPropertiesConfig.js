@@ -10,7 +10,7 @@ export default Spec.and(
       Spec.shape({
         type: Spec.optional(Spec.function),
         nullable: Spec.optional(Spec.boolean),
-        constraint: Spec.optional(Spec.validator),
+        constraint: Spec.optional(Spec.function),
         optional: Spec.optional(Spec.boolean),
         defaultValue: Spec.optional(Spec.any)
       }),

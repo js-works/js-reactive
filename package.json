@@ -1,6 +1,6 @@
 {
   "name": "js-scenery",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "LGPL-3.0",
   "homepage": "https://github.com/js-works/js-scenery",
   "types": "dist/types/main/js-scenery.d.ts",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "dio.js": "^9.1.1",
-    "js-spec": "^0.1.40",
+    "js-spec": "^0.1.45",
     "react": "^16.4.2"
   },
   "scripts": {

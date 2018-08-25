@@ -5,7 +5,7 @@ const
   platformName = isReact ? 'React' : 'DIO',
   render = isReact ? window.ReactDOM.render : window.dio.render,
   { createElement: h, Component, Fragment } = platform,
-  { funcComponent, classComponent } = scenery,
+  { funcComponent, classComponent, isElement, isElementOfType, isNode } = scenery,
   { Spec } = window.jsSpec
 
 const
@@ -16,7 +16,7 @@ const
       initialValue: {
         type: Number,
         constraint: Spec.integer,
-        optional: true
+        defaultValue: 0 
       }
     },
 
