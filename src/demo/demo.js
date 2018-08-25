@@ -5,7 +5,7 @@ const
   platformName = isReact ? 'React' : 'DIO',
   render = isReact ? window.ReactDOM.render : window.dio.render,
   { createElement: h, Component, Fragment } = platform,
-  { funcComponent, classComponent, isElement, isElementOfType, isNode } = scenery,
+  { funcComponent, classComponent } = scenery,
   { Spec } = window.jsSpec
 
 const

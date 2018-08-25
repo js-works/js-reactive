@@ -43,9 +43,13 @@ export default function validateProperties(
   }
 
   if (propsValidator) {
-    const error = propsValidator(props)
+    const
+      validator = propsValidator && propsValidator['js-spec:validate'] || validator,
+      error = validator(props)
 
-    if (error) {
+    if (error === false) {
+      messages.push('Invalid value')
+    } else if (error) {
       messages.push(error instanceof Error ? error.message : String(error))
     }
   }
@@ -55,7 +59,7 @@ export default function validateProperties(
       'Prop validation error for '
         + (isCtxProvider ? 'provider of context ' : 'component ')
         + `"${componentName}"`
-        + ':'
+        + ' => '
 
     if (messages.length === 1) {
       ret = new Error(`${errorMsgIntro} ${messages[0]}`)
