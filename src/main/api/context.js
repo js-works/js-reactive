@@ -1,5 +1,7 @@
 import Platform from '../internal/platform/Platform'
 
+import isNode from './isNode'
+
 import validateContextConfig
   from '../internal/validation/validateContextConfig'
 
@@ -25,7 +27,7 @@ export default function context(config) {
     if (hasType || hasConstraint || !hasDefaultValue) {
       Object.defineProperty(ret.Provider, 'propTypes', {
         value: determinePropTypes(
-          { value: config },
+          { value: config, children: isNode },
           null,
           config.displayName,
           true)

@@ -1,7 +1,7 @@
 import configSpec from '../spec/specOfContextConfig'
 import isValidDisplayName from '../helper/isValidDisplayName'
 
-export default function validateConfigComponentConfig(config) {
+export default function validateContextConfig(config) {
   let ret = null
   const error = configSpec.validate(config)
 

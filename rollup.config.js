@@ -29,7 +29,7 @@ function createRollupConfig(platform, moduleFormat, productive, customDest = nul
       }
     },
 
-    external: ['react', 'dio.js'],
+    external: ['react', 'dio.js', 'js-spec'],
 
     plugins: [
       resolve({

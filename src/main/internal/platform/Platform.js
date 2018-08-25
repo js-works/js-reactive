@@ -3,6 +3,9 @@ export default {
   createContext: null,
   createElement: null,
   isValidElement: null,
-  Component: null
-}
+  forwardRef: null,
+  Component: null,
 
+  // custom function
+  isContext: null
+}
