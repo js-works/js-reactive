@@ -3,9 +3,9 @@ import functionalComponent from './api/functionalComponent'
 import classComponent from './api/classComponent'
 import context from './api/context'
 import isElement from './api/isElement'
-import isElementOf from './api/isElementOf'
+import isElementOfType from './api/isElementOfType'
 import isNode from './api/isNode'
-import isElementsOf from './api/isNode'
+import isElementsOfType from './api/isNode'
 import connectContext from './api/connectContext'
 
 import React from 'react'
@@ -21,10 +21,10 @@ export {
   functionalComponent,
   classComponent,
   context,
-  isElement,
-  isElementOf,
   isNode,
-  isElementsOf,
+  isElement,
+  isElementOfType,
+  isElementsOfType,
   connectContext
 }
 

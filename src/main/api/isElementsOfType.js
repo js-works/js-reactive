@@ -1,7 +1,7 @@
 import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
-import isElementOf from './isElementOf'
+import isElementOfType from './isElementOfType'
 
-export default function isElementsOf(type, it)  {
+export default function isElementsOfType(type, it)  {
   let ret = false
 
   if (arguments.length > 1) {
@@ -14,7 +14,7 @@ export default function isElementsOf(type, it)  {
       const items = Array.isArray(it) ? it : Array.from(it)
 
       for (let i = 0; i < items.length; ++i) {
-        if (!isElementsOf(types || type, items[i])) {
+        if (!isElementsOfType(types || type, items[i])) {
           ret = false
           break
         } else {
@@ -22,13 +22,13 @@ export default function isElementsOf(type, it)  {
         }
       }
     } else {
-      ret = isElementOf(type, it) 
+      ret = isElementOfType(type, it) 
     }
   } else {
-    ret = it => isElementsOf(type, it) 
+    ret = it => isElementsOfType(type, it) 
     
     setJsSpecValidator(ret, it =>
-      isElementOf(type, it)
+      isElementOfType(type, it)
         ? null
         : new Error('Invalid element type(s)'))
   }

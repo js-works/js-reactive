@@ -1,7 +1,7 @@
 import Platform from '../internal/platform/Platform'
 import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
 
-export default function isElementOf(type, it) {
+export default function isElementOfType(type, it) {
   let ret = null
 
   const
@@ -11,7 +11,7 @@ export default function isElementOf(type, it) {
 
   if (!typeIsFunction && !typeIsArray) {
     throw new TypeError(
-      '[isElementOf] First argument "type" must either be a function '
+      '[isElementOfType] First argument "type" must either be a function '
         + ' or an array of functions')
   }
 
@@ -21,10 +21,10 @@ export default function isElementOf(type, it) {
         && Platform.isValidElement(it)
         && (typeIsFunction ? it.type === type : type.indexOf(it.type) >= 0)
   } else {
-    ret = it => isElementOf(type, it)
+    ret = it => isElementOfType(type, it)
   
     setJsSpecValidator(ret, it =>
-      isElementOf(type, it)
+      isElementOfType(type, it)
         ? null
         : new Error('Invalid type of virtual element'))
   }
