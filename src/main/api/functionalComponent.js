@@ -5,6 +5,10 @@ import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
 
 export default function functionalComponent(config) {
+  if (typeof config === 'function') {
+    config = config()
+  }
+
   if (process.env.NODE_ENV === 'development') {
     const error = validateFunctionalComponentConfig(config)
 

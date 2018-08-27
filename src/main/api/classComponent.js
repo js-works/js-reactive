@@ -6,6 +6,10 @@ import determinePropTypes from '../internal/helper/determinePropTypes'
 import extendClass from '../internal/helper/extendClass'
 
 export default function classComponent(config) {
+  if (typeof config === 'function') {
+    config = config()
+  }
+
   if (process.env.NODE_ENV === 'development') {
     const error = validateClassComponentConfig(config)
 

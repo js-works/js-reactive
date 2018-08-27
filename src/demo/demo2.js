@@ -5,55 +5,54 @@
     platform = isReact ? window.React : window.dio,
     platformName = isReact ? 'React' : 'DIO',
     render = isReact ? window.ReactDOM.render : window.dio.render,
-    { createElement: h, Component } = platform,
-    { functionalComponent, classComponent } = scenery,
-    { Spec } = window.jsSpec,
-
-    specOfListItems =
-      Spec.arrayOf( 
-        Spec.shape({
-          text:
-            Spec.string,
-          items:
-            Spec.optional(
-              Spec.lazy(() => specOfListItems))
-        }))
-
-  const BulletedList = classComponent({
-    displayName: 'BulletedList',
-
-    properties: {
-      items: {
-        type: Array,
-        constraint: specOfListItems
-      }
-    },
-
-    base: class extends Component {
-      renderItems(items) {
-        return (
-          h('ul', null,
-            items.map((item, idx) =>
-              h('li', { key: idx },
-                item.text,
-                item.items ? this.renderItems(item.items) : null)))
-        )
-      }
-
-      render() {
-        return this.renderItems(this.props.items)
-      }
-    }
-  })
+    { createElement: h } = platform,
+    { functionalComponent } = scenery,
+    { Spec } = window.jsSpec
 
   const Demo = functionalComponent({
     displayName: 'Demo',
 
-    render() {
+    render: () =>
+      h('div', null,
+        h('h3', null, 'jsScenery demo 2 (', platformName, ')'),
+        h(BulletedList, { items: demoListItems }))
+  })
+
+  const BulletedList = functionalComponent(() => {
+    return {
+      displayName: 'BulletedList',
+
+      properties: {
+        items: {
+          type: Array,
+          constraint: getSpecOfListItems()
+        }
+      },
+      
+      render: ({ items }) => renderItems(items)
+    }
+
+    function getSpecOfListItems() {
+      const specOfListItems =
+        Spec.arrayOf( 
+          Spec.shape({
+            text:
+              Spec.string,
+            items:
+              Spec.optional(
+                Spec.lazy(() => specOfListItems))
+          }))
+
+      return specOfListItems
+    }
+
+    function renderItems(items) {
       return (
-        h('div', null,
-          h('h3', null, 'jsScenery demo 2 (', platformName, ')'),
-          h(BulletedList, { items: demoListItems }))
+        h('ul', null,
+          items.map((item, idx) =>
+            h('li', { key: idx },
+              item.text,
+              item.items ? renderItems(item.items) : null)))
       )
     }
   })
