@@ -3,7 +3,7 @@ import Platform from '../internal/platform/Platform'
 import validateCtxConnectionConfig
   from '../internal/validation/validateCtxConnectionConfig'
 
-export default function connectContext(componentType, ctxConnections) {
+export default function connectToContext(componentType, ctxConnections) {
   if (process.env.NODE_ENV === 'development') {
     const error = validateCtxConnectionConfig(ctxConnections, componentType.displayName)
 

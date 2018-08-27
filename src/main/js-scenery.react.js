@@ -6,7 +6,7 @@ import isElement from './api/isElement'
 import isElementOfType from './api/isElementOfType'
 import isNode from './api/isNode'
 import isElementsOfType from './api/isNode'
-import connectContext from './api/connectContext'
+import connectToContext from './api/connectToContext'
 
 import React from 'react'
 
@@ -25,7 +25,7 @@ export {
   isElement,
   isElementOfType,
   isElementsOfType,
-  connectContext
+  connectToContext
 }
 
 // --- locals -------------------------------------------------------
