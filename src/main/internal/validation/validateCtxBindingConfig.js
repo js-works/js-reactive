@@ -1,7 +1,7 @@
-import configSpec from '../spec/specOfCtxConnectionConfig'
+import configSpec from '../spec/specOfCtxBindingConfig'
 import isValidDisplayName from '../helper/isValidDisplayName'
 
-export default function validateCtxConnectionConfig(config, componentName) {
+export default function validateCtxBindingConfig(config, componentName) {
   let ret = null
   const error = configSpec.validate(config)
 

@@ -1,11 +1,11 @@
 import Platform from '../internal/platform/Platform'
 
-import validateCtxConnectionConfig
-  from '../internal/validation/validateCtxConnectionConfig'
+import validateCtxBindingConfig
+  from '../internal/validation/validateCtxBindingConfig'
 
-export default function connectToContext(componentType, ctxConnections) {
+export default function bindToContext(componentType, ctxBindings) {
   if (process.env.NODE_ENV === 'development') {
-    const error = validateCtxConnectionConfig(ctxConnections, componentType.displayName)
+    const error = validateCtxBindingConfig(ctxBindings, componentType.displayName)
 
     if (error) {
       throw new Error(
@@ -14,14 +14,14 @@ export default function connectToContext(componentType, ctxConnections) {
   }
 
   const
-    keys = Object.keys(ctxConnections),
+    keys = Object.keys(ctxBindings),
     involvedContexts = [],
     contextData = []
 
   for (let i = 0; i < keys.length; ++i) {
     const
       key = keys[i],
-      ctxConnection = ctxConnections[key],
+      ctxConnection = ctxBindings[key],
       ctx = ctxConnection.context,
       map = ctxConnection.map || null,
       getDefaultValue = () => ctxConnection.defaultValue

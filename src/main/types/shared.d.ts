@@ -20,7 +20,7 @@ export function classComponent(config: ClassComponentConfig<Props>): {
 
 export function context(config: ContextConfig<T>): Context<T>
 
-export function connectToContext<Props>(type: ComponentType<Props>, ctxConnections: ContextConnectionConfig<Prop>): ComponentType<Prop>
+export function bindToContext<Props>(type: ComponentType<Props>, ctxConnections: ContextConnectionConfig<Prop>): ComponentType<Prop>
 
 export function isElement(it: any): boolean
 

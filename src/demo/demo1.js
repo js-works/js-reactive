@@ -6,7 +6,7 @@
     platformName = isReact ? 'React' : 'DIO',
     render = isReact ? window.ReactDOM.render : window.dio.render,
     { createElement: h, Component } = platform,
-    { functionalComponent, classComponent, context, connectToContext } = scenery,
+    { functionalComponent, classComponent, context, bindToContext } = scenery,
     { Spec } = window.jsSpec
 
   class Logger {
@@ -67,7 +67,7 @@
       }
     }),
 
-    WrappedCounter = connectToContext(Counter, {
+    WrappedCounter = bindToContext(Counter, {
       logger: {
         context: LoggerCtx
       }
