@@ -13,7 +13,6 @@ Platform.createElement = dio.createElement
 Platform.isValidElement = dio.isValidElement
 Platform.forwardRef = dio.forwardRef
 Platform.Component = dio.Component
-Platform.isContext = isContext
 
 export {
   defineComponent,
@@ -22,10 +21,4 @@ export {
   isElement,
   isElementOfType,
   isElementsOfType
-}
-
-function isContext(it) {
-  return !!it && typeof it === 'object'
-    && dio.isValidElement(it.Provider)
-    && dio.isValidElement(it.Consumer)
 }

@@ -13,7 +13,6 @@ Platform.createElement = React.createElement
 Platform.isValidElement = React.isValidElement
 Platform.forwardRef = React.forwardRef
 Platform.Component = React.Component
-Platform.isContext = isContext
 
 export {
   defineComponent,
@@ -24,12 +23,7 @@ export {
   isElementsOfType
 }
 
-// --- locals -------------------------------------------------------
-
-const
-  contextSymbol = Symbol.for('react.context'),
-  providerSymbol = Symbol.for('react.provider')
-
+/*
 function isContext(it) {
   return it !== null
     && typeof it === 'object'
@@ -39,3 +33,4 @@ function isContext(it) {
     && it.Provider.$$typeof === providerSymbol
     && it.Consumer === it
 }
+*/

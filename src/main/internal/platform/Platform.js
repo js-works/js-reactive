@@ -4,8 +4,5 @@ export default {
   createElement: null,
   isValidElement: null,
   forwardRef: null,
-  Component: null,
-
-  // custom function
-  isContext: null
+  Component: null
 }

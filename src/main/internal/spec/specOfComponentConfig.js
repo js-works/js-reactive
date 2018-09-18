@@ -55,7 +55,10 @@ const
           Spec.and(
             Spec.hasSomeKeys,
             Spec.keysOf(Spec.match(REGEX_PROP_NAME)),
-            /*Spec.valuesOf(Platform.isContext)*/)),
+            Spec.valuesOf(
+              Spec.and(
+                Spec.hasOwnProp('Provider'), 
+                Spec.hasOwnProp('Consumer'))))),
 
       methods:
         Spec.optional(

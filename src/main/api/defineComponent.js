@@ -1,15 +1,10 @@
 import validateComponentConfig
   from '../internal/validation/validateComponentConfig'
 
-import defineFunctionalComponent
-  from '../internal/component/defineFunctionalComponent'
-
-import defineClassComponent
-  from '../internal/component/defineClassComponent'
-
+import extendClass from '../internal/helper/extendClass'
 import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
-import bindComponentToContext from '../internal/component/bindComponentToContext'
+import bindComponentToContext from '../internal/helper/bindComponentToContext'
 
 export default function defineComponent(config) {
   if (typeof config === 'function') {
@@ -47,6 +42,52 @@ export default function defineComponent(config) {
 
   ret.defaultProps = determineDefaultProps(
     config.properties)
+
+  return ret
+}
+
+// --- locals -------------------------------------------------------
+
+function defineFunctionalComponent(config) {
+  if (typeof config === 'function') {
+    config = config()
+  }
+
+  const
+    ret = function () {
+      return config.render.apply(null, arguments)
+    }
+
+
+  Object.defineProperty(ret, 'displayName', {
+    value: config.displayName
+  })
+
+  return ret
+}
+
+function defineClassComponent(config) {
+  if (typeof config === 'function') {
+    config = config()
+  }
+
+  const
+    ret = extendClass(config.main),
+    displayName = config.displayName
+
+  Object.defineProperties(ret, {
+    displayName: {
+      value: displayName
+    },
+
+    contextTypes: {
+      value: null
+    },
+
+    childContextTypes: {
+      value: null
+    }
+  })
 
   return ret
 }
