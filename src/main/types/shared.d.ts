@@ -53,7 +53,7 @@ export interface ContextConfig<T> {
   displayName: string,
   type: any, 
   defaultValue?: T,
-  constraint?: (value: T) => Error | null | boolean
+  validate?: (value: T) => Error | null | boolean
 }
 
 interface PropertiesConfig<Props> {
@@ -62,7 +62,7 @@ interface PropertiesConfig<Props> {
 
 interface PropertyConfig<T> {
   type?: any,
-  constraint?: (value: T) => null | Error | boolean,
+  validate?: (value: T) => null | Error | boolean,
   nullable?: boolean,
   optional?: true,
   defaultValue?: T

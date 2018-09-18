@@ -1,12 +1,10 @@
 import Platform from './internal/platform/Platform'
-import functionalComponent from './api/functionalComponent'
-import classComponent from './api/classComponent'
-import context from './api/context'
+import defineComponent from './api/defineComponent'
+import defineContext from './api/defineContext'
 import isElement from './api/isElement'
 import isElementOfType from './api/isElementOfType'
 import isNode from './api/isNode'
 import isElementsOfType from './api/isNode'
-import bindToContext from './api/bindToContext'
 
 import React from 'react'
 
@@ -18,14 +16,12 @@ Platform.Component = React.Component
 Platform.isContext = isContext
 
 export {
-  functionalComponent,
-  classComponent,
-  context,
+  defineComponent,
+  defineContext,
   isNode,
   isElement,
   isElementOfType,
-  isElementsOfType,
-  bindToContext
+  isElementsOfType
 }
 
 // --- locals -------------------------------------------------------

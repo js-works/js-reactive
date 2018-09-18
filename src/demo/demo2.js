@@ -6,10 +6,10 @@
     platformName = isReact ? 'React' : 'DIO',
     render = isReact ? window.ReactDOM.render : window.dio.render,
     { createElement: h } = platform,
-    { functionalComponent } = scenery,
+    { defineComponent } = scenery,
     { Spec } = window.jsSpec
 
-  const Demo = functionalComponent({
+  const Demo = defineComponent({
     displayName: 'Demo',
 
     render: () =>
@@ -18,14 +18,14 @@
         h(BulletedList, { items: demoListItems }))
   })
 
-  const BulletedList = functionalComponent(() => {
+  const BulletedList = defineComponent(() => {
     return {
       displayName: 'BulletedList',
 
       properties: {
         items: {
           type: Array,
-          constraint: getSpecOfListItems()
+          validate: getSpecOfListItems()
         }
       },
       

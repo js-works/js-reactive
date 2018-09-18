@@ -5,6 +5,6 @@ export default Spec.shape({
   displayName: Spec.match(REGEX_DISPLAY_NAME),
   type: Spec.optional(Spec.function),
   nullable: Spec.optional(Spec.boolean),
-  constraint: Spec.optional(Spec.validator),
-  defaultValue: Spec.optional(Spec.any)
+  validate: Spec.optional(Spec.validator),
+  defaultValue: Spec.any
 })

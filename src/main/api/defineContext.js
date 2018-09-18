@@ -21,7 +21,7 @@ export default function context(config) {
   if (process.env.NODE_ENV === 'development') {
     const
       hasType = !!config.type,
-      hasConstraint = !!config.constraint,
+      hasConstraint = !!config.validate,
       hasDefaultValue = config.hasOwnProperty('defaultValue')
 
     if (hasType || hasConstraint || !hasDefaultValue) {

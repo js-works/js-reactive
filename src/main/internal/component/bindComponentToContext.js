@@ -1,18 +1,6 @@
-import Platform from '../internal/platform/Platform'
+import Platform from '../platform/Platform'
 
-import validateCtxBindingConfig
-  from '../internal/validation/validateCtxBindingConfig'
-
-export default function bindToContext(componentType, ctxBindings) {
-  if (process.env.NODE_ENV === 'development') {
-    const error = validateCtxBindingConfig(ctxBindings, componentType.displayName)
-
-    if (error) {
-      throw new Error(
-        `[classComponent] ${error.message}`)
-    }
-  }
-
+export default function bindComponentToContext(componentType, ctxBindings) {
   const
     keys = Object.keys(ctxBindings),
     involvedContexts = [],
@@ -21,29 +9,26 @@ export default function bindToContext(componentType, ctxBindings) {
   for (let i = 0; i < keys.length; ++i) {
     const
       key = keys[i],
-      ctxConnection = ctxBindings[key],
-      ctx = ctxConnection.context,
-      map = ctxConnection.map || null,
-      getDefaultValue = () => ctxConnection.defaultValue
+      context = ctxBindings[key]
 
-    let idx = involvedContexts.indexOf(ctx)
+    let idx = involvedContexts.indexOf(context)
 
     if (idx === -1) {
       idx = involvedContexts.length
-      involvedContexts.push(ctx)
+      involvedContexts.push(context)
     }
 
-    contextData.push([key, idx, map, getDefaultValue])
+    contextData.push([key, idx])
   }
 
   return Platform.forwardRef((props, ref) => {
     let newProps = null
-    
+ 
     if (props && ref) {
       const keys = Object.keys(props)
       
       if (keys.length > 0) {
-        newProps = {}
+        newProps = Object.assign({}, props)
 
         for (let i = 0; i < keys.length; ++i) {
           const key = keys[i]
@@ -54,7 +39,7 @@ export default function bindToContext(componentType, ctxBindings) {
     }
 
     if (ref) {
-      newProps = newProps || {}
+      newProps = newProps || Object.assign({}, props)
       newProps.forwardedRef = ref
     }
 
@@ -68,23 +53,19 @@ export default function bindToContext(componentType, ctxBindings) {
           contextValues[0] = value
 
           for (let j = 0; j < contextData.length; ++j) {
-            const [propName, contextIndex, map, getDefaultValue] = contextData[i]
+            const [propName, contextIndex] = contextData[i]
 
             if ((newProps || props)[propName] === undefined) {
               const contextValue = contextValues[contextIndex]
               
-              newProps = newProps || {}
+              newProps = newProps || Object.assign({}, props)
 
-              newProps[propName] = map ? map(contextValue) : contextValue 
-
-              if (newProps[propName] === undefined) {
-                newProps[propName] = getDefaultValue()
-              }
+              newProps[propName] = contextValue 
             }
           }
 
           newProps = newProps || props
-       
+
           return Platform.createElement(componentType, newProps)
         })
       } else {

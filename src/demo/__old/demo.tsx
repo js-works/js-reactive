@@ -48,17 +48,16 @@ const Counter = classComponent<CounterProps>({
 
     initialValue: {
       type: Number,
-      constraint: Spec.integer,
+      validate: Spec.integer,
       defaultValue: 0
-    },
-
-    logger: {
-      defaultValue: nopLogger, 
-      inject: LoggerCtx
     }
   },
 
-  base: class extends React.Component<CounterProps, CounterState> {
+  inject: {
+    logger: LoggerCtx
+  },
+
+  main: class extends React.Component<CounterProps, CounterState> {
     constructor(props: CounterProps) {
       super(props);
 

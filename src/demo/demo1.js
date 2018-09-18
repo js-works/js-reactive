@@ -6,7 +6,7 @@
     platformName = isReact ? 'React' : 'DIO',
     render = isReact ? window.ReactDOM.render : window.dio.render,
     { createElement: h, Component } = platform,
-    { functionalComponent, classComponent, context, bindToContext } = scenery,
+    { defineComponent, defineContext } = scenery,
     { Spec } = window.jsSpec
 
   class Logger {
@@ -22,31 +22,30 @@
     defaultLogger = new Logger(console.log),
     customLogger = new Logger((...args) => console.log('[Demo1]', ...args)),
 
-    LoggerCtx = context({
+    LoggerCtx = defineContext({
       displayName: 'LoggerCtx',
       type: Logger,
       defaultValue: defaultLogger
     }),
 
-    Counter = classComponent({
+    Counter = defineComponent({
       displayName: 'Counter',
 
       properties: {
         initialValue: {
           type: Number,
-          constraint: Spec.integer,
+          validate: Spec.integer,
           defaultValue: 0 
         },
-
-        logger: {
-          type: Logger,
-          defaultValue: Logger.default
-        }
       },
 
-      base: class extends Component {
+      inject: {
+        logger: LoggerCtx
+      },
+
+      main: class extends Component {
         constructor(props) {
-          super(props)
+          super(props) 
           this.state = { counter: props.initialValue }
           props.logger.log('Counter has been initialized')
         }
@@ -67,20 +66,14 @@
       }
     }),
 
-    WrappedCounter = bindToContext(Counter, {
-      logger: {
-        context: LoggerCtx
-      }
-    }),
-
-    Demo = functionalComponent({
+    Demo = defineComponent({
       displayName: 'Demo',
 
       render() {
         return (
           h(LoggerCtx.Provider, { value: customLogger },
             h('h3', null, 'jsScenery demo 1 (', platformName, ')'),
-            h(WrappedCounter)
+            h(Counter)
           ))
       }
     })
