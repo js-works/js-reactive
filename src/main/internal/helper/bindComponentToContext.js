@@ -1,6 +1,6 @@
 import Platform from '../platform/Platform'
 
-export default function bindComponentToContext(componentType, ctxBindings) {
+export default function bindComponentToContext(componentType, ctxBindings, displayName) {
   const
     keys = Object.keys(ctxBindings),
     involvedContexts = [],
@@ -21,7 +21,7 @@ export default function bindComponentToContext(componentType, ctxBindings) {
     contextData.push([key, idx])
   }
 
-  return Platform.forwardRef((props, ref) => {
+  const forward = (props, ref) => {
     let newProps = null
  
     if (props && ref) {
@@ -80,5 +80,9 @@ export default function bindComponentToContext(componentType, ctxBindings) {
 
       return node
     }
-  })
+  }
+
+  forward.displayName = displayName
+
+  return Platform.forwardRef(forward)
 }

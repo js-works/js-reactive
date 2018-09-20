@@ -20,74 +20,41 @@ export default function defineComponent(config) {
     }
   }
 
-  let ret = config.render
-    ? defineFunctionalComponent(config)
-    : defineClassComponent(config)
+  const isFunctionalComponent = config.hasOwnProperty('render')
 
-  if (config.inject) {
-    delete ret.propTypes
+  let ret =  isFunctionalComponent
+    ? props => config.render(props)
+    : extendClass(config.main)
 
-    ret = bindComponentToContext(ret, config.inject)
+  Object.defineProperty(ret, 'displayName', { value: config.displayName })
+
+  if (!isFunctionalComponent) {
+    Object.defineProperty(ret, 'contextTypes', { value: null })
+    Object.defineProperty(ret, 'childContextTypes', { value: null })
   }
 
+  if (config.inject) {
+    Object.defineProperty(ret, 'propTypes', { value: null })
+    Object.defineProperty(ret, 'defaultProps', { value: null })
+
+    ret = bindComponentToContext(ret, config.inject, config.displayName)
+  }
+
+  let propTypes = null
+
   if (process.env.NODE_ENV === 'development') {
-    ret.propTypes = determinePropTypes(
+    propTypes = determinePropTypes(
       config.properties,
       config.validate,
       config.displayName,
       false)
-  } else {
-    ret.propTypes = null
   }
 
-  ret.defaultProps = determineDefaultProps(
-    config.properties)
-
-  return ret
-}
-
-// --- locals -------------------------------------------------------
-
-function defineFunctionalComponent(config) {
-  if (typeof config === 'function') {
-    config = config()
-  }
-
-  const
-    ret = function () {
-      return config.render.apply(null, arguments)
-    }
-
-
-  Object.defineProperty(ret, 'displayName', {
-    value: config.displayName
-  })
-
-  return ret
-}
-
-function defineClassComponent(config) {
-  if (typeof config === 'function') {
-    config = config()
-  }
-
-  const
-    ret = extendClass(config.main),
-    displayName = config.displayName
-
-  Object.defineProperties(ret, {
-    displayName: {
-      value: displayName
-    },
-
-    contextTypes: {
-      value: null
-    },
-
-    childContextTypes: {
-      value: null
-    }
-  })
+  Object.defineProperty(ret, 'propTypes', { value: propTypes })
+  
+  Object.defineProperty(ret, 'defaultProps', {
+    value: determineDefaultProps(config.properties)
+  }) 
 
   return ret
 }

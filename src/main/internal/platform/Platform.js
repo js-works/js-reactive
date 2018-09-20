@@ -4,5 +4,6 @@ export default {
   createElement: null,
   isValidElement: null,
   forwardRef: null,
-  Component: null
+  Component: null,
+  Children: null
 }

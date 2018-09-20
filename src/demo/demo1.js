@@ -36,7 +36,7 @@
           type: Number,
           validate: Spec.integer,
           defaultValue: 0 
-        },
+        }
       },
 
       inject: {
@@ -67,7 +67,7 @@
     }),
 
     Demo = defineComponent({
-      displayName: 'Demo',
+      displayName: 'Demo1',
 
       render() {
         return (

@@ -25,13 +25,6 @@ export default function context(config) {
       hasDefaultValue = config.hasOwnProperty('defaultValue')
 
     if (hasType || hasConstraint || !hasDefaultValue) {
-      ret.Provider.propTypes = determinePropTypes(
-        { value: config, children: isNode },
-        null,
-        config.displayName,
-        true)
-
-      /*
       Object.defineProperty(ret.Provider, 'propTypes', {
         value: determinePropTypes(
           { value: config, children: isNode },
@@ -39,7 +32,6 @@ export default function context(config) {
           config.displayName,
           true)
       })
-      */
     }
   }
 

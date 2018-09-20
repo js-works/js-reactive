@@ -10,7 +10,7 @@
     { Spec } = window.jsSpec
 
   const Demo = defineComponent({
-    displayName: 'Demo',
+    displayName: 'Demo2',
 
     render: () =>
       h('div', null,

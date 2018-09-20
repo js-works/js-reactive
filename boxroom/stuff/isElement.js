@@ -1,5 +1,5 @@
-import Platform from '../internal/platform/Platform' 
-import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
+import Platform from '../../src/main/internal/platform/Platform' 
+import setJsSpecValidator from '../../src/main/internal/helper/setJsSpecValidator'
 
 export default function isElement(it) {
   return Platform.isValidElement(it)
