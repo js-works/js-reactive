@@ -36,7 +36,7 @@ export default function validateProperty<P extends Props, K extends keyof P>(
   } else if (typeConstructor !== undefined && typeConstructor !== null) {
     const type = typeof value
 
-    switch (typeConstructor) {
+    switch (<any>typeConstructor) {
       case Boolean:
         if (type !== 'boolean') {
           errMsg = `Property ${propInfo} must be boolean`
