@@ -48,6 +48,7 @@ const
     Spec.shape({
       displayName: Spec.match(REGEX_DISPLAY_NAME),
       properties: Spec.optional(specOfPropertiesConfig),
+      variableProps: Spec.optional(Spec.boolean),
       validate: Spec.optional(Spec.function),
 
       inject:

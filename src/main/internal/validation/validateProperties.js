@@ -1,7 +1,7 @@
 import validateProperty from './validateProperty'
 
 export default function validateProperties(
-  props, propsConfig, propsValidator, componentName, isCtxProvider) {
+  props, propsConfig, propsValidator, variableProps, componentName, isCtxProvider) {
   let ret = null
 
   const
@@ -22,24 +22,26 @@ export default function validateProperties(
     }
   }
 
-  const
-    usedPropNames = Object.keys(props),
-    invalidPropNames = []
+  if (!variableProps) {
+    const
+      usedPropNames = Object.keys(props),
+      invalidPropNames = []
 
-  for (let i = 0; i < usedPropNames.length; ++i) {
-    const usedPropName = usedPropNames[i]
+    for (let i = 0; i < usedPropNames.length; ++i) {
+      const usedPropName = usedPropNames[i]
 
-    if (!propsConfig || !propsConfig.hasOwnProperty(usedPropName)) {
-      if (usedPropName !== 'key' && usedPropName !=='ref') { // TODO: => DIO bug
-        invalidPropNames.push(usedPropName)
+      if (!propsConfig || !propsConfig.hasOwnProperty(usedPropName)) {
+        if (usedPropName !== 'key' && usedPropName !=='ref') { // TODO: => DIO bug
+          invalidPropNames.push(usedPropName)
+        }
       }
     }
-  }
 
-  if (invalidPropNames.length == 1) {
-    messages.push(`Invalid prop key "${invalidPropNames[0]}"`)
-  } else if (invalidPropNames.length > 1) {
-    messages.push('Invalid prop keys: ' + invalidPropNames.join(', '))
+    if (invalidPropNames.length == 1) {
+      messages.push(`Invalid prop key "${invalidPropNames[0]}"`)
+    } else if (invalidPropNames.length > 1) {
+      messages.push('Invalid prop keys: ' + invalidPropNames.join(', '))
+    }
   }
 
   if (propsValidator) {

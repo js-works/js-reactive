@@ -46,6 +46,7 @@ export default function defineComponent(config) {
     propTypes = determinePropTypes(
       config.properties,
       config.validate,
+      !!config.variableProps,
       config.displayName,
       false)
   }

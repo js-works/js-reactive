@@ -73,7 +73,7 @@
         return (
           h(LoggerCtx.Provider, { value: customLogger },
             h('h3', null, 'jsScenery demo 1 (', platformName, ')'),
-            h(Counter)
+            h(Counter, { x: 4 })
           ))
       }
     })

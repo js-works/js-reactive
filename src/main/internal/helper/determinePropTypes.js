@@ -1,14 +1,14 @@
 import validateProperties from '../validation/validateProperties'
 
 export default function determinePropTypes(
-  propsConfig, propsValidator, componentName, isCtxProvider) {
+  propsConfig, propsValidator, variableProps, componentName, isCtxProvider) {
 
   let ret = null
   
   ret = {
     '*': props => {
       return validateProperties(
-        props, propsConfig, propsValidator, componentName, isCtxProvider)
+        props, propsConfig, propsValidator, variableProps, componentName, isCtxProvider)
     }
   }
 

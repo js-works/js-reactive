@@ -29,6 +29,7 @@ export default function context(config) {
         value: determinePropTypes(
           { value: config, children: isNode },
           null,
+          false,
           config.displayName,
           true)
       })
