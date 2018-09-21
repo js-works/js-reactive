@@ -1,12 +1,8 @@
 (() => {
   const
-    scenery = window.jsScenery.react || window.jsScenery.dio,
-    isReact = !!window.jsScenery.react,
-    platform = isReact ? window.React : window.dio,
-    platformName = isReact ? 'React' : 'DIO',
-    render = isReact ? window.ReactDOM.render : window.dio.render,
-    { createElement: h, Component } = platform,
-    { defineComponent, defineContext } = scenery,
+    { createElement: h, Component } = window.React,
+    { render } = window.ReactDOM,
+    { defineComponent, defineContext } = window.jsScenery,
     { Spec } = window.jsSpec
 
   class Logger {
@@ -72,8 +68,8 @@
       render() {
         return (
           h(LoggerCtx.Provider, { value: customLogger },
-            h('h3', null, 'jsScenery demo 1 (', platformName, ')'),
-            h(Counter, { x: 4 })
+            h('h3', null, 'jsScenery demo 1'),
+            h(Counter)
           ))
       }
     })

@@ -1,12 +1,8 @@
 (() => {
   const
-    scenery = window.jsScenery.react || window.jsScenery.dio,
-    isReact = !!window.jsScenery.react,
-    platform = isReact ? window.React : window.dio,
-    platformName = isReact ? 'React' : 'DIO',
-    render = isReact ? window.ReactDOM.render : window.dio.render,
-    { createElement: h } = platform,
-    { defineComponent } = scenery,
+    { createElement: h } = window.React,
+    { render } = window.ReactDOM,
+    { defineComponent } = window.jsScenery,
     { Spec } = window.jsSpec
 
   const Demo = defineComponent({
@@ -14,7 +10,7 @@
 
     render: () =>
       h('div', null,
-        h('h3', null, 'jsScenery demo 2 (', platformName, ')'),
+        h('h3', null, 'jsScenery demo 2'),
         h(BulletedList, { items: demoListItems }))
   })
 

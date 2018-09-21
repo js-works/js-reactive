@@ -1,35 +1,31 @@
-import { eslint } from 'rollup-plugin-eslint'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import replace from 'rollup-plugin-replace'
-import babel from 'rollup-plugin-babel'
+import typescript from 'rollup-plugin-typescript2'
 import { uglify as uglifyJS} from 'rollup-plugin-uglify'
 import uglifyES from 'rollup-plugin-uglify-es'
 import gzip from 'rollup-plugin-gzip'
 
-function createRollupConfig(platform, moduleFormat, productive, customDest = null) {
+function createRollupConfig(moduleFormat, productive) {
   return {
-    input: `src/main/js-scenery.${platform}.js`,
+    input: 'src/main/js-scenery.ts',
 
     output: {
-      file: customDest
-        ? customDest
-        : productive
-          ? `dist/js-scenery.${platform}.${moduleFormat}.production.js`
-          : `dist/js-scenery.${platform}.${moduleFormat}.development.js`,
+      file: productive
+        ? `dist/js-scenery.${moduleFormat}.production.js`
+        : `dist/js-scenery.${moduleFormat}.development.js`,
 
       format: moduleFormat,
-      name: `jsScenery.${platform}`, 
+      name: 'jsScenery', 
       sourcemap: productive ? false : 'inline',
 
       globals: {
         'js-spec': 'jsSpec',
-        'react': 'React',
-        'dio.js': 'dio'
+        'react': 'React'
       }
     },
 
-    external: ['react', 'dio.js', 'js-spec'],
+    external: ['react', 'js-spec'],
 
     plugins: [
       resolve({
@@ -42,13 +38,9 @@ function createRollupConfig(platform, moduleFormat, productive, customDest = nul
           'node_modules/js-spec/index.js': ['Spec']
         }
       }),
-      eslint({
-        exclude: [
-          'src/styles/**',
-        ]
-      }),
-      babel({
+      typescript({
         exclude: 'node_modules/**',
+        useTsconfigDeclarationDir: true
       }),
       replace({
         exclude: 'node_modules/**',
@@ -65,14 +57,10 @@ function createRollupConfig(platform, moduleFormat, productive, customDest = nul
 
 const configs = []
 
-for (const platform of ['react', 'dio']) {
-  for (const format of ['umd', 'cjs', 'amd', 'esm']) {
-    for (const productive of [true, false]) {
-      configs.push(createRollupConfig(platform, format, productive))
-    }
+for (const format of ['umd', 'cjs', 'amd', 'esm']) {
+  for (const productive of [true, false]) {
+    configs.push(createRollupConfig(format, productive))
   }
-
-  configs.push(createRollupConfig(platform, 'umd', true, `dist/main/${platform}.js`))
 }
 
 export default configs
