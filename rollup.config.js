@@ -8,15 +8,15 @@ import gzip from 'rollup-plugin-gzip'
 
 function createRollupConfig(moduleFormat, productive) {
   return {
-    input: 'src/main/js-scenery.ts',
+    input: 'src/main/js-reactive.ts',
 
     output: {
       file: productive
-        ? `dist/js-scenery.${moduleFormat}.production.js`
-        : `dist/js-scenery.${moduleFormat}.development.js`,
+        ? `dist/js-reactive.${moduleFormat}.production.js`
+        : `dist/js-reactive.${moduleFormat}.development.js`,
 
       format: moduleFormat,
-      name: 'jsScenery', 
+      name: 'jsReactive', 
       sourcemap: productive ? false : 'inline',
 
       globals: {

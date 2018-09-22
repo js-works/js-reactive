@@ -1,12 +1,12 @@
 {
-  "name": "js-scenery",
-  "version": "0.0.13",
+  "name": "js-reactive",
+  "version": "0.0.2",
   "license": "LGPL-3.0",
-  "homepage": "https://github.com/js-works/js-scenery",
-  "types": "dist/types/main/js-scenery.d.ts",
+  "homepage": "https://github.com/js-works/js-reactive",
+  "types": "dist/types/main/js-reactive.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/js-works/js-scenery.git"
+    "url": "https://github.com/js-works/js-reactive.git"
   },
   "main": "dist/main/",
   "files": [

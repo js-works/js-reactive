@@ -16,6 +16,6 @@
     ]
   },
   "files": [
-    "src/main/js-scenery.ts"
+    "src/main/js-reactive.ts"
   ]
 }
