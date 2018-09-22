@@ -16,7 +16,7 @@ const columnsSpec =
                 when:
                     it => it && !it.columns,
                 check:
-                    Spec.shape({
+                    Spec.strictShape({
                         title: Spec.string,
                         field: Spec.string,
                         align: Spec.optional(Spec.oneOf('left', 'right', 'center')),
@@ -29,7 +29,7 @@ const columnsSpec =
                     it => it && it.columns,
 
                 check:
-                    Spec.shape({
+                    Spec.strictShape({
                         title: Spec.string,
                         columns: Spec.lazy(() => columnsSpec)
                     })
@@ -37,7 +37,7 @@ const columnsSpec =
         );
 
 const tableConfigSpec =
-    Spec.shape({
+    Spec.strictShape({
         columns: columnsSpec,
 
         showRecordNumbers:
@@ -45,7 +45,7 @@ const tableConfigSpec =
 
         expandableRow:
             Spec.optional(
-                Spec.shape({
+                Spec.strictShape({
                     getContent:
                         Spec.function
                 }))
@@ -73,7 +73,7 @@ export default defineClassComponent({
 
         sorting: {
             type: Object,
-            constraint: Spec.shape({
+            constraint: Spec.strictShape({
                 field: Spec.String,
                 direction: Spec.oneOf('asc', 'desc')
             }),

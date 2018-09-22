@@ -12,7 +12,7 @@ const
 
 const componentConfigSpec =
   Spec.and(
-    Spec.shape({
+    Spec.strictShape({
       displayName:
         Spec.match(REGEX_DISPLAY_NAME),
 
@@ -25,7 +25,7 @@ const componentConfigSpec =
               Spec.match(REGEX_PROPERTY_NAME)),
 
             Spec.valuesOf(
-              Spec.shape({
+              Spec.strictShape({
                 type:
                   Spec.optional(Spec.function),
                 

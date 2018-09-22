@@ -8,7 +8,7 @@ const REGEX_DISPLAY_NAME = /^[A-Z][a-zA-Z0-9_.]*$/;
 
 const contextConfigSpec =
   Spec.optional(
-    Spec.shape({
+    Spec.strictShape({
       displayName:
         Spec.match(REGEX_DISPLAY_NAME),
 

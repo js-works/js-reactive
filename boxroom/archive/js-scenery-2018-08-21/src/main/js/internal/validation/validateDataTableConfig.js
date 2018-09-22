@@ -1,16 +1,16 @@
 import { Spec } from 'js-spec';
 
 const tableConfigSpec =
-    Spec.shape({
+    Spec.strictShape({
         columns:
             Spec.arrayOf( 
                 Spec.or(
-                    Spec.shape({
+                    Spec.strictShape({
                         title: Spec.string,
                         field: Spec.string,
                         sortable: Spec.optional(Spec.boolean)
                     }),
-                    Spec.shape({
+                    Spec.strictShape({
                         title: Spec.string,
                         columns: Spec.lazy(() => tableConfigSpec.columns)
                     })

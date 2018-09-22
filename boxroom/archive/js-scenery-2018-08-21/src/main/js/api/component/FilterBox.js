@@ -14,7 +14,7 @@ export default defineClassComponent({
         config: {
             type: Object,
             constraint:
-                Spec.shape({
+                Spec.strictShape({
                     filters:
                         Spec.array
                 })

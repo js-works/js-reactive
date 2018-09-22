@@ -15,7 +15,7 @@ const menuItemSpec =
                 it => it && !it.items,
 
             check:
-                Spec.shape({
+                Spec.strictShape({
                     text: Spec.string,
                     icon: Spec.optional(Spec.string),
                     disabled: Spec.optional(Spec.boolean),
@@ -27,7 +27,7 @@ const menuItemSpec =
                 it => it && it.items,
 
             check:
-                Spec.shape({
+                Spec.strictShape({
                     text: Spec.string,
                     icon: Spec.optional(Spec.string),
                     className: Spec.optional(Spec.string),

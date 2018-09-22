@@ -13,7 +13,7 @@ const
 
       Spec.valuesOf(
         Spec.and(
-          Spec.shape({
+          Spec.strictShape({
             type: Spec.optional(Spec.function),
             nullable: Spec.optional(Spec.boolean),
             validate: Spec.optional(Spec.function),
@@ -40,7 +40,7 @@ const
           }))),
 
   specOfFunctionalComponentConfig =
-    Spec.shape({
+    Spec.strictShape({
       displayName: Spec.match(REGEX_DISPLAY_NAME),
       properties: Spec.optional(specOfPropertiesConfig),
       validate: Spec.optional(Spec.function),
@@ -48,7 +48,7 @@ const
     }),
   
   specOfClassComponentConfig =
-    Spec.shape({
+    Spec.strictShape({
       displayName: Spec.match(REGEX_DISPLAY_NAME),
       properties: Spec.optional(specOfPropertiesConfig),
       variableProps: Spec.optional(Spec.boolean),

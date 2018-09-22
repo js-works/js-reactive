@@ -27,7 +27,7 @@ const
                     when: it => it.columns === undefined,
 
                     check:
-                        Spec.shape({
+                        Spec.strictShape({
                             title: Spec.string,
                             field: Spec.string,
                             width: Spec.optional(Spec.string),
@@ -41,7 +41,7 @@ const
                     when: it => it.columns !== undefined,
 
                     check:
-                        Spec.shape({
+                        Spec.strictShape({
                             title: Spec.string,
                             columns: Spec.lazy(() => columnsSpec),
                             align:
@@ -57,7 +57,7 @@ const
                 it => it.actions === undefined,
 
             check:
-                Spec.shape({
+                Spec.strictShape({
                     type: Spec.oneOf('general', 'single-row', 'multi-row'),
                     text: Spec.string,
                     icon: Spec.optional(Spec.string),
@@ -70,7 +70,7 @@ const
                 it => it.actions,
 
             check:
-                Spec.shape({
+                Spec.strictShape({
                     type: Spec.is('menu'),
                     text: Spec.string,
                     icon: Spec.optional(Spec.string),
@@ -79,13 +79,13 @@ const
                 })
         }),    
 
-    dataNavSpec = Spec.shape({
+    dataNavSpec = Spec.strictShape({
         headline: Spec.optional(Spec.string),
        
         selectionMode: Spec.oneOf('single', 'multi', 'none'),
 
         expandableRows:
-            Spec.shape({
+            Spec.strictShape({
                 getContent: Spec.function
             }),
         

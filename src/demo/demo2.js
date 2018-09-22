@@ -2,7 +2,7 @@
   const
     { createElement: h } = window.React,
     { render } = window.ReactDOM,
-    { defineComponent } = window.jsScenery,
+    { defineComponent } = window.jsReactive,
     { Spec } = window.jsSpec
 
   const Demo = defineComponent({

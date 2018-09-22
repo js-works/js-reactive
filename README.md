@@ -102,7 +102,7 @@ render(<Demo/>, document.getElementById('main-content'))
   [js-spec](https://github.com/js-works/js-spec) can be used. 
 
 - As the component's meta data is defined separated from the component logic, it's
-  easier to implement other compont logic programming paradigms as they do not have
+  easier to implement other component logic programming paradigms as they do not have
   to care about component meta data and context injections any longer.
 
   ```jsx

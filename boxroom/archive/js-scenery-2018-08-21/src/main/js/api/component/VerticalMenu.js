@@ -17,16 +17,16 @@ function buildItemsSpec(level =0) {
     };
 
     if (level >= 2) {
-        ret = Spec.shape(shape);
+        ret = Spec.strictShape(shape);
     } else {
         shape.items =
             Spec.optional(
-                Spec.shape(
+                Spec.strictShape(
                     buildItemsSpec(level + 1)));
         
         ret =
             Spec.and(
-                Spec.shape(shape),
+                Spec.strictShape(shape),
                 Spec.not(
                     Spec.struct({
                         items: Spec.something,

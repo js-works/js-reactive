@@ -2,7 +2,7 @@
   const
     { createElement: h, Component } = window.React,
     { render } = window.ReactDOM,
-    { defineComponent, defineContext } = window.jsScenery,
+    { defineComponent, defineContext } = window.jsReactive,
     { Spec } = window.jsSpec
 
   class Logger {

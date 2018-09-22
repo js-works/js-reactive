@@ -33,7 +33,7 @@ export default defineFunctionalComponent({
             type: Array,
 
             constraint: Spec.arrayOf(
-                Spec.shape({
+                Spec.strictShape({
                     content: Spec.any,
                     flex: Spec.optional(Spec.nonnegativeInteger),
                     className: Spec.optional(Spec.string),

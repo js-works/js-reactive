@@ -40,7 +40,7 @@ export default defineClassComponent({
                         
                         check:
                             Spec.arrayOf(
-                                Spec.shape({
+                                Spec.strictShape({
                                     value: Spec.or(Spec.string, Spec.number),
                                     text: Spec.or(Spec.string, Spec.number)
                                 }))
