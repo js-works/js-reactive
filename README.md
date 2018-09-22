@@ -1,7 +1,7 @@
 # jsReactive
 A bundle of helpler functions to simplify component implementations with React
 
-## Usage exsample
+## Usage example
 
 ```jsx
 import React, { Component } from 'react'
