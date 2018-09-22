@@ -114,7 +114,7 @@ render(<Demo/>, document.getElementById('main-content'))
 
     main: defineLogic({
       // [...]
-      // in this example "defineLogic" is just a placeholder for whatever
+      // In this example "defineLogic" is just a placeholder for whatever
       // custom component logic function you want to use.
       // [...]
     })  
