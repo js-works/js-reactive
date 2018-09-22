@@ -89,10 +89,16 @@ render(<Demo/>, document.getElementById('main-content'))
 ## Benefits
 
 - Strict separation between component meta data (displayName, properties
-  description etc.) and actual component logic (render function or component class)
+  description etc.) and actual component logic (render function or component
+  class).
 
-- Context values can be easily injected to properties to be available everywhere in
-  the component logic, not only in the "render" function
+- Context values can easily be injected into the properties to be available
+  everywhere in the component logic, not just in the "render" function.
+
+- No need to use 'prop-types' library: As component properties and context values
+  can be validated in a more general way, jsReactive is not depdendent on a
+  React or jsReactive specific prop validation library.
+  Instead a general validation library like 'js-spec' can be used. 
 
 - As the component's meta data is defined separated from the component logic, it's
   easier to implement other compont logic programming paradigms as they do not have
@@ -114,11 +120,6 @@ render(<Demo/>, document.getElementById('main-content'))
     })  
   })
   ```
-
-- No need to use 'prop-types' library: As component properties and context values
-  can be validated in a more general way, jsReactive is not depdendent on a
-  React or jsReactive specific prop validation library.
-  Instead a general validation library like 'js-spec' can be used. 
 
 ## Project status
 
