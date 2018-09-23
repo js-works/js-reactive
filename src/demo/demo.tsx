@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { defineComponent, defineContext } from '../main/js-react-utils'
-import { Spec } from 'js-spec' // 3rd-party validation library
+import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
 
 type Logger = {
   debug: Function

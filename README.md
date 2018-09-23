@@ -1,5 +1,5 @@
-# jsReactUtils
-A bundle of helpler functions to simplify component implementations with React
+# js-react-utils
+A bundle of utility functions to simplify component development with React
 
 ## Usage example
 
@@ -7,7 +7,7 @@ A bundle of helpler functions to simplify component implementations with React
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { defineComponent, defineContext } from 'js-react-utils'
-import { Spec } from 'js-spec' // 3rd-party validation library
+import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
 
 const consoleLogger = {
   debug: console.debug,
@@ -56,7 +56,7 @@ const Counter = defineComponent({
 
     render() {
       return (
-        <div className="cmpnt-counter">
+        <div className="counter">
           <button onClick={() => this.incrementCounter(-1)}>
             -1
           </button>
@@ -108,7 +108,7 @@ render(<Demo/>, document.getElementById('main-content'))
   to care about component meta data and context injections any longer.
 
   ```jsx
-  connst FancyComponent = defineComponent({
+  const FancyComponent = defineComponent({
     displayName: 'FancyComponent',
 
     properties: {

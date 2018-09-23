@@ -13,11 +13,12 @@ export default {
     globals: {
       'react': 'React',
       'react-dom': 'ReactDOM',
-      'js-spec': 'jsSpec'
+      'js-spec': 'jsSpec',
+      'js-spec/dev-only': 'jsSpec'
     }
   },
 
-  external: ['react', 'react-dom', 'js-spec'],
+  external: ['react', 'react-dom', 'js-spec', 'js-spec/dev-only'],
   
   plugins: [
     commonjs(),
