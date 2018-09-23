@@ -8,7 +8,7 @@ export default {
   input: 'src/demo/demo.tsx',
   output: {
     file: './build/demo.js',
-    format: 'iife',
+    format: 'umd',
 
     globals: {
       'react': 'React',
