@@ -8,6 +8,6 @@
 /.nyc_output
 /nbproject
 /node_modules
-/build/*
-/dist/*
+/build
+/dist
 
