@@ -8,15 +8,15 @@ import gzip from 'rollup-plugin-gzip'
 
 function createRollupConfig(moduleFormat, productive) {
   return {
-    input: 'src/main/js-reactive.ts',
+    input: 'src/main/js-react-utils.ts',
 
     output: {
       file: productive
-        ? `dist/js-reactive.${moduleFormat}.production.js`
-        : `dist/js-reactive.${moduleFormat}.development.js`,
+        ? `dist/js-react-utils.${moduleFormat}.production.js`
+        : `dist/js-react-utils.${moduleFormat}.development.js`,
 
       format: moduleFormat,
-      name: 'jsReactive', 
+      name: 'jsReactUtils', 
       sourcemap: productive ? false : 'inline',
 
       globals: {

@@ -1,12 +1,12 @@
 {
-  "name": "js-reactive",
+  "name": "js-react-utils",
   "version": "0.0.2",
   "license": "LGPL-3.0",
-  "homepage": "https://github.com/js-works/js-reactive",
-  "types": "dist/types/main/js-reactive.d.ts",
+  "homepage": "https://github.com/js-works/js-react-utils",
+  "types": "dist/types/main/js-react-utils.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/js-works/js-reactive.git"
+    "url": "https://github.com/js-works/js-react-utils.git"
   },
   "main": "dist/main/",
   "files": [
@@ -62,7 +62,7 @@
     "test": "rollup --c rollup.test.config.js",
     "test-watch": "mocha -w src/test/**/*.js",
     "demo": "rollup --c rollup.demo.config.js --w",
-    "docs": "shx rm -rf ./dist/docs && cross-conf-env typedoc --options typedoc.json --name \"js-reactive (version npm_package_version)\" src/main/api",
+    "docs": "shx rm -rf ./dist/docs && cross-conf-env typedoc --options typedoc.json --name \"js-react-utils (version npm_package_version)\" src/main/api",
     "zipsource": "shx rm -rf ./build/source && shx mkdir -p ./build/source && copyfiles -a ./* ./build/source && shx cp -r ./src ./build/source && shx mkdir -p ./dist/source && cd build/source && bestzip ../../dist/source/source.zip . && cd ../..",
     "dist": "npm run clean && npm run test && npm run build && npm run docs && npm run zipsource"
   }

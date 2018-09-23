@@ -18,6 +18,6 @@
     ]
   },
   "files": [
-    "src/main/js-reactive.ts"
+    "src/main/js-react-utils.ts"
   ]
 }

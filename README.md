@@ -1,4 +1,4 @@
-# jsReactive
+# jsReactUtils
 A bundle of helpler functions to simplify component implementations with React
 
 ## Usage example
@@ -6,7 +6,7 @@ A bundle of helpler functions to simplify component implementations with React
 ```jsx
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import { defineComponent, defineContext } from 'js-reactive'
+import { defineComponent, defineContext } from 'js-react-utils'
 import { Spec } from 'js-spec' // 3rd-party validation library
 
 const consoleLogger = {
@@ -98,8 +98,8 @@ render(<Demo/>, document.getElementById('main-content'))
   everywhere in the component logic, not just in the "render" function.
 
 - No need to use 'prop-types' library: As component properties and context values
-  can be validated in a more general way, jsReactive is not depending on a
-  React or jsReactive specific prop validation library.
+  can be validated in a more general way, jsReactUtils is not depending on a
+  React or jsReactUtils specific prop validation library.
   Instead a general validation library like for example
   [js-spec](https://github.com/js-works/js-spec) can be used. 
 

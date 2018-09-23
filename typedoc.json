@@ -1,5 +1,5 @@
 {
-  "name": "js-reactive",
+  "name": "js-react-utils",
   "mode": "file",
   "out": "dist/docs/api",
   "theme": "minimal",
