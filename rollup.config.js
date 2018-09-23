@@ -2,7 +2,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import replace from 'rollup-plugin-replace'
 import typescript from 'rollup-plugin-typescript2'
-import { uglify as uglifyJS} from 'rollup-plugin-uglify'
+import { uglify as uglifyJS } from 'rollup-plugin-uglify'
 import uglifyES from 'rollup-plugin-uglify-es'
 import gzip from 'rollup-plugin-gzip'
 
@@ -33,14 +33,9 @@ function createRollupConfig(moduleFormat, productive) {
         main: true,
         browser: true,
       }),
-      commonjs({
-        namedExports: {
-          'node_modules/js-spec/index.js': ['Spec']
-        }
-      }),
+      commonjs(),
       typescript({
-        exclude: 'node_modules/**',
-        useTsconfigDeclarationDir: true
+        exclude: 'node_modules/**'
       }),
       replace({
         exclude: 'node_modules/**',
