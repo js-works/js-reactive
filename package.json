@@ -37,8 +37,10 @@
     "rollup-plugin-commonjs": "^9.1.5",
     "rollup-plugin-eslint": "^5.0.0",
     "rollup-plugin-gzip": "^2.0.0",
+    "rollup-plugin-livereload": "^0.6.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-serve": "^0.6.0",
     "rollup-plugin-typescript2": "^0.17.0",
     "rollup-plugin-uglify": "^4.0.0",
     "rollup-plugin-uglify-es": "0.0.1",
@@ -57,6 +59,7 @@
     "build-watch": "watch -f \"src/main/**/*.js\" -r \"rollup --c rollup.config.js\"",
     "test": "rollup --c rollup.test.config.js",
     "test-watch": "mocha -w src/test/**/*.js",
+    "demo": "rollup --c rollup.demo.config.js --w",
     "docs": "shx rm -rf ./dist/docs && esdoc",
     "zipsource": "shx rm -rf ./build/source && shx mkdir -p ./build/source && copyfiles -a ./* ./build/source && shx cp -r ./src ./build/source && shx mkdir -p ./dist/source && cd build/source && bestzip ../../dist/source/source.zip . && cd ../..",
     "dist": "npm run clean && npm run test && npm run build && npm run docs && npm run zipsource"

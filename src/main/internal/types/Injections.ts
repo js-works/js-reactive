@@ -1,7 +1,5 @@
-import * as React from 'react'
-
 type Injections = {
-  [propName: string]: React.Context<any> 
+  [propName: string]: any 
 }
 
 export default Injections

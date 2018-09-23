@@ -2,7 +2,7 @@ import Props from './Props'
 import Class from './Class'
 
 type PropertyConfig<T> = {
-  type?:
+  type?: 
     T extends string
     ? Class<String>
     : T extends number 

@@ -1,13 +1,16 @@
-#demo1 {
-  float: left;
-  margin: 0 50px 10px 20px;
+.counter {
+  display: block;
 }
 
-#demo2 {
-  float: left;
-  margin: 0 50px 10px 20px;
+.counter .counter-increment {
+  display: inline-block;
 }
 
-#demo2 li {
-  font-size: 14px;
+.counter .counter-decrement {
+  display: inline-block;
+}
+
+.counter .counter-value {
+  display: inline-block;
+  padding: 0 2ex;
 }

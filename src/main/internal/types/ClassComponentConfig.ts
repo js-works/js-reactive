@@ -14,9 +14,9 @@ interface ClassComponentConfig<
   properties?: PropertiesConfig<P>,
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
-  inject?: { [propName in keyof I]: React.Context<any> },
+  inject?: { [propName in keyof I]: React.Context<I[propName]> },
   methods?: { [methodName in keyof M]: M[methodName] },
-  main: { new(props: P): (React.Component<P | I> & M) }
+  main: Class<React.Component<P | I> & M>
 }
 
 export default ClassComponentConfig

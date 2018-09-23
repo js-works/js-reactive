@@ -44,13 +44,13 @@ const Counter = defineComponent({
 
   main: class extends Component {
     constructor(props) {
-      supper(props)
+      super(props)
       this.state = { counter: props.initialValue }
-      props.logger.debug('Component "Counter" has been initialized')
+      props.logger.info('Component "Counter" has been initialized')
     }
 
     incrementCounter(delta) {
-      this.props.logger.debug(`Incrementing counter by ${delta}`)
+      this.props.logger.info(`Incrementing counter by ${delta}`)
       this.setState(state => ({ counter: state.counter + delta }))
     }
 
@@ -77,8 +77,10 @@ const Demo = defineComponent({
 
   render() {
     return (
-      <h3>Deomo<h3>
-      <div><Counter/></div>
+      <div>
+        <h3>Demo<h3>
+        <div><Counter/></div>
+      </div>
     )
   }
 })

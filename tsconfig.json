@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES5",
+    "jsx": "react",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "declarationDir": "dist/types",
     "sourceMap": true,
-    "lib": ["es7"],
+    "lib": ["es7", "dom"],
     "esModuleInterop": true,
     "typeRoots": [
       "node_modules/@types"
