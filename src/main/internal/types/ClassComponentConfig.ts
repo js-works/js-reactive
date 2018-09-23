@@ -3,7 +3,7 @@ import Props from './Props'
 import Injections from './Injections'
 import Methods from './Methods'
 import PropertiesConfig from './PropertiesConfig'
-import * as React from 'react'
+import React from 'react'
 
 interface ClassComponentConfig<
   P extends Props = {},

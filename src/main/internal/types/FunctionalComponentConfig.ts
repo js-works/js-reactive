@@ -2,7 +2,7 @@ import Props from './Props'
 import Injections from './Injections'
 import VirtualNode from './VirtualNode'
 import PropertiesConfig from './PropertiesConfig'
-import * as React from 'react'
+import React from 'react'
 
 interface FunctionalComponentConfig<
   P extends Props = {},

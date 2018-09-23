@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { defineComponent, defineContext } from '../main/js-reactive'
 import { Spec } from 'js-spec' // 3rd-party validation library
 
@@ -95,7 +95,7 @@ const Counter = defineComponent<Props, Injections>({
 const Demo = defineComponent({
   displayName: 'Demo',
 
-  render(props) {
+  render() {
     return (
       <div>
         <h3>Demo</h3>

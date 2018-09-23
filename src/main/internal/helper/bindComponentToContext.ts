@@ -1,7 +1,7 @@
 import Props from '../types/Props'
 import ComponentType from '../types/ComponentType'
 import Context from '../types/Context'
-import * as React from 'react'
+import React from 'react'
 
 export default function bindComponentToContext<P extends Props>(
   componentType: ComponentType<P>,

@@ -1,3 +1,4 @@
+import commonjs from 'rollup-plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
 import replace from 'rollup-plugin-replace'
 import serve from 'rollup-plugin-serve'
@@ -7,13 +8,19 @@ export default {
   input: 'src/demo/demo.tsx',
   output: {
     file: './build/demo.js',
-    format: 'iife'
-  },
-  
-  external: ['react', 'react-dom', 'js-spec'],
+    format: 'iife',
 
+    globals: {
+      'react': 'React',
+      'react-dom': 'ReactDOM',
+      'js-spec': 'jsSpec'
+    }
+  },
+
+  external: ['react', 'react-dom', 'js-spec'],
+  
   plugins: [
-    typescript(),
+    commonjs(),
     replace({
       exclude: 'node_modules/**',
       
@@ -21,6 +28,7 @@ export default {
         'process.env.NODE_ENV': "'development'"
       }
     }),
+    typescript(),
     serve({
       open: true,
       contentBase: '.',

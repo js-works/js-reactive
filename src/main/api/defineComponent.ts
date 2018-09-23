@@ -13,7 +13,7 @@ import ComponentType from '../internal/types/ComponentType'
 import ClassComponentConfig from '../internal/types/ClassComponentConfig'
 import FunctionalComponentConfig from '../internal/types/FunctionalComponentConfig'
 
-import * as React from 'react'
+import React from 'react'
 
 type ConfigOrConfigProvider<P extends Props> =
   FunctionalComponentConfig<P>

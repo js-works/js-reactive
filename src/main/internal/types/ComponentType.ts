@@ -1,5 +1,5 @@
 import Props from './Props'
-import * as React from 'react'
+import React from 'react'
 
 type ComponentType<P extends Props> = React.ComponentType<P>
 

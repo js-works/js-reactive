@@ -1,6 +1,6 @@
 import { SYMBOL_ITERATOR } from '../internal/constant/constants'
 import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
-import * as React from 'react'
+import React from 'react'
 
 export default function isNode(it: any) {
   const type = typeof it

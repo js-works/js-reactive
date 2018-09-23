@@ -2,7 +2,7 @@ import { REGEX_DISPLAY_NAME, REGEX_PROP_NAME } from '../constant/constants'
 import isContext from '../helper/isContext'
 import PropertiesConfig from '../types/PropertiesConfig'
 
-import * as React from 'react'
+import React from 'react'
 import { Spec } from 'js-spec'
 
 const

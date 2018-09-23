@@ -1,5 +1,5 @@
 import setJsSpecValidation from '../helper/setJsSpecValidator'
-import * as React from 'react'
+import React from 'react'
 
 const
   exampleCtx: any = React.createContext(null),

@@ -1,6 +1,6 @@
 import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
 import ComponentType from '../internal/types/ComponentType'
-import * as React from 'react'
+import React from 'react'
 
 export default function isElementOfType(
   type: string | ComponentType<any> | Array<string | ComponentType<any>>,

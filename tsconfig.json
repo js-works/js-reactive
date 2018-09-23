@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES5",
     "jsx": "react",
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
