@@ -1,0 +1,7 @@
+{
+  "name": "js-reactive",
+  "mode": "file",
+  "out": "dist/docs/api",
+  "theme": "minimal",
+  "ignoreCompilerErrors": "true"
+}
