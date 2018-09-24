@@ -1,6 +1,6 @@
 {
   "name": "js-react-utils",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "LGPL-3.0",
   "homepage": "https://github.com/js-works/js-react-utils",
   "repository": {
@@ -8,9 +8,10 @@
     "url": "https://github.com/js-works/js-react-utils.git"
   },
   "main": "index.js",
-  "types": "dist/types/js-react-utils.d.ts",
+  "module": "dist/js-react-utils.ems.production.js",
   "unpkg": "dist/js-react-utils.umd.production.js",
   "jsdelivr": "dist/js-react-utils.umd.production.js",
+  "types": "dist/types/js-react-utils.d.ts",
   "files": [
     "index.js",
     "dist"
