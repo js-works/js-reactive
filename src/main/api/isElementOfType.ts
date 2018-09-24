@@ -2,10 +2,11 @@ import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
 import ComponentType from '../internal/types/ComponentType'
 import React from 'react'
 
-export default function isElementOfType(
-  type: string | ComponentType<any> | Array<string | ComponentType<any>>,
-  it: any
-) {
+type Type = string | ComponentType<any> | (string | ComponentType<any>)[]
+
+function isElementOfType(type: Type, it: any): boolean
+function isElementOfType(type: Type): ((it: any) => boolean)
+function isElementOfType(type: Type, it?: any) {
   let ret = null
 
   const
@@ -36,3 +37,5 @@ export default function isElementOfType(
 
   return ret
 }
+
+export default isElementOfType
