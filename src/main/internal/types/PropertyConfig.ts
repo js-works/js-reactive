@@ -4,11 +4,11 @@ import Class from './Class'
 type PropertyConfig<T> = {
   type?: 
     T extends string
-    ? Class<String>
+    ? StringConstructor 
     : T extends number 
-    ? Class<Number>
+    ? NumberConstructor 
     : T extends boolean
-    ? Class<Boolean>
+    ? BooleanConstructor 
     : Class<T>
 
   nullable?: boolean,
