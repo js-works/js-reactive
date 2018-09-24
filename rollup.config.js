@@ -19,19 +19,15 @@ function createRollupConfig(moduleFormat, productive) {
       sourcemap: productive ? false : 'inline',
 
       globals: {
-        'js-spec': 'jsSpec',
-        'react': 'React'
+        'react': 'React',
+        'js-spec': 'jsSpec'
       }
     },
 
-    external: ['react', 'js-spec'],
+    external: productive ? ['react', 'js-spec'] : ['react'],
 
     plugins: [
-      resolve({
-        jsnext: true,
-        main: true,
-        browser: true,
-      }),
+      resolve(),
       typescript({
         exclude: 'node_modules/**'
       }),
