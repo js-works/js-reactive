@@ -24,7 +24,7 @@ const LoggerCtx = defineContext({
     error: Spec.function
   }),
 
-  defaultValue: ConsoleLogger
+  defaultValue: consoleLogger
 })
 
 const Counter = defineComponent({
