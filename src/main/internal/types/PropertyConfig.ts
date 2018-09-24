@@ -13,7 +13,7 @@ type PropertyConfig<T> = {
 
   nullable?: boolean,
   validate?: (value: T) => null | Error | true | false,
-  optional?: true,
+  optional?: boolean,
   defaultValue?: T 
 }
 
