@@ -23,8 +23,7 @@ function isElementOfType(type: Type, it?: any) {
 
   if (arguments.length > 1) {
     ret =
-      typeof it === 'function'
-        && React.isValidElement(it)
+      React.isValidElement(it)
         && (!typeIsArray ? it.type === type : (<any[]>type).indexOf(it.type) >= 0)
   } else {
     ret = (it: any) => isElementOfType(type, it)
