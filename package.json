@@ -1,6 +1,6 @@
 {
   "name": "js-react-utils",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "LGPL-3.0",
   "homepage": "https://github.com/js-works/js-react-utils",
   "repository": {
@@ -66,7 +66,8 @@
     "build-watch": "watch -f \"src/main/**/*.js\" -r \"rollup --c rollup.config.js\"",
     "test": "nyc mocha -r ts-node/register -r source-map-support/register src/test/**/*.ts",
     "test-watch": "mocha -w -r ts-node/register -r source-map-support/register src/test/**/*.ts",
-    "demo": "rollup --c rollup.demo.config.js --w",
+    "build-demo-watch": "watch -f \"./src/**/*.ts?\" -r \"rollup --c rollup.demo.config.js\"",
+    "demo": "rollup --c rollup.demo.config.js -w",
     "docs": "shx rm -rf ./dist/docs && cross-conf-env typedoc --options typedoc.json --name \"js-react-utils (version npm_package_version)\" src/main/api",
     "zipsource": "shx rm -rf ./build/source && shx mkdir -p ./build/source && copyfiles -a ./* ./build/source && shx cp -r ./src ./build/source && shx mkdir -p ./dist/source && cd build/source && bestzip ../../dist/source/source.zip . && cd ../..",
     "dist": "npm run clean && npm run test && npm run build && npm run docs && npm run zipsource"

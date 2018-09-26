@@ -30,13 +30,13 @@ export default {
       }
     }),
     typescript(),
-    serve({
-      open: true,
-      contentBase: '.',
-      openPage: '/src/demo/demo.html'
-    }),
-    livereload({
-      watch: ['src/demo', 'build']
-    })
+    //serve({
+    //  open: true,
+    //  contentBase: '.',
+    //  openPage: '/src/demo/demo.html'
+    //}),
+    //livereload({
+    //  watch: ['src/demo', 'build']
+    //})
   ]
 }
