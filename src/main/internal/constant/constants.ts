@@ -5,9 +5,8 @@ const
       ? Symbol.iterator
       : '@@iterator',
 
-  REGEX_DISPLAY_NAME = /^[A-Z][a-zA-Z0-9.]*$/,
+  REGEX_DISPLAY_NAME = /^([a-z]+:)*[A-Z][a-zA-Z0-9.]*$/,
   REGEX_PROP_NAME = /^[a-z][a-zA-Z0-9]*$/
-
 
 export {
   SYMBOL_ITERATOR,
