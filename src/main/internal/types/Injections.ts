@@ -1,5 +1,5 @@
 type Injections = {
-  [propName: string]: any 
+  [propName: string]: any
 }
 
 export default Injections

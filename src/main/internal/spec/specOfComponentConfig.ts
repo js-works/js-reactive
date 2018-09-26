@@ -39,6 +39,23 @@ const
             return errorMsg ? new Error(errorMsg) : null
           }))),
 
+  specOfInjectConfig =
+    Spec.optional(
+      Spec.and(
+        Spec.hasSomeKeys,
+        Spec.keysOf(Spec.match(REGEX_PROP_NAME)),
+        Spec.valuesOf(
+          Spec.or(
+            {
+              when: Spec.prop('kind', Spec.is('context')),
+
+              then:
+                Spec.strictShape({
+                  kind: Spec.is('context'),
+                  source: isContext
+                })
+            })))),
+
   specOfFunctionalComponentConfig =
     Spec.strictShape({
       displayName: Spec.match(REGEX_DISPLAY_NAME),
@@ -54,12 +71,7 @@ const
       variableProps: Spec.optional(Spec.boolean),
       validate: Spec.optional(Spec.function),
 
-      inject:
-        Spec.optional(
-          Spec.and(
-            Spec.hasSomeKeys,
-            Spec.keysOf(Spec.match(REGEX_PROP_NAME)),
-            Spec.valuesOf(isContext))),
+      inject: specOfInjectConfig,
 
       methods:
         Spec.optional(

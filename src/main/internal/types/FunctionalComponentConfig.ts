@@ -2,6 +2,7 @@ import Props from './Props'
 import Injections from './Injections'
 import VirtualNode from './VirtualNode'
 import PropertiesConfig from './PropertiesConfig'
+import InjectionsConfig from './InjectionsConfig'
 import React from 'react'
 
 interface FunctionalComponentConfig<
@@ -12,7 +13,7 @@ interface FunctionalComponentConfig<
   properties?: PropertiesConfig<P>,
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
-  inject?: { [propName in keyof I]: React.Context<I[propName]> },
+  inject?: InjectionsConfig<I>,
   render: (props: P) => VirtualNode
 }
 

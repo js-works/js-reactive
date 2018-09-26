@@ -3,6 +3,7 @@ import Props from './Props'
 import Injections from './Injections'
 import Methods from './Methods'
 import PropertiesConfig from './PropertiesConfig'
+import InjectionsConfig from './InjectionsConfig'
 import React from 'react'
 
 interface ClassComponentConfig<
@@ -14,7 +15,7 @@ interface ClassComponentConfig<
   properties?: PropertiesConfig<P>,
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
-  inject?: { [propName in keyof I]: React.Context<I[propName]> },
+  inject?: InjectionsConfig<I>,
   methods?: { [methodName in keyof M]: M[methodName] },
   main: Class<React.Component<P | I> & M>
 }

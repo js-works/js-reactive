@@ -1,6 +1,11 @@
 import Injections from './Injections'
-import 'react'
+import { Context } from 'react'
 
 type InjectionsConfig<I extends Injections> = {
-  [propName in keyof I]: React.Context<I[propName]>
+  [propName in keyof I]: {
+    kind: 'context',
+    source: Context<I[propName]>
+  }
 }
+
+export default InjectionsConfig

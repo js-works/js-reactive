@@ -1,58 +1,85 @@
 import Props from '../types/Props'
 import ComponentType from '../types/ComponentType'
 import Context from '../types/Context'
-import React from 'react'
+import * as React from 'react'
 
 export default function bindComponentToContext<P extends Props>(
   componentType: ComponentType<P>,
-  ctxBindings: { [propName: string]: Context<any> },
+  ctxBindings: any, // TODO
   displayName: string
 ): ComponentType<P> {
   const
-    propNames = Object.keys(ctxBindings),
-    contextData: ({ context: Context<any>, propName: string })[] = []
+    keys = Object.keys(ctxBindings),
+    involvedContexts: Context<any>[] = [],
+    contextData: [string, number][] = []
 
-  for (let i = 0; i < propNames.length; ++i) {
+  for (let i = 0; i < keys.length; ++i) {
     const
-      propName = propNames[i],
-      context = ctxBindings[propName]
+      key = keys[i],
+      context = ctxBindings[key].source
 
-    contextData.push({ context, propName })
+    let idx = involvedContexts.indexOf(context)
+
+    if (idx === -1) {
+      idx = involvedContexts.length
+      involvedContexts.push(context)
+    }
+
+    contextData.push([key, idx])
   }
 
   const forward: any = (props: P, ref: Function) => {
-    const
-      newProps: { [key in keyof P]: any } = <any>{},
-      keys = Object.keys(props)
+    let newProps: P = null
+ 
+    if (props && ref) {
+      const keys = Object.keys(props)
+      
+      if (keys.length > 0) {
+        newProps = Object.assign({}, props)
 
-    for (let i = 0; i < keys.length; ++i) {
-      const key = keys[i]
-
-      newProps[key] = props[key]
+        for (let i = 0; i < keys.length; ++i) {
+          const key = keys[i]
+    
+          newProps[key] = props[key]
+        }
+      }
     }
 
     if (ref) {
+      newProps = newProps || Object.assign({}, props)
       newProps.forwardedRef = ref
     }
 
+    const contextValues = new Array(involvedContexts.length)
+
     let node = null
 
-    for (let i = 0; i < contextData.length; ++i) {
+    for (let i = 0; i < involvedContexts.length; ++i) {
       if (i === 0) {
-        const { propName, context } = contextData[0]
-        
-        node = React.createElement(context.Consumer, null, (value: any) => {
-          newProps[propName] = value
+        node = React.createElement(involvedContexts[0].Consumer, null, (value: any) => {
+          contextValues[0] = value
+
+          for (let j = 0; j < contextData.length; ++j) {
+            const [propName, contextIndex] = contextData[i]
+
+            if ((newProps || props)[propName] === undefined) {
+              const contextValue = contextValues[contextIndex]
+              
+              newProps = newProps || Object.assign({}, props)
+
+              newProps[propName] = contextValue 
+            }
+          }
+
+          newProps = newProps || props
 
           return React.createElement(componentType, newProps)
         })
       } else {
-        const
-          { propName, context } = contextData[i],
-          currNode: any = node
+        const currNode: any = node
         
-        node = React.createElement(context.Consumer, null, (value: any) => {
-          newProps[propName] = value
+        node = React.createElement(involvedContexts[i].Consumer, null, (value: any) => {
+          contextValues[i] = value 
 
           return currNode
         })

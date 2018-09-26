@@ -53,7 +53,10 @@ const Counter = defineComponent<Props, Injections>({
   },
 
   inject: {
-    logger: LoggerCtx
+    logger: {
+      kind: 'context',
+      source: LoggerCtx
+    }
   },
 
   main: class extends React.Component<AllProps, State> {
