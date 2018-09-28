@@ -105,7 +105,6 @@ render(<Demo/>, document.getElementById('main-content'))
   React or js-react-utils specific prop validation library.
   Instead a general validation library like for example
   [js-spec](https://github.com/js-works/js-spec) can be used. 
-  ```
 
 ## Project status
 
