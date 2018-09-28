@@ -17,7 +17,7 @@ interface ClassComponentConfig<
   validate?: (props: P) => null | Error | true | false,
   inject?: InjectionsConfig<I>,
   methods?: { [methodName in keyof M]: M[methodName] },
-  main: Class<React.Component<P | I> & M>
+  base: Class<React.Component<P | I> & M>
 }
 
 export default ClassComponentConfig

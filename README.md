@@ -45,7 +45,7 @@ const Counter = defineComponent({
     }
   },
 
-  main: class extends Component {
+  base: class extends Component {
     constructor(props) {
       super(props)
       this.state = { counter: props.initialValue }

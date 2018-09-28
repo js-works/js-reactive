@@ -79,7 +79,7 @@ const
             Spec.arrayOf(Spec.string),
             Spec.unique)),
 
-      main: Spec.extends(React.Component)
+      base: Spec.extends(React.Component)
     }),
 
   specOfComponentConfig = 
@@ -91,12 +91,12 @@ const
           then: specOfFunctionalComponentConfig
         },
         {
-          when: Spec.hasOwnProp('main'),
+          when: Spec.hasOwnProp('base'),
           then: specOfClassComponentConfig
         },
         {
           when: Spec.any,
-          then: Spec.fail('Either parameter "render" or parameter "main" must be configured')
+          then: Spec.fail('Either parameter "render" or parameter "base" must be configured')
         }))
 
 export default specOfComponentConfig

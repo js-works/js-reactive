@@ -59,7 +59,7 @@ const Counter = defineComponent<Props, Injections>({
     }
   },
 
-  main: class extends React.Component<AllProps, State> {
+  base: class extends React.Component<AllProps, State> {
     constructor(props: AllProps) {
       super(props)
       this.state = { counter: props.initialValue }

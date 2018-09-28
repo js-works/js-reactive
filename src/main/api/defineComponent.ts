@@ -15,11 +15,9 @@ import FunctionalComponentConfig from '../internal/types/FunctionalComponentConf
 
 import React from 'react'
 
-type ConfigOrConfigProvider<P extends Props> =
+type Config<P extends Props> =
   FunctionalComponentConfig<P>
-    | (() => FunctionalComponentConfig<P>)
     | ClassComponentConfig<P>
-    | (() => ClassComponentConfig<P>)
 
 function defineComponent<
   P extends Props = {},
@@ -28,27 +26,11 @@ function defineComponent<
 
 function defineComponent<
   P extends Props = {},
-  I extends Injections = {}
->(configProvider: () => FunctionalComponentConfig<P, I>): ComponentType<P>
-
-function defineComponent<
-  P extends Props = {},
   I extends Injections = {},
   M extends Methods = {}
 >(config: ClassComponentConfig<P, I, M>): ComponentType<P>
 
-/*
-function defineComponent<
-  P extends Props = {},
-  I extends Injections = {},
-  M extends Methods = {}
->(configProvider: () => ClassComponentConfig<P, I, M>): ComponentType<P>
-*/
-function defineComponent<P extends Props>(configOrConfigProvider: ConfigOrConfigProvider<P>): ComponentType<P> {
-  const config = typeof configOrConfigProvider === 'function'
-      ? configOrConfigProvider()
-      : configOrConfigProvider
-
+function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development') {
     const error = validateComponentConfig(config)
 
@@ -62,7 +44,7 @@ function defineComponent<P extends Props>(configOrConfigProvider: ConfigOrConfig
 
   let ret: ComponentType<P> = isFunctionalComponent
     ? (props: P) => (<any>config).render(props) // TODO
-    : extendClass((<any>config).main) // TODO
+    : extendClass((<any>config).base) // TODO
 
   Object.defineProperty(ret, 'displayName', { value: config.displayName })
 
