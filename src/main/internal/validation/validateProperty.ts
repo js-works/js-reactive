@@ -26,10 +26,10 @@ export default function validateProperty<P extends Props, K extends keyof P>(
   validate = validate && (<any>validate)['js-spec:validate'] || validate
 
   if (!valueIsSet) {
-    if (!propConfig.hasOwnProperty('defaultValue') && propConfig.optional !== true) {
+    if (!propConfig.hasOwnProperty('defaultValue') && propConfig.required === true) {
       errMsg = `Missing mandatory property ${propInfo}`
     }
-  } else if (value === null && nullable === true || value === undefined && propConfig.optional === true) {
+  } else if (value === null && nullable === true || value === undefined && propConfig.required !== true) {
     // Perfectly fine
   } else if (value === null && nullable === false) {
     errMsg = `Property ${propInfo} must not be null`
@@ -74,7 +74,7 @@ export default function validateProperty<P extends Props, K extends keyof P>(
   }
   
   if (!errMsg && !(nullable && value === null)
-    && (valueIsSet || propConfig.optional !== true) && validate) {
+    && (valueIsSet || propConfig.required !== true) && validate) {
 
     let err = (<Function>validate)(value)
       

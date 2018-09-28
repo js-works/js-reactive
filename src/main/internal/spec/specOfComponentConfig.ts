@@ -17,23 +17,23 @@ const
             type: Spec.optional(Spec.function),
             nullable: Spec.optional(Spec.boolean),
             validate: Spec.optional(Spec.function),
-            optional: Spec.optional(Spec.boolean),
+            required: Spec.optional(Spec.boolean),
             defaultValue: Spec.optional(Spec.any)
           }),
 
           (propConfig: PropertiesConfig<any>) => {
             const
-              optional = propConfig.optional,
+              required = propConfig.required,
+              hasRequiredParam = propConfig.hasOwnProperty('required'),
               hasDefaultValue = propConfig.hasOwnProperty('defaultValue')
 
             let errorMsg = null
 
-            if (optional === false && hasDefaultValue) {
-              errorMsg = 'Parameter "optional" must not be false if "defaultValue" is provided'
-            } else if (optional === false) {
-              errorMsg = 'Please do not provide "optional: false" as this is redundant'
-            } else if (optional === true && hasDefaultValue) {
-              errorMsg = 'Please do not provide "optional: true" when "defaultValue" is also provided - this is redundant'
+            if (hasRequiredParam && hasDefaultValue) {
+              errorMsg = 'The parameters "required" and "defaultValue" must '
+                + 'not be set both at once'
+            } else if (required === false) {
+              errorMsg = 'Please do not provide "required: false" as this is redundant'
             }
 
             return errorMsg ? new Error(errorMsg) : null
