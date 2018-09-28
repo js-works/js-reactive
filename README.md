@@ -101,30 +101,10 @@ render(<Demo/>, document.getElementById('main-content'))
   everywhere in the component logic, not just in the "render" function.
 
 - No need to use 'prop-types' library: As component properties and context values
-  can be validated in a more general way, jsReactUtils is not depending on a
-  React or jsReactUtils specific prop validation library.
+  can be validated in a more general way, js-react-utils is not depending on a
+  React or js-react-utils specific prop validation library.
   Instead a general validation library like for example
   [js-spec](https://github.com/js-works/js-spec) can be used. 
-
-- As the component's meta data is defined separated from the component logic, it's
-  easier to implement other component logic programming paradigms as they do not have
-  to care about component meta data and context injections any longer.
-
-  ```jsx
-  const FancyComponent = defineComponent({
-    displayName: 'FancyComponent',
-
-    properties: {
-      // [...]
-    },
-
-    main: defineLogic({
-      // [...]
-      // In this example "defineLogic" is just a placeholder for whatever
-      // custom component logic function you want to use.
-      // [...]
-    })  
-  })
   ```
 
 ## Project status
