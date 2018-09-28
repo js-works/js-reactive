@@ -74,7 +74,7 @@ export default function validateProperty<P extends Props, K extends keyof P>(
   }
   
   if (!errMsg && !(nullable && value === null)
-    && (valueIsSet || propConfig.required !== true) && validate) {
+    && valueIsSet && validate) {
 
     let err = (<Function>validate)(value)
       
