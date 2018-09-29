@@ -47,11 +47,11 @@ const
         Spec.valuesOf(
           Spec.or(
             {
-              when: Spec.prop('kind', Spec.is('context')),
+              when: Spec.prop('mode', Spec.is('context')),
 
               then:
                 Spec.strictShape({
-                  kind: Spec.is('context'),
+                  mode: Spec.is('context'),
                   source: isContext
                 })
             })))),

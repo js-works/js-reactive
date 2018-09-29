@@ -8,7 +8,11 @@ type PropertyConfig<T> = {
     : T extends number 
     ? NumberConstructor 
     : T extends boolean
-    ? BooleanConstructor 
+    ? BooleanConstructor
+    : T extends Function
+    ? FunctionConstructor
+    : T extends Symbol
+    ? SymbolConstructor
     : Class<T>
 
   nullable?: boolean,

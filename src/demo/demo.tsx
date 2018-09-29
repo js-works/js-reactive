@@ -54,7 +54,7 @@ const Counter = defineComponent<Props, Injections>({
 
   inject: {
     logger: {
-      kind: 'context',
+      mode: 'context',
       source: LoggerCtx
     }
   },
