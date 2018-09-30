@@ -13,7 +13,7 @@ type PropertyConfig<T> = {
     ? FunctionConstructor
     : T extends Symbol
     ? SymbolConstructor
-    : Class<T>
+    : Class<T> | ObjectConstructor
 
   nullable?: boolean,
   validate?: (value: T) => null | Error | true | false,
