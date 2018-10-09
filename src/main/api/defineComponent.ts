@@ -12,6 +12,7 @@ import Methods from '../internal/types/Methods'
 import ComponentType from '../internal/types/ComponentType'
 import ClassComponentConfig from '../internal/types/ClassComponentConfig'
 import FunctionalComponentConfig from '../internal/types/FunctionalComponentConfig'
+import Attributes from '../internal/types/Attributes'
 import ClassAttributes from '../internal/types/ClassAttributes'
 
 type Config<P extends Props> =
@@ -21,13 +22,13 @@ type Config<P extends Props> =
 function defineComponent<
   P extends Props = {},
   I extends Injections = {}
->(config: FunctionalComponentConfig<P, I>): ComponentType<P>
+>(config: FunctionalComponentConfig<P, I>): ComponentType<P & Attributes>
 
 function defineComponent<
   P extends Props = {},
   I extends Injections = {},
   M extends Methods = {}
->(config: ClassComponentConfig<P, I, M>): ComponentType<ClassAttributes<P>> // TODO
+>(config: ClassComponentConfig<P, I, M>): ComponentType<P & ClassAttributes<M>> // TODO!!!!!!!!
 
 function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development') {
