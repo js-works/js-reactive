@@ -17,6 +17,10 @@ type Injections = {
   logger: Logger
 }
 
+type Methods = {
+  reset: () => void  
+}
+
 type State = {
   counter: number
 }
@@ -41,7 +45,7 @@ const LoggerCtx = defineContext<Logger>({
   defaultValue: consoleLogger
 })
 
-const Counter = defineComponent<Props, Injections>({
+const Counter = defineComponent<Props, Injections, Methods>({
   displayName: 'Counter',
 
   properties: {
@@ -71,6 +75,10 @@ const Counter = defineComponent<Props, Injections>({
       this.setState(state => ({ counter: state.counter + delta }))
     }
 
+    reset() {
+      this.setState({ counter: 0})
+    }
+
     render() {
       return (
         <div className="counter">
@@ -95,17 +103,26 @@ const Counter = defineComponent<Props, Injections>({
   }
 })
 
-const Demo = defineComponent({
+type DemoProps = {}
+
+const Demo = defineComponent<DemoProps>({
   displayName: 'Demo',
 
-  render() {
-    return (
-      <div>
-        <h3>Demo</h3>
-        <div><Counter/></div>
-      </div>
-    )
+  base: class extends React.Component<DemoProps> {
+    private _counter: Methods = null
+
+    render() {
+      return (
+        <div>
+          <h3>Demo</h3>
+          <div><Counter ref={(it: Methods) => this._counter = it }/></div>
+          <br/>
+          <button onClick={() => this._counter.reset()}>Reset to 0</button>
+        </div>
+      )
+    }
   }
 })
+
 
 ReactDOM.render(<Demo/>, document.getElementById('main-content'))

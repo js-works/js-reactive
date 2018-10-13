@@ -19,6 +19,7 @@ type Config<P extends Props> =
   FunctionalComponentConfig<P>
     | ClassComponentConfig<P>
 
+
 function defineComponent<
   P extends Props = {},
   I extends Injections = {}
@@ -28,7 +29,7 @@ function defineComponent<
   P extends Props = {},
   I extends Injections = {},
   M extends Methods = {}
->(config: ClassComponentConfig<P, I, M>): ComponentType<P & ClassAttributes<M>> // TODO!!!!!!!!
+>(config: ClassComponentConfig<P, I, M>): ComponentType<P | ClassAttributes<M>>
 
 function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development') {

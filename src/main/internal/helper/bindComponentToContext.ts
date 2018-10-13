@@ -30,7 +30,7 @@ export default function bindComponentToContext<P extends Props>(
 
   const forward: any = (props: P, ref: Function) => {
     let newProps: P = null
- 
+
     if (props && ref) {
       const keys = Object.keys(props)
       
@@ -47,7 +47,7 @@ export default function bindComponentToContext<P extends Props>(
 
     if (ref) {
       newProps = newProps || Object.assign({}, props)
-      newProps.forwardedRef = ref
+      newProps.ref = ref
     }
 
     const contextValues = new Array(involvedContexts.length)
