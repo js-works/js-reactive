@@ -13,6 +13,8 @@ type PropertyConfig<T> = {
     ? FunctionConstructor
     : T extends Symbol
     ? SymbolConstructor
+    : T extends Array<any>
+    ? ArrayConstructor
     : Class<T> | ObjectConstructor
 
   nullable?: boolean,
