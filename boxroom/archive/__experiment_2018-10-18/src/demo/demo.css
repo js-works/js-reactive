@@ -1,0 +1,16 @@
+.counter {
+  display: block;
+}
+
+.counter .counter-increment {
+  display: inline-block;
+}
+
+.counter .counter-decrement {
+  display: inline-block;
+}
+
+.counter .counter-value {
+  display: inline-block;
+  padding: 0 2ex;
+}
