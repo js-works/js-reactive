@@ -1,19 +1,11 @@
 import setJsSpecValidation from '../helper/setJsSpecValidator'
 import React from 'react'
 
-const
-  exampleCtx: any = React.createContext(null),
-  contextSymbol = exampleCtx.$$typeof,
-  providerSymbol = exampleCtx.Provider.$$typeof
-
 function isContext(it: any) {
   return it !== null
     && typeof it === 'object'
-    && it.$$typeof === contextSymbol
-    && it.Provider !== null
-    && typeof it.Provider === 'object'
-    && it.Provider.$$typeof === providerSymbol
-    && it.Consumer === it
+    && !!it.Provider
+    && !!it.Consumer
 }
 
 setJsSpecValidation(isContext, (it: any) => {

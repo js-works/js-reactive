@@ -3,29 +3,26 @@ import ReactDOM from 'react-dom'
 import { defineComponent, defineContext } from '../main/js-react-utils'
 import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
 
+const { useState, useContext, useImperativeMethods } = React as any
+
 type Logger = {
   debug: Function
   info: Function,
   error: Function
 }
 
-type Props = {
+type CounterProps = {
   initialValue?: number
 }
 
-type Injections = {
-  logger: Logger
-}
 
-type Methods = {
-  reset: () => void  
+type CounterMethods = {
+  reset: (value: number) => void  
 }
 
 type State = {
   counter: number
 }
-
-type AllProps = Props & Injections
 
 const consoleLogger: Logger = {
   debug: console.debug,
@@ -45,79 +42,72 @@ const LoggerCtx = defineContext<Logger>({
   defaultValue: consoleLogger
 })
 
-const Counter = defineComponent<Props, Injections, Methods>({
+const Counter = defineComponent<CounterProps, CounterMethods>({
   displayName: 'Counter',
 
   properties: {
     initialValue: {
       type: Number,
       validate: Spec.integer,
-      defaultValue: 0
+      defaultValue: 1
     }
   },
 
-  inject: {
-    logger: {
-      mode: 'context',
-      source: LoggerCtx
-    }
-  },
+  methods: ['reset'],
 
-  base: class extends React.Component<AllProps, State> {
-    constructor(props: AllProps) {
-      super(props)
-      this.state = { counter: props.initialValue }
-      props.logger.info('Component "Counter" has been initialized')
-    }
+  main({ initialValue }, ref) {
+    const
+      [counterValue, setCounterValue] = useState(0),
+      logger = useContext(LoggerCtx)
+  
+    function increaseCounter(delta: number) {
+      logger.info('Increasing counter by ' + delta)
 
-    incrementCounter(delta: number) {
-      this.props.logger.info(`Incrementing counter by ${delta}`)
-      this.setState(state => ({ counter: state.counter + delta }))
+      setCounterValue(counterValue + delta)
     }
 
-    reset() {
-      this.setState({ counter: 0})
-    }
+    useImperativeMethods(ref, () => ({
+      reset: (value: number = 0) => {
+        logger.info('Resetting counter to ' + value)
+        setCounterValue(value)
+      }
+    }))
 
-    render() {
-      return (
-        <div className="counter">
-          <button
-            className="counter-decrement"
-            onClick={() => this.incrementCounter(-1)}
-          >
-            -1
-          </button>
-          <div className="counter-value">
-            {this.state.counter}
-          </div>
-          <button 
-            className="counter-increment"
-            onClick={() => this.incrementCounter(1)}
-          >
-            +1
-          </button>
+    return (
+      <div className="counter">
+        <button
+          className="counter-decrement"
+          onClick={() => increaseCounter(-1)}>
+          -
+        </button>
+        <div className="counter-value">
+          {counterValue}
         </div>
-      )
-    }
+        <button
+          className="counter-increment"
+          onClick={() => increaseCounter(1)}>
+          +
+        </button>
+      </div>
+    )
   }
 })
 
-type DemoProps = {}
+type DemoCounterProps = {}
 
-const Demo = defineComponent<DemoProps>({
+const Demo = defineComponent<DemoCounterProps>({
   displayName: 'Demo',
 
-  base: class extends React.Component<DemoProps> {
-    private _counter: Methods = null
+  main: class extends React.Component<DemoCounterProps> {
+    private _counter: CounterMethods = null
 
     render() {
       return (
         <div>
           <h3>Demo</h3>
-          <div><Counter ref={(it: Methods) => this._counter = it }/></div>
+          <div><Counter ref={(it: CounterMethods) => this._counter = it} /></div>
           <br/>
-          <button onClick={() => this._counter.reset()}>Reset to 0</button>
+          <button onClick={() => this._counter.reset(0)}>Reset to 0</button>
         </div>
       )
     }

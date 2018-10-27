@@ -1,6 +1,6 @@
 {
   "name": "js-react-utils",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "license": "LGPL-3.0",
   "homepage": "https://github.com/js-works/js-react-utils",
   "repository": {
@@ -34,11 +34,11 @@
     "esdoc": "^1.1.0",
     "esdoc-importpath-plugin": "^1.0.2",
     "esdoc-standard-plugin": "^1.0.0",
-    "js-spec": "^0.1.60",
+    "js-spec": "^0.1.61",
     "mocha": "^5.1.1",
     "nyc": "^13.0.1",
-    "react-dom": "^16.4.2",
-    "rollup": "^0.64.1",
+    "react-dom": "^16.7.0-alpha.0",
+    "rollup": "^0.66.6",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.5",
     "rollup-plugin-eslint": "^5.0.0",
@@ -58,12 +58,12 @@
     "ziptool": "^1.0.2"
   },
   "dependencies": {
-    "react": "^16.4.2"
+    "react": "^16.7.0-alpha.0"
   },
   "scripts": {
     "clean": "shx rm -rf ./build ./dist",
     "build": "rollup --c rollup.config.js && tsc -d --emitDeclarationOnly --declarationDir dist/types",
-    "build-watch": "watch -f \"src/main/**/*.js\" -r \"rollup --c rollup.config.js\"",
+    "build-watch": "rollup --c rollup.config.js -w",
     "test": "nyc mocha -r ts-node/register -r source-map-support/register src/test/**/*.ts",
     "test-watch": "mocha -w -r ts-node/register -r source-map-support/register src/test/**/*.ts",
     "build-demo-watch": "watch -f \"./src/**/*.ts?\" -r \"rollup --c rollup.demo.config.js\"",

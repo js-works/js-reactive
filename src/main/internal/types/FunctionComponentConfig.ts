@@ -1,20 +1,18 @@
 import Props from './Props'
-import Injections from './Injections'
+import Methods from './Methods'
 import VirtualNode from './VirtualNode'
 import PropertiesConfig from './PropertiesConfig'
-import InjectionsConfig from './InjectionsConfig'
-import React from 'react'
 
-interface FunctionalComponentConfig<
+interface FunctionComponentConfig<
   P extends Props = {},
-  I extends Injections = {}
+  M extends Methods = {}
 > {
   displayName: string,
   properties?: PropertiesConfig<P>,
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
-  inject?: InjectionsConfig<I>,
-  render: (props: P) => VirtualNode
+  methods?: (keyof M)[],
+  main: (props: P, ref?: any) => VirtualNode
 }
 
-export default FunctionalComponentConfig
+export default FunctionComponentConfig

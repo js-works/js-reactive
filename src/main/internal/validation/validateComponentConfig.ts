@@ -1,9 +1,9 @@
 import configSpec from '../spec/specOfComponentConfig'
 import isValidDisplayName from '../helper/isValidDisplayName'
-import FunctionalComponentConfig from '../types/FunctionalComponentConfig'
+import FunctionComponentConfig from '../types/FunctionComponentConfig'
 import ClassComponentConfig from '../types/ClassComponentConfig'
 
-type ComponentConfig = FunctionalComponentConfig | ClassComponentConfig
+type ComponentConfig = FunctionComponentConfig | ClassComponentConfig
 
 export default function validateComponentConfig(config: ComponentConfig) {
   let ret = null

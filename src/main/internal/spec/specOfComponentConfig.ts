@@ -39,64 +39,20 @@ const
             return errorMsg ? new Error(errorMsg) : null
           }))),
 
-  specOfInjectConfig =
-    Spec.optional(
-      Spec.and(
-        Spec.hasSomeKeys,
-        Spec.keysOf(Spec.match(REGEX_PROP_NAME)),
-        Spec.valuesOf(
-          Spec.or(
-            {
-              when: Spec.prop('mode', Spec.is('context')),
-
-              then:
-                Spec.strictShape({
-                  mode: Spec.is('context'),
-                  source: isContext
-                })
-            })))),
-
-  specOfFunctionalComponentConfig =
-    Spec.strictShape({
-      displayName: Spec.match(REGEX_DISPLAY_NAME),
-      properties: Spec.optional(specOfPropertiesConfig),
-      validate: Spec.optional(Spec.function),
-      render: Spec.function
-    }),
-  
-  specOfClassComponentConfig =
+  specOfComponentConfig = 
     Spec.strictShape({
       displayName: Spec.match(REGEX_DISPLAY_NAME),
       properties: Spec.optional(specOfPropertiesConfig),
       variableProps: Spec.optional(Spec.boolean),
       validate: Spec.optional(Spec.function),
 
-      inject: specOfInjectConfig,
-
       methods:
         Spec.optional(
           Spec.and(
             Spec.arrayOf(Spec.string),
-            Spec.unique)),
+            Spec.unique())),
 
-      base: Spec.extends(React.Component)
-    }),
-
-  specOfComponentConfig = 
-    Spec.and(
-      Spec.object,
-      Spec.or(
-        {
-          when: Spec.hasOwnProp('render'),
-          then: specOfFunctionalComponentConfig
-        },
-        {
-          when: Spec.hasOwnProp('base'),
-          then: specOfClassComponentConfig
-        },
-        {
-          when: Spec.any,
-          then: Spec.fail('Either parameter "render" or parameter "base" must be configured')
-        }))
+      main: Spec.function
+    })
 
 export default specOfComponentConfig

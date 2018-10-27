@@ -38,47 +38,41 @@ const Counter = defineComponent({
     }
   },
 
-  inject: {
-    logger: {
-      mode: 'context',
-      source: LoggerCtx
-    }
-  },
+  main({ initialValue }) {
+    const
+      [counterValue, setCounterValue] = useState(0),
+      logger = useContext(LoggerCtx)
+  
+    function increaseCounter(delta) {
+      logger.info(`Increasing counter by ${delta}`)
 
-  base: class extends Component {
-    constructor(props) {
-      super(props)
-      this.state = { counter: props.initialValue }
-      props.logger.info('Component "Counter" has been initialized')
+      setCounterValue(counterValue + delta)
     }
 
-    incrementCounter(delta) {
-      this.props.logger.info(`Incrementing counter by ${delta}`)
-      this.setState(state => ({ counter: state.counter + delta }))
-    }
-
-    render() {
-      return (
-        <div className="counter">
-          <button onClick={() => this.incrementCounter(-1)}>
-            -1
-          </button>
-          <div>
-            {this.state.counter}
-          </div>
-          <button onClick={() => this.incrementCounter(1)}>
-            +1
-          </button>
+    return (
+      <div className="counter">
+        <button
+          className="counter-decrement"
+          onClick={() => increaseCounter(-1)}>
+          -
+        </button>
+        <div className="counter-value">
+          {counterValue}
         </div>
-      )
-    }
+        <button
+          className="counter-increment"
+          onClick={() => increaseCounter(1)}>
+          +
+        </button>
+      </div>
+    )
   }
 })
 
 const Demo = defineComponent({
   displayName: 'Demo',
 
-  render() {
+  main() {
     return (
       <div>
         <h3>Demo</h3>
@@ -94,11 +88,7 @@ render(<Demo/>, document.getElementById('main-content'))
 ## Benefits
 
 - Strict separation between component meta data (displayName, properties
-  description etc.) and actual component logic (render function or component
-  class).
-
-- Context values can easily be injected into the properties to be available
-  everywhere in the component logic, not just in the "render" function.
+  description etc.) and actual component logic.
 
 - No need to use 'prop-types' library: As component properties and context values
   can be validated in a more general way, js-react-utils is not depending on a

@@ -4,32 +4,29 @@ import validateComponentConfig
 import extendClass from '../internal/helper/extendClass'
 import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
-import bindComponentToContext from '../internal/helper/bindComponentToContext'
 
 import Props from '../internal/types/Props'
-import Injections from '../internal/types/Injections'
 import Methods from '../internal/types/Methods'
 import ComponentType from '../internal/types/ComponentType'
 import ClassComponentConfig from '../internal/types/ClassComponentConfig'
-import FunctionalComponentConfig from '../internal/types/FunctionalComponentConfig'
-import Attributes from '../internal/types/Attributes'
-import ClassAttributes from '../internal/types/ClassAttributes'
+import FunctionComponentConfig from '../internal/types/FunctionComponentConfig'
+import AdditionalAttributes from '../internal/types/AdditionalAttributes'
+
+import React from 'react'
 
 type Config<P extends Props> =
-  FunctionalComponentConfig<P>
+  FunctionComponentConfig<P>
     | ClassComponentConfig<P>
 
-
 function defineComponent<
   P extends Props = {},
-  I extends Injections = {}
->(config: FunctionalComponentConfig<P, I>): ComponentType<P & Attributes>
-
-function defineComponent<
-  P extends Props = {},
-  I extends Injections = {},
   M extends Methods = {}
->(config: ClassComponentConfig<P, I, M>): ComponentType<P | ClassAttributes<M>>
+>(config: FunctionComponentConfig<P, M>): ComponentType<P & AdditionalAttributes<M>>
+
+function defineComponent<
+  P extends Props = {},
+  M extends Methods = {}
+>(config: ClassComponentConfig<P, M>): ComponentType<P | AdditionalAttributes<M>>
 
 function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development') {
@@ -41,24 +38,22 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
     }
   }
 
-  const isFunctionalComponent = config.hasOwnProperty('render')
+  const
+    main: any = config.main,
+    isFunctionComponent = !(main.prototype instanceof React.Component),
+    needsForwardRef = isFunctionComponent && (main.length > 1 || config.methods && config.methods.length > 0)
 
-  let ret: ComponentType<P> = isFunctionalComponent
-    ? (props: P) => (<any>config).render(props) // TODO
-    : extendClass((<any>config).base) // TODO
+  let ret: ComponentType<P> = !isFunctionComponent
+    ? extendClass(main)
+    : needsForwardRef
+    ? (props: P, ref: any) => main(props, ref)
+    : (props: P) => main(props)
 
   Object.defineProperty(ret, 'displayName', { value: config.displayName })
 
-  if (!isFunctionalComponent) {
+  if (!isFunctionComponent) {
     Object.defineProperty(ret, 'contextTypes', { value: null })
     Object.defineProperty(ret, 'childContextTypes', { value: null })
-  }
-
-  if (config.inject) {
-    Object.defineProperty(ret, 'propTypes', { value: null })
-    Object.defineProperty(ret, 'defaultProps', { value: null })
-
-    ret = bindComponentToContext(ret, config.inject, config.displayName)
   }
 
   let propTypes = null
@@ -70,6 +65,10 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
       !!config.variableProps,
       config.displayName,
       false)
+  }
+  
+  if (needsForwardRef) {
+    ret = React.forwardRef(ret)
   }
 
   Object.defineProperty(ret, 'propTypes', { value: propTypes })
