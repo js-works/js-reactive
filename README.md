@@ -4,7 +4,7 @@ A bundle of utility functions to simplify component development with React
 ## Usage example
 
 ```jsx
-import React, { Component } from 'react'
+import React, { useState, useContext } from 'react'
 import { render } from 'react-dom'
 import { defineComponent, defineContext } from 'js-react-utils'
 import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
