@@ -1,11 +1,24 @@
 import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 import replace from 'rollup-plugin-replace'
 import typescript from 'rollup-plugin-typescript2'
-import { uglify as uglifyJS } from 'rollup-plugin-uglify'
-import uglifyES from 'rollup-plugin-uglify-es'
+import { uglify } from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 import gzip from 'rollup-plugin-gzip'
 
-function createRollupConfig(moduleFormat, productive) {
+const configs = []
+
+for (const format of ['umd', 'cjs', 'amd', 'esm']) {
+  for (const productive of [true, false]) {
+    configs.push(createConfig(format, productive))
+  }
+}
+
+export default configs
+
+// ------------------------------------------------------------------
+
+function createConfig(moduleFormat, productive) {
   return {
     input: 'src/main/js-react-utils.ts',
 
@@ -28,9 +41,7 @@ function createRollupConfig(moduleFormat, productive) {
 
     plugins: [
       resolve(),
-      typescript({
-        exclude: 'node_modules/**'
-      }),
+      commonjs(),
       replace({
         exclude: 'node_modules/**',
         
@@ -38,18 +49,12 @@ function createRollupConfig(moduleFormat, productive) {
           'process.env.NODE_ENV': productive ? "'production'" : "'development'"
         }
       }),
-      productive && (moduleFormat === 'esm' ? uglifyES() : uglifyJS()),
+      typescript({
+        exclude: 'node_modules/**'
+      }),
+      productive && (moduleFormat === 'esm' ? terser() : uglify()),
       productive && gzip()
     ],
   }
 }
 
-const configs = []
-
-for (const format of ['umd', 'cjs', 'amd', 'esm']) {
-  for (const productive of [true, false]) {
-    configs.push(createRollupConfig(format, productive))
-  }
-}
-
-export default configs

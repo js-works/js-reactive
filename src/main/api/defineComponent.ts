@@ -29,7 +29,7 @@ function defineComponent<
 >(config: ClassComponentConfig<P, M>): ComponentType<P | AdditionalAttributes<M>>
 
 function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' as any) {
     const error = validateComponentConfig(config)
 
     if (error) {
@@ -58,7 +58,7 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
 
   let propTypes = null
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' as any) {
     propTypes = determinePropTypes(
       config.properties,
       config.validate,

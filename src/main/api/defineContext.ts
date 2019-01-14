@@ -10,7 +10,7 @@ import ContextConfig from '../internal/types/ContextConfig'
 import determinePropTypes from '../internal/helper/determinePropTypes'
 
 export default function defineContext<T>(config: ContextConfig<T>) {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' as any) {
     const error = validateContextConfig(config)
 
     if (error) {
@@ -20,7 +20,7 @@ export default function defineContext<T>(config: ContextConfig<T>) {
 
   const ret = React.createContext(config.defaultValue)
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' as any) {
     const
       hasType = !!config.type,
       hasConstraint = !!config.validate,
