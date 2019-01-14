@@ -1,5 +1,7 @@
-import { createElement, defineComponent } from '../../modules/core/main/index'
-import { useEffect, useState } from '../../modules/hooks/main/index'
+import React from 'react'
+import { defineComponent } from '../../main'
+
+const { useEffect, useState } = React as any
 
 const Clock = defineComponent({
   displayName: 'Clock',

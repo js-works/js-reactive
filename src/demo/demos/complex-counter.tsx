@@ -1,5 +1,7 @@
-import { createElement, defineComponent } from '../../modules/core/main/index'
-import { useCallback, useMethods, useRef, useState } from '../../modules/hooks/main/index'
+import React from 'react'
+import { defineComponent } from '../../main'
+
+const { useCallback, useImperativeMethods, useRef, useState } = React as any
 
 type CounterProps = {
   label?: string,
@@ -13,9 +15,16 @@ type CounterMethods = {
 const Counter = defineComponent<CounterProps, CounterMethods>({
   displayName: 'Counter',
 
-  defaultProps: {
-    label: 'Counter',
-    initialValue: 0
+  properties: {
+    label: {
+      type: String,
+      defaultValue: 'Counter'
+    },
+
+    initialValue: {
+      type: Number,
+      defaultValue: 0
+    }
   },
 
   render(props, ref) {
@@ -24,12 +33,11 @@ const Counter = defineComponent<CounterProps, CounterMethods>({
       onIncrement = useCallback(() => setCount(count + 1)),
       onDecrement = useCallback(() => setCount(count - 1))
     
-    useMethods(ref, () => ({
+    useImperativeMethods(ref, () => ({
       reset(n: number) {
         setCount(n)
       }
     }), [])
-
 
     return (
       <div>
@@ -47,7 +55,7 @@ const App = defineComponent({
 
   render() {
     const
-      counterRef = useRef<CounterMethods>(),
+      counterRef = useRef(),
       onResetTo0 = useCallback(() => counterRef.current.reset(0)),
       onResetTo100 = useCallback(() => counterRef.current.reset(100))
 

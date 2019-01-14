@@ -39,15 +39,15 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   }
 
   const
-    main: any = config.main,
-    isFunctionComponent = !(main.prototype instanceof React.Component),
-    needsForwardRef = isFunctionComponent && (main.length > 1 || config.methods && config.methods.length > 0)
+    render: any = config.render,
+    isFunctionComponent = !(render.prototype instanceof React.Component),
+    needsForwardRef = isFunctionComponent && (render.length > 1 || config.methods && config.methods.length > 0)
 
   let ret: ComponentType<P> = !isFunctionComponent
-    ? extendClass(main)
+    ? extendClass(render)
     : needsForwardRef
-    ? (props: P, ref: any) => main(props, ref)
-    : (props: P) => main(props)
+    ? (props: P, ref: any) => render(props, ref)
+    : (props: P) => render(props)
 
   Object.defineProperty(ret, 'displayName', { value: config.displayName })
 

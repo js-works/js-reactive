@@ -12,7 +12,7 @@ interface FunctionComponentConfig<
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
   methods?: (keyof M)[],
-  main: (props: P, ref?: any) => VirtualNode
+  render: (props: P, ref?: any) => VirtualNode
 }
 
 export default FunctionComponentConfig

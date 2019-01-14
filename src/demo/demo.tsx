@@ -15,7 +15,7 @@ type DemoAppProps = {
 const DemoApp = defineComponent<DemoAppProps>({
   displayName: 'DemoApp',
 
-  main(props: DemoAppProps) {
+  render(props: DemoAppProps) {
     const
       [demoIdx, setDemoIdx] = useState(getCurrentDemoIndex())
 
@@ -60,4 +60,4 @@ function getCurrentDemoIndex() {
 
 ReactDOM.render(
   <DemoApp demos={availableDemos} /> as any,
-  document.getElementById('main-content'))
+  document.getElementById('xxx-content'))

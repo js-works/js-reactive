@@ -16,7 +16,7 @@ const HelloWorld = defineComponent<HelloWorldProps>({
     } 
   },
 
-  main(props) {
+  render(props) {
     return `Hello, ${props.name}!`
   }
 })

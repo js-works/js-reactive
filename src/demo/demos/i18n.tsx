@@ -37,7 +37,7 @@ const App = defineComponent<AppProps>({
     }
   },
 
-  main(props) {
+  render(props) {
     const [locale, setLocale] = useState(() => props.defaultLocale)
 
     return (
@@ -69,7 +69,7 @@ const LocaleText = defineComponent<LocaleTextProps>({
     }
   },
 
-  main(props) {
+  render(props) {
     const locale = useContext(LocaleCtx)
 
     return (

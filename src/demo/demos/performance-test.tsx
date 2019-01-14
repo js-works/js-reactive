@@ -25,7 +25,7 @@ const Tile = defineComponent({
     }
   },
   
-  main(props) {
+  render(props) {
     const
       { width, color } = props,
     
@@ -55,7 +55,7 @@ const TileRow = defineComponent({
     }
   },
   
-  main(props) {
+  render(props) {
     const
       { tileWidth, columnCount } = props,
       tiles = []
@@ -96,7 +96,7 @@ const SpeedTest = defineComponent<SpeedTestProps>({
     }
   },
     
-  main(props) {
+  render(props) {
     const
       [data, setData] = useState(() => ({
         intervalId : null as any,

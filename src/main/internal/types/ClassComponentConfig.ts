@@ -13,7 +13,7 @@ interface ClassComponentConfig<
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
   methods?: (keyof M)[],
-  main: Class<React.Component<P> & M>
+  render: Class<React.Component<P> & M>
 }
 
 export default ClassComponentConfig

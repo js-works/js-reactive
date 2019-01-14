@@ -52,7 +52,7 @@ const
             Spec.arrayOf(Spec.string),
             Spec.unique())),
 
-      main: Spec.function
+      render: Spec.function
     })
 
 export default specOfComponentConfig

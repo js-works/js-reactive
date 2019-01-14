@@ -1,5 +1,7 @@
-import { createElement, defineComponent }  from '../../modules/core/main/index'
-import { useCallback, useEffect, useRef, useState } from '../../modules/hooks/main'
+import React from 'react'
+import {  defineComponent }  from '../../main'
+
+const { useCallback, useEffect, useRef, useState } = React as any
 
 const StopWatch = defineComponent({
   displayName: 'StopWatch',
@@ -65,4 +67,5 @@ const StopWatch = defineComponent({
   }
 })
 
-export default StopWatch()
+export default <StopWatch/>
+ 
