@@ -60,4 +60,4 @@ function getCurrentDemoIndex() {
 
 ReactDOM.render(
   <DemoApp demos={availableDemos} /> as any,
-  document.getElementById('xxx-content'))
+  document.getElementById('main-content'))
