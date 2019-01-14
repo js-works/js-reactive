@@ -68,7 +68,7 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   }
   
   if (needsForwardRef) {
-    ret = React.forwardRef(ret)
+    ret = React.forwardRef(ret) as any // TODO - compile error if "as any" is missing
   }
 
   Object.defineProperty(ret, 'propTypes', { value: propTypes })

@@ -14,7 +14,7 @@ for (const format of ['umd', 'cjs', 'amd', 'esm']) {
   }
 }
 
-export default configs[0]
+export default configs
 
 // ------------------------------------------------------------------
 
