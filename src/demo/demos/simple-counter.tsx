@@ -13,17 +13,9 @@ type CounterProps = {
 const Counter = defineComponent<CounterProps>({
   displayName: 'Counter',
 
-  properties: {
-    label: {
-      type: String,
-      defaultValue: 'Counter'
-    },
-    
-    initialValue: {
-      type: Number,
-      validate: Spec.integer,
-      defaultValue: 0
-    }
+  defaultProps: {
+    label: 'Counter',
+    initialValue: 0
   },
 
   render(props) {

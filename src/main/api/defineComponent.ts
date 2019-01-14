@@ -8,25 +8,18 @@ import determinePropTypes from '../internal/helper/determinePropTypes'
 import Props from '../internal/types/Props'
 import Methods from '../internal/types/Methods'
 import ComponentType from '../internal/types/ComponentType'
-import ClassComponentConfig from '../internal/types/ClassComponentConfig'
-import FunctionComponentConfig from '../internal/types/FunctionComponentConfig'
+import ComponentConfig from '../internal/types/ComponentConfig'
 import AdditionalAttributes from '../internal/types/AdditionalAttributes'
 
 import React from 'react'
 
 type Config<P extends Props> =
-  FunctionComponentConfig<P>
-    | ClassComponentConfig<P>
+  ComponentConfig<P>
 
 function defineComponent<
   P extends Props = {},
   M extends Methods = {}
->(config: FunctionComponentConfig<P, M>): ComponentType<P & AdditionalAttributes<M>>
-
-function defineComponent<
-  P extends Props = {},
-  M extends Methods = {}
->(config: ClassComponentConfig<P, M>): ComponentType<P | AdditionalAttributes<M>>
+>(config: ComponentConfig<P, M>): ComponentType<P & AdditionalAttributes<M>>
 
 function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development' as any) {
@@ -74,7 +67,10 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   Object.defineProperty(ret, 'propTypes', { value: propTypes })
   
   Object.defineProperty(ret, 'defaultProps', {
-    value: determineDefaultProps(config.properties)
+    value: 
+      config.hasOwnProperty('properties')
+        ? determineDefaultProps(config.properties)
+        : config.defaultProps || null
   }) 
 
   return ret
