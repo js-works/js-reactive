@@ -26,7 +26,7 @@ const DemoApp = defineComponent<DemoAppProps>({
     }
 
     const options = []
-console.log(props)
+
     for (let i = 0; i < props.demos.length; ++i) {
       const demo = props.demos[i]
 

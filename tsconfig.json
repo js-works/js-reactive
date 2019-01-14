@@ -20,11 +20,12 @@
       "node", "react", "react-dom", "mocha", "chai"
     ]
   },
+
   "files": [
     "src/main/index.ts"
   ],
 
   "include": [
-		"./src/**/*.ts*"
+		"./src/main/**/*.ts*"
   ]
 }
