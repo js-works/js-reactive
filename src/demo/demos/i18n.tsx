@@ -1,6 +1,9 @@
-import { createElement, createElement as h, defineComponent, defineContext } from '../../modules/core/main/index'
-import { useState, useContext } from '../../modules/hooks/main/index'
+import React from 'react'
 import { Spec } from 'js-spec'
+
+import { defineComponent, defineContext } from '../../main/index'
+
+const { useState, useContext } = React as any  
 
 const translations: Record<string, Record<string, string>> = {
   en: {
@@ -34,7 +37,7 @@ const App = defineComponent<AppProps>({
     }
   },
 
-  render(props) {
+  main(props) {
     const [locale, setLocale] = useState(() => props.defaultLocale)
 
     return (
@@ -66,7 +69,7 @@ const LocaleText = defineComponent<LocaleTextProps>({
     }
   },
 
-  render(props) {
+  main(props) {
     const locale = useContext(LocaleCtx)
 
     return (

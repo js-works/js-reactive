@@ -1,5 +1,8 @@
-import { createElement, defineComponent }  from '../../modules/core/main/index'
-import { useState, useEffect } from '../../modules/hooks/main/index'
+import React from 'react'
+
+import { defineComponent }  from '../../main'
+
+const { useState, useEffect } = React as any
 
 const
   framesPerSecond = 240,
@@ -22,7 +25,7 @@ const Tile = defineComponent({
     }
   },
   
-  render(props) {
+  main(props) {
     const
       { width, color } = props,
     
@@ -35,7 +38,7 @@ const Tile = defineComponent({
         margin: 0
       }
     
-    return <div style={style}/>
+    return <div style={style as any}/> // TODO
   }
 })
 
@@ -52,7 +55,7 @@ const TileRow = defineComponent({
     }
   },
   
-  render(props) {
+  main(props) {
     const
       { tileWidth, columnCount } = props,
       tiles = []
@@ -62,7 +65,7 @@ const TileRow = defineComponent({
         colorIdx = Math.floor(Math.random() * colors.length),       
         color = colors[colorIdx]
     
-      tiles.push(Tile({ width: tileWidth, color, key: x }))
+      tiles.push(<Tile width={tileWidth} color={color} key={x}/>)
     }
   
     return <div style={{ clear: 'both' }}>{tiles}</div>
@@ -93,10 +96,10 @@ const SpeedTest = defineComponent<SpeedTestProps>({
     }
   },
     
-  render(props) {
+  main(props) {
     const
       [data, setData] = useState(() => ({
-        intervalId : null,
+        intervalId : null as any,
         startTime: Date.now(),
         frameCount: 0,
         actualFramesPerSecond: '0'
@@ -126,11 +129,11 @@ const SpeedTest = defineComponent<SpeedTestProps>({
   
       for (let y = 0; y < props.rowCount; ++y) {
         rows.push(
-          TileRow({
-            tileWidth: props.tileWidth,
-            columnCount: props.columnCount,
-            key: y
-          }))
+          <TileRow
+            tileWidth={props.tileWidth}
+            columnCount={props.columnCount}
+            key={y}
+          />)
       }
       
       return (

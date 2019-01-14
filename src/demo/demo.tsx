@@ -30,7 +30,7 @@ console.log(props)
     for (let i = 0; i < props.demos.length; ++i) {
       const demo = props.demos[i]
 
-      options.push(<option key={i} value={i}/>, demo[0])
+      options.push(<option key={i} value={i}>{demo[0]}</option>)
     }
 
     return (
