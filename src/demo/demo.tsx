@@ -1,118 +1,63 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { defineComponent, defineContext } from '../main/js-react-utils'
-import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
 
-const { useState, useContext, useImperativeMethods } = React as any
+import { defineComponent } from '../main'
+import availableDemos from './available-demos'
 
-type Logger = {
-  debug: Function
-  info: Function,
-  error: Function
+const { useState } = React as any
+
+// --- Component DemoSelector ---------------------------------------
+
+type DemoAppProps = {
+  demos?: [string, any][]
 }
 
-type CounterProps = {
-  initialValue?: number
-}
+const DemoApp = defineComponent<DemoAppProps>({
+  displayName: 'DemoApp',
 
-
-type CounterMethods = {
-  reset: (value: number) => void  
-}
-
-type State = {
-  counter: number
-}
-
-const consoleLogger: Logger = {
-  debug: console.debug,
-  info: console.info,
-  error: console.error
-}
-
-const LoggerCtx = defineContext<Logger>({
-  displayName: 'LoggerCtx',
-
-  validate: Spec.shape({
-    debug: Spec.function,
-    info: Spec.function,
-    error: Spec.function
-  }),
-
-  defaultValue: consoleLogger
-})
-
-const Counter = defineComponent<CounterProps, CounterMethods>({
-  displayName: 'Counter',
-
-  properties: {
-    initialValue: {
-      type: Number,
-      validate: Spec.integer,
-      defaultValue: 1
-    }
-  },
-
-  methods: ['reset'],
-
-  main({ initialValue }, ref) {
+  main(props: DemoAppProps) {
     const
-      [counterValue, setCounterValue] = useState(0),
-      logger = useContext(LoggerCtx)
-  
-    function increaseCounter(delta: number) {
-      logger.info('Increasing counter by ' + delta)
+      [demoIdx, setDemoIdx] = useState(getCurrentDemoIndex())
 
-      setCounterValue(counterValue + delta)
+    function startDemo(idx: number) {
+      setDemoIdx(idx)
+      document.location.href = document.location.href.replace(/#.*$/, '') + '#idx=' + idx
+      console.clear()
     }
 
-    useImperativeMethods(ref, () => ({
-      reset: (value: number = 0) => {
-        logger.info('Resetting counter to ' + value)
-        setCounterValue(value)
-      }
-    }))
+    const options = []
+console.log(props)
+    for (let i = 0; i < props.demos.length; ++i) {
+      const demo = props.demos[i]
+
+      options.push(<option key={i} value={i}/>, demo[0])
+    }
 
     return (
-      <div className="counter">
-        <button
-          className="counter-decrement"
-          onClick={() => increaseCounter(-1)}>
-          -
-        </button>
-        <div className="counter-value">
-          {counterValue}
+      <div>
+        <label>Select demo:</label>
+        <select
+          onChange={ (ev: any) => startDemo(ev.target.value) }
+          value={demoIdx}
+          autoFocus={true}
+        >
+          {options}
+        </select>
+        <div>
+          <h4>Example: {props.demos[demoIdx][0]}</h4>
+          {props.demos[demoIdx][1]}
         </div>
-        <button
-          className="counter-increment"
-          onClick={() => increaseCounter(1)}>
-          +
-        </button>
       </div>
     )
-  }
+   }
 })
 
-type DemoCounterProps = {}
+function getCurrentDemoIndex() {
+  return parseInt(document.location.href.replace(/^.*idx=/, ''), 10) || 0
+}
 
-const Demo = defineComponent<DemoCounterProps>({
-  displayName: 'Demo',
+// --- main ---------------------------------------------------------
 
-  main: class extends React.Component<DemoCounterProps> {
-    private _counter: CounterMethods = null
-
-    render() {
-      return (
-        <div>
-          <h3>Demo</h3>
-          <div><Counter ref={(it: CounterMethods) => this._counter = it} /></div>
-          <br/>
-          <button onClick={() => this._counter.reset(0)}>Reset to 0</button>
-        </div>
-      )
-    }
-  }
-})
-
-
-ReactDOM.render(<Demo/>, document.getElementById('main-content'))
+ReactDOM.render(
+  <DemoApp demos={availableDemos} /> as any,
+  document.getElementById('main-content'))

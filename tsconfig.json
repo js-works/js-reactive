@@ -21,7 +21,7 @@
     ]
   },
   "files": [
-    "src/main/js-react-utils.ts"
+    "src/main/index.ts"
   ],
 
   "include": [
