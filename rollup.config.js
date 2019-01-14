@@ -14,7 +14,7 @@ for (const format of ['umd', 'cjs', 'amd', 'esm']) {
   }
 }
 
-export default configs
+export default configs[0]
 
 // ------------------------------------------------------------------
 
@@ -57,4 +57,3 @@ function createConfig(moduleFormat, productive) {
     ],
   }
 }
-

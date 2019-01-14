@@ -10,9 +10,12 @@
     "sourceMap": true,
     "lib": ["es5", "es6", "dom"],
     "esModuleInterop": true,
+    "baseUrl": ".",
+
     "typeRoots": [
       "node_modules/@types"
     ],
+
     "types": [
       "node", "react", "react-dom", "mocha", "chai"
     ]
