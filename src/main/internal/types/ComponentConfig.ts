@@ -28,7 +28,7 @@ type ShortComponentConfig<
   variableProps?: never,
   validate?: (props: P) => null | Error | true | false,
   methods?: (keyof M)[],
-  render: (props: P, ref?: any) => VirtualNode | Class<React.Component<P> & M>
+  render: (props: P, ref?: any) => VirtualNode | Class<React.Component<P, any> & M>
 }
 
 
