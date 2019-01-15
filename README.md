@@ -38,7 +38,7 @@ const Counter = defineComponent({
     }
   },
 
-  main({ initialValue }) {
+  render({ initialValue }) {
     const
       [counterValue, setCounterValue] = useState(0),
       logger = useContext(LoggerCtx)
@@ -72,7 +72,7 @@ const Counter = defineComponent({
 const Demo = defineComponent({
   displayName: 'Demo',
 
-  main() {
+  render() {
     return (
       <div>
         <h3>Demo</h3>
