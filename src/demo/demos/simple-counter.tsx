@@ -3,7 +3,7 @@ import { Spec } from 'js-spec'
 
 import { defineComponent } from '../../main'
 
-const { useCallback, useEffect, useState } = React as any
+const { useCallback, useEffect, useState } = React
 
 type CounterProps = {
   label?: string,
@@ -21,7 +21,7 @@ const Counter = defineComponent<CounterProps>({
   render(props) {
     const
       [count, setCount] = useState(props.initialValue),
-      onIncrement = useCallback(() => setCount(count + 1))
+      onIncrement = useCallback(() => setCount(count + 1), null)
 
     useEffect(() => {
       console.log('Component has been mounted')

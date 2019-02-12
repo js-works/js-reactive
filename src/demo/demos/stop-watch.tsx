@@ -1,7 +1,7 @@
 import React from 'react'
 import {  defineComponent }  from '../../main'
 
-const { useCallback, useEffect, useRef, useState } = React as any
+const { useCallback, useEffect, useRef, useState } = React
 
 const StopWatch = defineComponent({
   displayName: 'StopWatch',
@@ -18,9 +18,9 @@ const StopWatch = defineComponent({
         } else {
           startTimer()
         }
-      }),
+      }, null),
 
-      onReset = useCallback(resetTimer)
+      onReset = useCallback(resetTimer, null)
 
     useEffect(() => {
       return () => stopTimer()

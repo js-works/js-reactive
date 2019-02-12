@@ -2,7 +2,15 @@ import React from 'react'
 
 import { defineComponent }  from '../../main'
 
-const { useState, useEffect } = React as any
+const { useState, useEffect, useRef } = React
+
+function useForceUpdate() {
+  const [, setState] = useState(false)
+
+  return () => {
+    setState(state => !state)
+  }
+}
 
 const
   framesPerSecond = 240,
@@ -98,12 +106,11 @@ const SpeedTest = defineComponent<SpeedTestProps>({
     
   render(props) {
     const
-      [data, setData] = useState(() => ({
-        intervalId : null as any,
-        startTime: Date.now(),
-        frameCount: 0,
-        actualFramesPerSecond: '0'
-      })),
+      forceUpdate = useForceUpdate(),
+      intervalIdRef = useRef(null),
+      startTimeRef = useRef(Date.now()),
+      frameCountRef = useRef(0),
+      actualFramesPerSecondRef = useRef('0'),
 
       rows = [],
         
@@ -113,18 +120,18 @@ const SpeedTest = defineComponent<SpeedTestProps>({
       }
 
       useEffect(() => {
-        data.intervalId = setInterval(() => {
-          ++data.frameCount
-          setData(data)
+        intervalIdRef.current = setInterval(() => {
+          ++frameCountRef.current
+          forceUpdate()
 
-          if (data.frameCount % 10 === 0) {
-            data.actualFramesPerSecond =
-              (data.frameCount * 1000.0 /
-                (Date.now() - data.startTime)).toFixed(2)
+          if (frameCountRef.current % 10 === 0) {
+            actualFramesPerSecondRef.current =
+              (frameCountRef.current * 1000.0 /
+                (Date.now() - startTimeRef.current)).toFixed(2)
           }
         }, 1000 / framesPerSecond)
 
-        return () => clearInterval(data.intervalId)
+        return () => clearInterval(intervalIdRef.current)
       }, [])
   
       for (let y = 0; y < props.rowCount; ++y) {
@@ -144,7 +151,7 @@ const SpeedTest = defineComponent<SpeedTestProps>({
           </div>
           <br/>
           <div style={{ clear: 'both' }}>
-            (actual frames per second: {data.actualFramesPerSecond})
+            (actual frames per second: {actualFramesPerSecondRef.current})
           </div>
         </div>
       )

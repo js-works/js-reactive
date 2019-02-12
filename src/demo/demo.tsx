@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { defineComponent } from '../main'
 import availableDemos from './available-demos'
 
-const { useState } = React as any
+const { useState } = React
 
 // --- Component DemoSelector ---------------------------------------
 

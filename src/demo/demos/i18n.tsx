@@ -3,7 +3,7 @@ import { Spec } from 'js-spec'
 
 import { defineComponent, defineContext } from '../../main/index'
 
-const { useState, useContext } = React as any  
+const { useState, useContext } = React
 
 const translations: Record<string, Record<string, string>> = {
   en: {

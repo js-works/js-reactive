@@ -1,7 +1,7 @@
 import React from 'react'
 import { defineComponent } from '../../main'
 
-const { useCallback, useImperativeMethods, useRef, useState } = React as any
+const { useCallback, useImperativeHandle, useRef, useState } = React
 
 type CounterProps = {
   label?: string,
@@ -30,10 +30,10 @@ const Counter = defineComponent<CounterProps, CounterMethods>({
   render(props, ref) {
     const
       [count, setCount] = useState(() => props.initialValue),
-      onIncrement = useCallback(() => setCount(count + 1)),
-      onDecrement = useCallback(() => setCount(count - 1))
+      onIncrement = useCallback(() => setCount(count + 1), null),
+      onDecrement = useCallback(() => setCount(count - 1), null)
     
-    useImperativeMethods(ref, () => ({
+    useImperativeHandle(ref, () => ({
       reset(n: number) {
         setCount(n)
       }
@@ -55,9 +55,9 @@ const App = defineComponent({
 
   render() {
     const
-      counterRef = useRef(),
-      onResetTo0 = useCallback(() => counterRef.current.reset(0)),
-      onResetTo100 = useCallback(() => counterRef.current.reset(100))
+      counterRef = useRef(null),
+      onResetTo0 = useCallback(() => counterRef.current.reset(0), []),
+      onResetTo100 = useCallback(() => counterRef.current.reset(100), [])
 
     return (
       <div>

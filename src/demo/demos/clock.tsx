@@ -1,7 +1,7 @@
 import React from 'react'
 import { defineComponent } from '../../main'
 
-const { useEffect, useState } = React as any
+const { useEffect, useState } = React
 
 const Clock = defineComponent({
   displayName: 'Clock',
