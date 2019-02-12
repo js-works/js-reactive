@@ -36,11 +36,9 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
     isFunctionComponent = !(render.prototype instanceof React.Component),
     needsForwardRef = isFunctionComponent && (render.length > 1 || config.methods && config.methods.length > 0)
 
-  let ret: ComponentType<P> = !isFunctionComponent
+  let ret = !isFunctionComponent
     ? extendClass(render)
-    : needsForwardRef
-    ? (props: P, ref: any) => render(props, ref)
-    : (props: P) => render(props)
+    : render.bind()
 
   Object.defineProperty(ret, 'displayName', { value: config.displayName })
 
@@ -61,7 +59,7 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   }
   
   if (needsForwardRef) {
-    ret = React.forwardRef(ret) as any // TODO - compile error if "as any" is missing
+    ret = React.forwardRef(ret)
   }
 
   Object.defineProperty(ret, 'propTypes', { value: propTypes })
