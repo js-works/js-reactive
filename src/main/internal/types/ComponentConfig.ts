@@ -3,14 +3,15 @@ import Props from './Props'
 import Methods from './Methods'
 import VirtualNode from './VirtualNode'
 import PropertiesConfig from './PropertiesConfig'
-import React from 'react'
+import React, { WeakValidationMap } from 'react'
 
 type FullComponentConfig<
   P extends Props = {},
   M extends Methods = {}
 > = {
   displayName: string,
-  properties?: PropertiesConfig<P>,
+  properties: PropertiesConfig<P>,
+  propTypes?: never,
   defaultProps?: never,
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
@@ -23,6 +24,7 @@ type ShortComponentConfig<
   M extends Methods = {}
 > = {
   displayName: string,
+  propTypes?: WeakValidationMap<P>,
   defaultProps?: Partial<P>,
   properties?: never,
   variableProps?: never,

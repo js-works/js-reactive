@@ -50,12 +50,15 @@ function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
   let propTypes = null
 
   if (process.env.NODE_ENV === 'development' as any) {
-    propTypes = determinePropTypes(
-      config.properties,
-      config.validate,
-      !!config.variableProps,
-      config.displayName,
-      false)
+    propTypes =
+      config.propTypes
+        ? { ...config.propTypes } 
+        : determinePropTypes(
+          config.properties,
+          config.validate,
+         !!config.variableProps,
+         config.displayName,
+         false)
   }
   
   if (needsForwardRef) {

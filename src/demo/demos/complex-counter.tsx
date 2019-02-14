@@ -1,11 +1,12 @@
 import React from 'react'
+import { Spec } from 'js-spec'
 import { defineComponent } from '../../main'
 
 const { useCallback, useImperativeHandle, useRef, useState } = React
 
 type CounterProps = {
   label?: string,
-  initialValue?: number
+  initialValue?: number,
 }
 
 type CounterMethods = {
@@ -23,13 +24,14 @@ const Counter = defineComponent<CounterProps, CounterMethods>({
 
     initialValue: {
       type: Number,
+      validate: Spec.integer,
       defaultValue: 0
     }
   },
 
   render(props, ref) {
     const
-      [count, setCount] = useState(() => props.initialValue),
+      [count, setCount] = useState(props.initialValue),
       onIncrement = useCallback(() => setCount(count + 1), null),
       onDecrement = useCallback(() => setCount(count - 1), null)
     

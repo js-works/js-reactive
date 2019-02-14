@@ -38,12 +38,21 @@ const
 
             return errorMsg ? new Error(errorMsg) : null
           }))),
+  
+  specOfPropTypesConfig =
+    Spec.and(
+      Spec.object,
+      Spec.hasSomeKeys,
+      Spec.keysOf(Spec.match(REGEX_PROP_NAME)),
+      Spec.valuesOf(Spec.function)),
+      // TODO - check for valid keys
 
   specOfDefaultPropsConfig =
     Spec.and(
       Spec.object,
       Spec.hasSomeKeys,
       Spec.keysOf(Spec.match(REGEX_PROP_NAME))),
+      // TODO - check for valid keys
 
   specOfComponentConfig = 
     Spec.and(
@@ -51,6 +60,7 @@ const
         displayName: Spec.match(REGEX_DISPLAY_NAME),
         properties: Spec.optional(specOfPropertiesConfig),
         variableProps: Spec.optional(Spec.boolean),
+        propTypes: Spec.optional(specOfPropTypesConfig),
         defaultProps: Spec.optional(specOfDefaultPropsConfig),
         validate: Spec.optional(Spec.function),
 
@@ -66,11 +76,17 @@ const
       config => {
         let error = null
 
-        if (config.hasOwnProperty('defaultProps')) {
-          if (config.hasOwnProperty('properties')) {
-            error = new SpecError('It\'s not allowed to configure both parameter "properties" and "defaultProps" at the same time')
-          } else if (config.hasOwnProperty('variableProps')) {
-            error = new SpecError('It\'s not allowed to configure both parameter "variableProps" and "defaultProps" at the same time')
+        for (let key of ['propTypes', 'defaultProps']) {
+          if (config.hasOwnProperty(key)) {
+            if (config.hasOwnProperty('properties')) {
+              error = new SpecError(`It\'s not allowed to configure both parameter "properties" and "${key}" at the same time`)
+            } else if (config.hasOwnProperty('variableProps')) {
+              error = new SpecError(`It's not allowed to configure both parameter "variableProps" and "${key}" at the same time`)
+            }
+          }
+
+          if (error) {
+            break
           }
         }
 
