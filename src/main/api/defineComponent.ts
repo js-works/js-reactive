@@ -8,20 +8,26 @@ import determinePropTypes from '../internal/helper/determinePropTypes'
 import Props from '../internal/types/Props'
 import Methods from '../internal/types/Methods'
 import ComponentType from '../internal/types/ComponentType'
-import ComponentConfig from '../internal/types/ComponentConfig'
+import ComponentConfigStd from '../internal/types/ComponentConfigStd'
+import ComponentConfigAlt from '../internal/types/ComponentConfigAlt'
 import AdditionalAttributes from '../internal/types/AdditionalAttributes'
 
 import React from 'react'
 
-type Config<P extends Props> =
-  ComponentConfig<P>
+type ComponentConfig<P extends Props, M extends Methods> =
+  ComponentConfigStd<P, M> & ComponentConfigAlt<P, M>
 
 function defineComponent<
   P extends Props = {},
   M extends Methods = {}
->(config: ComponentConfig<P, M>): ComponentType<P & AdditionalAttributes<M>>
+>(config: ComponentConfigStd<P, M>): ComponentType<P & AdditionalAttributes<M>>
 
-function defineComponent<P extends Props>(config: Config<P>): ComponentType<P> {
+function defineComponent<
+  P extends Props = {},
+  M extends Methods = {}
+>(config: ComponentConfigAlt<P, M>): ComponentType<P & AdditionalAttributes<M>>
+
+function defineComponent<P extends Props, M extends Methods>(config: ComponentConfig<P, M>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development' as any) {
     const error = validateComponentConfig(config)
 

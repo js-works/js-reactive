@@ -1,8 +1,9 @@
 import configSpec from '../spec/specOfComponentConfig'
 import isValidDisplayName from '../helper/isValidDisplayName'
-import ComponentConfig from '../types/ComponentConfig'
+import ComponentConfigStd from '../types/ComponentConfigStd'
+import ComponentConfigAlt from '../types/ComponentConfigAlt'
 
-export default function validateComponentConfig(config: ComponentConfig) {
+export default function validateComponentConfig(config: ComponentConfigStd<any, any> | ComponentConfigAlt<any, any>) {
   let ret = null
   const error = configSpec.validate(config)
 

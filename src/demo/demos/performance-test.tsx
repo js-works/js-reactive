@@ -19,7 +19,12 @@ const
   columnCount = 20,
   rowCount = 20
 
-const Tile = defineComponent({
+type TileProps = {
+  color: string,
+  width: number
+}
+
+const Tile = defineComponent<TileProps>({
   displayName: 'Tile',
   
   properties: {
@@ -50,7 +55,12 @@ const Tile = defineComponent({
   }
 })
 
-const TileRow = defineComponent({
+type TypeRowProps = {
+  tileWidth: number,
+  columnCount: number
+}
+
+const TileRow = defineComponent<TypeRowProps>({
   displayName:  'TileRow',
   
   properties: {
