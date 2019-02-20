@@ -1,6 +1,6 @@
 {
   "name": "js-react-utils",
-  "version": "0.0.38",
+  "version": "0.0.50",
   "license": "LGPL-3.0",
   "homepage": "https://github.com/js-works/js-react-utils",
   "repository": {
@@ -9,7 +9,6 @@
   },
   "main": "index.js",
   "module": "dist/js-react-utils.ems.production.js",
-  "unpkg": "dist/js-react-utils.umd.production.js",
   "jsdelivr": "dist/js-react-utils.umd.production.js",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -37,7 +36,7 @@
     "js-spec": "^0.1.63",
     "mocha": "^5.2.0",
     "nyc": "^13.2.0",
-    "react-dom": "^16.8.1",
+    "react-dom": "^16.8.2",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.0",
@@ -59,7 +58,7 @@
     "ziptool": "^1.0.2"
   },
   "dependencies": {
-    "react": "^16.8.1"
+    "react": "^16.8.2"
   },
   "nyc": {
     "temp-directory": "./coverage/.nyc_output",

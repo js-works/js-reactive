@@ -12,20 +12,24 @@ import ComponentConfigStd from '../internal/types/ComponentConfigStd'
 import ComponentConfigAlt from '../internal/types/ComponentConfigAlt'
 import AdditionalAttributes from '../internal/types/AdditionalAttributes'
 
-import React from 'react'
+import React, { ReactElement, ReactNode } from 'react'
 
 type ComponentConfig<P extends Props, M extends Methods> =
   ComponentConfigStd<P, M> & ComponentConfigAlt<P, M>
 
-function defineComponent<
-  P extends Props = {},
-  M extends Methods = {}
->(config: ComponentConfigStd<P, M>): ComponentType<P & AdditionalAttributes<M>>
+type Extras<P extends Props> = {
+  create(props?: P, ...children: ReactNode[]): ReactElement<P>
+}
 
 function defineComponent<
   P extends Props = {},
   M extends Methods = {}
->(config: ComponentConfigAlt<P, M>): ComponentType<P & AdditionalAttributes<M>>
+>(config: ComponentConfigStd<P, M>): ComponentType<P & AdditionalAttributes<M>> & Extras<P>
+
+function defineComponent<
+  P extends Props = {},
+  M extends Methods = {}
+>(config: ComponentConfigAlt<P, M>): ComponentType<P & AdditionalAttributes<M>> & Extras<P>
 
 function defineComponent<P extends Props, M extends Methods>(config: ComponentConfig<P, M>): ComponentType<P> {
   if (process.env.NODE_ENV === 'development' as any) {
@@ -79,6 +83,12 @@ function defineComponent<P extends Props, M extends Methods>(config: ComponentCo
         ? determineDefaultProps(config.properties)
         : config.defaultProps || null
   }) 
+
+  const createComponentElement = React.createElement.bind(null, ret)
+
+  ret.create = function (/* arguments */) {
+    return createComponentElement.apply(null, arguments)
+  }
 
   return ret
 }

@@ -31,7 +31,7 @@ export default function validateProperties<P extends Props>(
     }
   }
 
-  if (!variableProps) {
+  if (propsConfig && !variableProps) {
     const
       usedPropNames = Object.keys(props),
       invalidPropNames = []
