@@ -1,4 +1,3 @@
-import Class from './Class'
 import Props from './Props'
 import Methods from './Methods'
 import VirtualNode from './VirtualNode'
@@ -16,7 +15,7 @@ type ComponentConfigAlt<
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
   methods?: (keyof M)[],
-  render: (props: P, ref?: ComponentRef<M>) => VirtualNode | Class<React.Component<P> & M>
+  render: (props: P, ref?: ComponentRef<M>) => VirtualNode
 }
 
 export default ComponentConfigAlt

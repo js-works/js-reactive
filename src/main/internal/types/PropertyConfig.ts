@@ -1,5 +1,4 @@
 import Props from './Props'
-import Class from './Class'
 
 type PropertyConfig<T> = {
   type?: 
@@ -13,7 +12,7 @@ type PropertyConfig<T> = {
     ? FunctionConstructor
     : T extends Symbol
     ? SymbolConstructor
-    : Class<T> | ObjectConstructor
+    : { new(...args: any[]): T } | ObjectConstructor
 
   nullable?: boolean,
   validate?: (value: T) => null | Error | true | false,

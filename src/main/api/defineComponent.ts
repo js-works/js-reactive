@@ -1,7 +1,6 @@
 import validateComponentConfig
   from '../internal/validation/validateComponentConfig'
 
-import extendClass from '../internal/helper/extendClass'
 import determineDefaultProps from '../internal/helper/determineDefaultProps'
 import determinePropTypes from '../internal/helper/determinePropTypes'
 
@@ -43,19 +42,11 @@ function defineComponent<P extends Props, M extends Methods>(config: ComponentCo
 
   const
     render: any = config.render,
-    isFunctionComponent = !(render.prototype instanceof React.Component),
-    needsForwardRef = isFunctionComponent && (render.length > 1 || config.methods && config.methods.length > 0)
+    needsForwardRef = render.length > 1 || config.methods && config.methods.length > 0
 
-  let ret = !isFunctionComponent
-    ? extendClass(render)
-    : render.bind()
+  let ret = render.bind()
 
   Object.defineProperty(ret, 'displayName', { value: config.displayName })
-
-  if (!isFunctionComponent) {
-    Object.defineProperty(ret, 'contextTypes', { value: null })
-    Object.defineProperty(ret, 'childContextTypes', { value: null })
-  }
 
   let propTypes = null
 

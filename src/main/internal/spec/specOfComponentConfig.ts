@@ -1,8 +1,5 @@
 import { REGEX_DISPLAY_NAME, REGEX_PROP_NAME } from '../constant/constants'
-import isContext from '../helper/isContext'
 import PropertiesConfig from '../types/PropertiesConfig'
-
-import React from 'react'
 import { Spec, SpecError } from 'js-spec'
 
 const
@@ -45,14 +42,12 @@ const
       Spec.hasSomeKeys,
       Spec.keysOf(Spec.match(REGEX_PROP_NAME)),
       Spec.valuesOf(Spec.function)),
-      // TODO - check for valid keys
 
   specOfDefaultPropsConfig =
     Spec.and(
       Spec.object,
       Spec.hasSomeKeys,
       Spec.keysOf(Spec.match(REGEX_PROP_NAME))),
-      // TODO - check for valid keys
 
   specOfComponentConfig = 
     Spec.and(

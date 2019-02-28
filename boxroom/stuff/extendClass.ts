@@ -1,4 +1,6 @@
-import Class from '../types/Class'
+type Class<T> = {
+  new(...args: any[]): T 
+}
 
 const hasReflect =
   typeof Reflect === 'object'

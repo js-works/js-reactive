@@ -1,4 +1,3 @@
-import Class from './Class'
 import Props from './Props'
 import Methods from './Methods'
 import VirtualNode from './VirtualNode'
@@ -15,7 +14,7 @@ type ComponentConfigStd<
   defaultProps?: Partial<P>,
   validate?: (props: P) => null | Error | true | false,
   methods?: (keyof M)[],
-  render: (props: P, ref?: ComponentRef<M>) => VirtualNode | Class<React.Component<P, any> & M>
+  render: (props: P, ref?: ComponentRef<M>) => VirtualNode
 }
 
 export default ComponentConfigStd
