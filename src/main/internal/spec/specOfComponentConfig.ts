@@ -10,7 +10,7 @@ const
 
       Spec.valuesOf(
         Spec.and(
-          Spec.strictShape({
+          Spec.exact({
             type: Spec.optional(Spec.function),
             nullable: Spec.optional(Spec.boolean),
             validate: Spec.optional(Spec.function),
@@ -51,7 +51,7 @@ const
 
   specOfComponentConfig = 
     Spec.and(
-      Spec.strictShape({
+      Spec.exact({
         displayName: Spec.match(REGEX_DISPLAY_NAME),
         properties: Spec.optional(specOfPropertiesConfig),
         variableProps: Spec.optional(Spec.boolean),
