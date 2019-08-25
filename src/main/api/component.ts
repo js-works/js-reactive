@@ -1,26 +1,9 @@
 import Props from './../internal/types/Props'
-import { ReactNode } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 
 export default function component<P extends Props = {}>(displayName: string) {
   return new ComponentBuilder<P>(displayName)
 }
-
-type GreeterProps = {
-  name?: string
-}
-
-const Counter = component<GreeterProps>('Counter')
-  .validate(props => null)
-
-  .memoize()
-
-  .defaultProps({
-    name: 'World'
-  })
-
-  .render(props => {
-    return props.name.trim()
-  })
 
 // --- private ------------------------------------------------------
 
@@ -70,7 +53,7 @@ class ComponentBuilder<P extends Props> {
     return new DefaultPropsBuilder(defaultProps, this._attrs)
   }
 
-  render(renderer: Renderer<P>): Renderer<P> {
+  render(renderer: Renderer<P>): FunctionComponent<P> {
     return createComponent(renderer, this._attrs)
   }
 }
@@ -91,7 +74,7 @@ class ValidateBuilder<P extends Props> {
     return new DefaultPropsBuilder(defaultProps, this._attrs)
   }
   
-  render(renderer: Renderer<P>): Renderer<P> {
+  render(renderer: Renderer<P>): FunctionComponent<P> {
     return createComponent(renderer, this._attrs)
   }
 }
@@ -109,7 +92,7 @@ class MemoizeBuilder<P extends Props> {
     return new DefaultPropsBuilder(defaultProps, this._attrs)
   }
 
-  render(renderer: Renderer<P>): Renderer<P> {
+  render(renderer: Renderer<P>): FunctionComponent<P> {
     return createComponent(renderer, this._attrs)
   }
 }
@@ -123,11 +106,51 @@ class DefaultPropsBuilder<P extends Props, D extends Partial<PickOptionalProps<P
     this._attrs.defaultProps = defaultProps
   }
 
-  render(renderer: Renderer<P & D>): Renderer<P> {
+  render(renderer: Renderer<P & D>): FunctionComponent<P> {
     return createComponent(renderer as any, this._attrs)
   }
 }
 
 function createComponent<P extends Props, D extends Partial<PickOptionalProps<P>> = {}>(render: (props: P) => any, attrs: BuilderAttrs<P>): (props: P) => any { // TODO
-  return () => null
+  const
+    defaultProps =
+      attrs.defaultProps && Object.keys(attrs.defaultProps).length > 0
+        ? attrs.defaultProps
+        : null
+
+  const ret = (props: P) => {
+    if (defaultProps) {
+      props = Object.assign({}, defaultProps, props)
+    }
+
+    return render(props)  
+  }
+
+  ret.displayName = attrs.displayName
+
+  if (attrs.validate) {
+    const validate = attrs.validate
+
+    ret.propTypes = {
+      '*'(props: any) {
+        const
+          result = validate(props),
+
+          errorMsg =
+            result === false
+              ? 'Invalid value'
+              : result instanceof Error
+                ? result.message
+                : null
+
+        return !errorMsg
+          ? null
+          : new TypeError(
+            'Props validation error for component '
+            + `"${attrs.displayName}" => ${errorMsg}`)
+      }
+    }
+  }
+
+  return ret
 }

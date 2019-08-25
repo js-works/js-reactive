@@ -56,24 +56,28 @@ function buildContext<T>(defaultValue: T, attrs: BuilderAttrs<T>): Context<T> {
   const
     ret = createContext(defaultValue),
     provider: any = ret.Provider,
-    validate = this._attrs.validate
+    validate = attrs.validate
 
-  provider.displayName = this._attrs.displayName
+  provider.displayName = attrs.displayName
 
   if (validate) {
     provider.propTypes = {
       value: (props: any) => {
         const
-        result = validate(props.value),
+          result = validate(props.value),
 
-        errorMsg =
+          errorMsg =
             result === false
-            ? 'Invalid value'
-            : result instanceof Error
+              ? 'Invalid value'
+              : result instanceof Error
                 ? result.message
                 : null
 
-        return errorMsg ? new TypeError(errorMsg) : null
+        return !errorMsg
+          ? null
+          : new TypeError(
+            'Validation error for provider of context '
+            + `"${attrs.displayName}" => ${errorMsg}`)
       }
     }
   }

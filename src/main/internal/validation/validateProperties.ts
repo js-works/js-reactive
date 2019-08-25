@@ -23,7 +23,7 @@ export default function validateProperties<P extends Props>(
         propName = propNames[i],
         propConfig = propsConfig[propName],
         ret = validateProperty(
-          props, propConfig, propName, componentName, isCtxProvider)
+          props, propConfig, propName as any, componentName, isCtxProvider)
 
       if (ret) {
         messages.push(ret.message)
