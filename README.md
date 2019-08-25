@@ -64,21 +64,17 @@ const Counter = component('Counter')
         </button>
       </div>
     )
-  }
-})
+  })
 
-const Demo = defineComponent({
-  displayName: 'Demo',
-
-  render() {
+const Demo = component('Demo')
+  .render(() => {
     return (
       <div>
         <h3>Demo</h3>
         <div><Counter/></div>
       </div>
     )
-  }
-})
+  })
 
 render(<Demo/>, document.getElementById('main-content'))
 ```
