@@ -1,4 +1,4 @@
-import React, { Ref } from 'react'
+import React from 'react'
 import { Spec } from 'js-spec'
 import { component, isRef } from '../../main'
 
@@ -6,15 +6,14 @@ const { useCallback, useImperativeHandle, useRef, useState } = React
 
 type CounterProps = {
   label?: string,
-  initialValue?: number,
-  componentRef?: Ref<CounterMethods>
+  initialValue?: number
 }
 
 type CounterMethods = {
   reset(n: number): void
 }
 
-const Counter = component<CounterProps>('Counter')
+const Counter = component<CounterProps, CounterMethods>('Counter')
   .validate(
     Spec.checkProps({
       optional: {
@@ -24,19 +23,17 @@ const Counter = component<CounterProps>('Counter')
       }
     })
   )
-
   .defaultProps({
     initialValue: 0,
     label: 'Counter'
   })
-
-  .render(props => {
+  .render((props, ref) => {
     const
       [count, setCount] = useState(props.initialValue),
       onIncrement = useCallback(() => setCount(count + 1), null),
       onDecrement = useCallback(() => setCount(count - 1), null)
     
-    useImperativeHandle(props.componentRef, () => ({
+    useImperativeHandle(ref, () => ({
       reset(n: number) {
         setCount(n)
       }
@@ -61,7 +58,9 @@ const App = component('App')
 
     return (
       <div>
-        <Counter componentRef={counterRef}/>
+        {
+          React.createElement(Counter as any, { ref: counterRef }) // TODO !!!
+        }
         <br/>
         <div>
           <button onClick={onResetTo0}>Set to 0</button>

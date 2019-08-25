@@ -4,8 +4,6 @@ import VirtualNode from './VirtualNode'
 import PropertiesConfig from './PropertiesConfig'
 import React, { WeakValidationMap } from 'react'
 
-type ComponentRef<M extends Methods> = { current: M } | ((ref: M) => void)
-
 type ComponentConfigAlt<
   P extends Props = {},
   M extends Methods = {}
@@ -15,7 +13,7 @@ type ComponentConfigAlt<
   variableProps?: boolean,
   validate?: (props: P) => null | Error | true | false,
   methods?: (keyof M)[],
-  render: (props: P, ref?: ComponentRef<M>) => VirtualNode
+  render: (props: P, methods?: M) => VirtualNode
 }
 
 export default ComponentConfigAlt

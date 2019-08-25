@@ -25,7 +25,6 @@ const LoggerCtx = context('LoggerCtx')
   )
   .defaultValue(consoleLogger)
 
-
 const Counter = component('Counter')
   .validate(
     Spec.checkProps: {
