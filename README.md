@@ -23,7 +23,6 @@ const LoggerCtx = context('LoggerCtx')
       error: Spec.function
     })
   )
-
   .defaultValue(consoleLogger)
 
 
@@ -35,7 +34,6 @@ const Counter = component('Counter')
       }
     }
   )
-
   .render(props => {
     const
       [counterValue, setCounterValue] = useState(props.initialValue),
