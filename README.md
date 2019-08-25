@@ -6,7 +6,7 @@ A bundle of utility functions to simplify component development with React
 ```jsx
 import React, { useState, useContext } from 'react'
 import { render } from 'react-dom'
-import { defineComponent, defineContext } from 'js-react-utils'
+import { component, context } from 'js-react-utils'
 import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
 
 const consoleLogger = {
@@ -15,32 +15,30 @@ const consoleLogger = {
   error: console.error
 }
 
-const LoggerCtx = defineContext({
-  displayName: 'LoggerCtx',
+const LoggerCtx = context('LoggerCtx')
+  .validate(
+    Spec.shape({
+      debug: Spec.function,
+      info: Spec.function,
+      error: Spec.function
+    })
+  )
 
-  validate: Spec.shape({
-    debug: Spec.function,
-    info: Spec.function,
-    error: Spec.function
-  }),
+  .defaultValue(consoleLogger)
 
-  defaultValue: consoleLogger
-})
 
-const Counter = defineComponent({
-  displayName: 'Counter',
-
-  properties: {
-    initialValue: {
-      type: Number,
-      validate: Spec.integer,
-      defaultValue: 0
+const Counter = component('Counter')
+  .validate(
+    Spec.checkProps: {
+      optional: {
+        initialValue: Spec.integer
+      }
     }
-  },
+  )
 
-  render({ initialValue }) {
+  .render(props => {
     const
-      [counterValue, setCounterValue] = useState(0),
+      [counterValue, setCounterValue] = useState(props.initialValue),
       logger = useContext(LoggerCtx)
   
     function increaseCounter(delta) {
@@ -87,15 +85,18 @@ render(<Demo/>, document.getElementById('main-content'))
 
 ## Benefits
 
-- Strict separation between component meta data (displayName, properties
-  description etc.) and actual component logic.
-
-- No need to use 'prop-types' library: As component properties and context values
+- Support for framework agnostic props validation.
+  No need to use 'prop-types' library: As component properties and context values
   can be validated in a more general way, js-react-utils is not depending on a
   React or js-react-utils specific prop validation library.
   Instead a general validation library like for example
-  [js-spec](https://github.com/js-works/js-spec) can be used. 
+  [js-spec](https://github.com/js-works/js-spec) can be used.
+
+- js-react-utils does support default properties (which will not be supported
+  by future versions of React out-of-the-box any longer)
+
+- Some helpful helper functions
 
 ## Project status
 
-This project is in alpha state - please do not use it in production yet.
+This project is in alpha state.
