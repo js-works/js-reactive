@@ -1,5 +1,3 @@
-type Methods = {
-  [methodName: string]: Function
-}
+type Methods = Record<string, (...args: any[]) => any> 
 
 export default Methods

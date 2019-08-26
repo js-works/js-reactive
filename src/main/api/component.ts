@@ -1,7 +1,7 @@
-import React, { FunctionComponent, ReactNode, RefAttributes } from 'react'
+import React, { FunctionComponent, ReactElement, ReactNode, RefAttributes } from 'react'
 import Props from './../internal/types/Props'
 import Methods from './../internal/types/Methods'
-
+import h from './h'
 
 type ComponentRef<M extends Methods> = { current: M } | ((ref: M) => void)
 
@@ -9,8 +9,11 @@ export default function component<P extends Props = {}, M extends Methods = {}>(
   return new ComponentBuilder<P, M>(displayName)
 }
 
-
 // --- private ------------------------------------------------------
+
+type Component<P extends Props> = FunctionComponent<P & RefAttributes<any>> & { // TODO!!!
+  create(props?: Props, ...children: ReactNode[]): ReactElement<P>
+}
 
 type Renderer<P extends Props, M extends Methods> = (props: P, ref?: ComponentRef<M>) => ReactNode
 
@@ -58,7 +61,7 @@ class ComponentBuilder<P extends Props, M extends Methods = {}> {
     return new DefaultPropsBuilder<P, M, D>(defaultProps, this._attrs)
   }
 
-  render(renderer: Renderer<P, M>): FunctionComponent<P> {
+  render(renderer: Renderer<P, M>): Component<P> {
     return createComponent<P, M>(renderer, this._attrs)
   }
 }
@@ -79,11 +82,10 @@ class ValidateBuilder<P extends Props, M extends Methods> {
     return new DefaultPropsBuilder(defaultProps, this._attrs)
   }
   
-  render(renderer: Renderer<P, M>): FunctionComponent<P & RefAttributes<M>> {
+  render(renderer: Renderer<P, M>): Component<P> {
     return createComponent(renderer, this._attrs)
   }
 }
-
 
 class MemoizeBuilder<P extends Props, M extends Methods> {
   private _attrs: BuilderAttrs<P>
@@ -97,7 +99,7 @@ class MemoizeBuilder<P extends Props, M extends Methods> {
     return new DefaultPropsBuilder<P, M, D>(defaultProps, this._attrs)
   }
 
-  render(renderer: Renderer<P, M>): FunctionComponent<P> {
+  render(renderer: Renderer<P, M>): Component<P> {
     return createComponent(renderer, this._attrs)
   }
 }
@@ -111,12 +113,12 @@ class DefaultPropsBuilder<P extends Props, M extends Methods, D extends Partial<
     this._attrs.defaultProps = defaultProps
   }
 
-  render(renderer: Renderer<P, M>): FunctionComponent<P> {
+  render(renderer: Renderer<P, M>): Component<P> {
     return createComponent(renderer as any, this._attrs)
   }
 }
 
-function createComponent<P extends Props, M extends Methods, D extends Partial<PickOptionalProps<P>> = {}>(render: (props: P, ref: ComponentRef<M>) => any, attrs: BuilderAttrs<P>): (props: P) => any { // TODO
+function createComponent<P extends Props, M extends Methods, D extends Partial<PickOptionalProps<P>> = {}>(render: (props: P, ref: ComponentRef<M>) => any, attrs: BuilderAttrs<P>): Component<P> {
   const
     defaultProps =
       attrs.defaultProps && Object.keys(attrs.defaultProps).length > 0
@@ -164,6 +166,8 @@ function createComponent<P extends Props, M extends Methods, D extends Partial<P
   if (attrs.memoize === true) {
     ret = React.memo(ret)
   }
+
+  ret.create = h.bind(null, ret)
 
   return ret
 }

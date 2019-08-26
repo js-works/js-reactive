@@ -1,7 +1,7 @@
 import React from 'react'
 import { Spec } from 'js-spec'
 
-import { defineComponent, defineContext } from '../../main/index'
+import { component, context } from '../../main/index'
 
 const { useState, useContext } = React
 
@@ -17,27 +17,23 @@ const translations: Record<string, Record<string, string>> = {
   }
 }
 
-const LocaleCtx = defineContext({
-  displayName: 'LocaleCtx',
-  defaultValue: 'en'
-})
+const LocaleCtx = context<string>('LocaleCtx')
+  .validate(Spec.string)
+  .defaultValue('en')
 
 type AppProps = {
   defaultLocale: string
 }
 
-const App = defineComponent<AppProps>({
-  displayName: 'App',
-
-  properties: {
-    defaultLocale: {
-      type: String,
-      validate: Spec.oneOf('en', 'fr', 'de'),
-      defaultValue: 'en'
-    }
-  },
-
-  render(props) {
+const App = component<AppProps>('App')
+  .validate(
+    Spec.checkProps({
+      optional: {
+        defaultLocale: Spec.oneOf('en', 'fr', 'de')
+      }
+    })
+  )
+  .render(props => {
     const [locale, setLocale] = useState(() => props.defaultLocale)
 
     return (
@@ -53,23 +49,21 @@ const App = defineComponent<AppProps>({
         </div>
       </LocaleCtx.Provider>
     )
-  }
-})
+  })
 
 interface LocaleTextProps {
   id: string
 }
 
-const LocaleText = defineComponent<LocaleTextProps>({
-  displayName: 'LocaleText',
-
-  properties: {
-    id: {
-      type: String,
-    }
-  },
-
-  render(props) {
+const LocaleText = component<LocaleTextProps>('LocaleText')
+  .validate(
+    Spec.checkProps({
+      required: {
+        id: Spec.string
+      }
+    })
+  )
+  .render(props => {
     const locale = useContext(LocaleCtx)
 
     return (
@@ -77,7 +71,6 @@ const LocaleText = defineComponent<LocaleTextProps>({
         { translations[locale][props.id] }
       </p>
     )
-  }
-})
+  })
 
 export default <App defaultLocale="en"/>

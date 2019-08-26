@@ -1,12 +1,10 @@
 import React from 'react'
-import { defineComponent } from '../../main'
+import { component } from '../../main'
 
 const { useEffect, useState } = React
 
-const Clock = defineComponent({
-  displayName: 'Clock',
-
-  render() {
+const Clock = component('Clock')
+  .render(props => {
     const
       [time, setTime] = useState(() => new Date().toLocaleTimeString())
   
@@ -24,7 +22,6 @@ const Clock = defineComponent({
         Time: {time}
       </div>
     )
-  }
-})
+  })
 
 export default <Clock/>

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { defineComponent } from '../main'
+import { component } from '../main'
 import availableDemos from './available-demos'
 
 const { useState } = React
@@ -12,10 +12,8 @@ type DemoAppProps = {
   demos?: [string, any][]
 }
 
-const DemoApp = defineComponent<DemoAppProps>({
-  displayName: 'DemoApp',
-
-  render(props: DemoAppProps) {
+const DemoApp = component<DemoAppProps>('DemoApp')
+  .render(props => {
     const
       [demoIdx, setDemoIdx] = useState(getCurrentDemoIndex())
 
@@ -50,7 +48,7 @@ const DemoApp = defineComponent<DemoAppProps>({
       </div>
     )
    }
-})
+)
 
 function getCurrentDemoIndex() {
   return parseInt(document.location.href.replace(/^.*idx=/, ''), 10) || 0

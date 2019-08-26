@@ -1,35 +1,33 @@
 import React from 'react'
 import { Spec } from 'js-spec'
-import { defineComponent } from '../../main'
+import { component, isRef } from '../../main'
 
 const { useCallback, useImperativeHandle, useRef, useState } = React
 
 type CounterProps = {
   label?: string,
-  initialValue?: number,
+  initialValue?: number
 }
 
 type CounterMethods = {
   reset(n: number): void
 }
 
-const Counter = defineComponent<CounterProps, CounterMethods>({
-  displayName: 'Counter',
-
-  properties: {
-    label: {
-      type: String,
-      defaultValue: 'Counter'
-    },
-
-    initialValue: {
-      type: Number,
-      validate: Spec.integer,
-      defaultValue: 0
-    }
-  },
-
-  render(props, ref) {
+const Counter = component<CounterProps, CounterMethods>('Counter')
+  .validate(
+    Spec.checkProps({
+      optional: {
+        initialValue: Spec.integer,
+        label: Spec.string,
+        componentRef: isRef
+      }
+    })
+  )
+  .defaultProps({
+    initialValue: 0,
+    label: 'Counter'
+  })
+  .render((props, ref) => {
     const
       [count, setCount] = useState(props.initialValue),
       onIncrement = useCallback(() => setCount(count + 1), null),
@@ -49,13 +47,10 @@ const Counter = defineComponent<CounterProps, CounterMethods>({
         <button onClick={onIncrement}>+</button>
       </div>
     )
-  }
-})
+  })
 
-const App = defineComponent({
-  displayName: 'App',
-
-  render() {
+const App = component('App')
+  .render(() => {
     const
       counterRef = useRef(null),
       onResetTo0 = useCallback(() => counterRef.current.reset(0), []),
@@ -72,7 +67,6 @@ const App = defineComponent({
         </div>
       </div>
     )
-  }
-})
+  })
 
 export default <App/>

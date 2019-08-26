@@ -1,12 +1,10 @@
 import React from 'react'
-import {  defineComponent }  from '../../main'
+import { component }  from '../../main'
 
 const { useCallback, useEffect, useRef, useState } = React
 
-const StopWatch = defineComponent({
-  displayName: 'StopWatch',
-
-  render() {
+const StopWatch = component('StopWatch')
+  .render(props => {
     const
       timerIdRef = useRef(null),
       [time, setTime] = useState(() => 0),
@@ -64,8 +62,6 @@ const StopWatch = defineComponent({
         </button>
       </div>
     )
-  }
-})
+  })
 
 export default <StopWatch/>
- 

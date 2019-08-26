@@ -1,8 +1,7 @@
 import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
-import ComponentType from '../internal/types/ComponentType'
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
-type Type = string | ComponentType<any> | (string | ComponentType<any>)[]
+type Type = string | FunctionComponent<any> | (string | FunctionComponent<any>)[] // TODO? Classes?
 
 function isElementOfType(type: Type, it: any): boolean
 function isElementOfType(type: Type): ((it: any) => boolean)

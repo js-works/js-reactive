@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { defineComponent }  from '../../main'
+import { component }  from '../../main'
 
 const { useState, useEffect, useRef } = React
 
@@ -20,25 +20,16 @@ const
   rowCount = 20
 
 type TileProps = {
-  color: string,
-  width: number
+  color?: string,
+  width?: number
 }
 
-const Tile = defineComponent<TileProps>({
-  displayName: 'Tile',
-  
-  properties: {
-    color: {
-      type: String,
-      defaultValue: 'white'
-    },
-    width: {
-      type: Number,
-      defaultValue: 3
-    }
-  },
-  
-  render(props) {
+const Tile = component<TileProps>('Tile')
+  .defaultProps({
+    color: 'white',
+    width: 3
+  })
+  .render(props => {
     const
       { width, color } = props,
     
@@ -53,27 +44,18 @@ const Tile = defineComponent<TileProps>({
     
     return <div style={style as any}/> // TODO
   }
-})
+)
 
 type TypeRowProps = {
-  tileWidth: number,
+  tileWidth?: number,
   columnCount: number
 }
 
-const TileRow = defineComponent<TypeRowProps>({
-  displayName:  'TileRow',
-  
-  properties: {
-    tileWidth: {
-      type: Number,
-      defaultValue: 3
-    },
-    columnCount: {
-      type: Number
-    }
-  },
-  
-  render(props) {
+const TileRow = component<TypeRowProps>('TileRow')
+  .defaultProps({
+    tileWidth: 3
+  })
+  .render(props => {
     const
       { tileWidth, columnCount } = props,
       tiles = []
@@ -88,33 +70,19 @@ const TileRow = defineComponent<TypeRowProps>({
   
     return <div style={{ clear: 'both' }}>{tiles}</div>
   }
-})
+)
 
 type SpeedTestProps = {
   columnCount: number,
   rowCount: number,
-  tileWidth: number
+  tileWidth?: number
 }
 
-const SpeedTest = defineComponent<SpeedTestProps>({
-  displayName: 'SpeedTest',
-
-  properties: {
-    columnCount: {
-      type: Number
-    },
-
-    rowCount: {
-      type: Number
-    },
-
-    tileWidth: {
-      type: Number,
-      defaultValue: 3
-    }
-  },
-    
-  render(props) {
+const SpeedTest = component<SpeedTestProps>('SpeedTest')
+  .defaultProps({
+    tileWidth: 3 
+  })
+  .render(props => {
     const
       forceUpdate = useForceUpdate(),
       intervalIdRef = useRef(null),
@@ -166,7 +134,7 @@ const SpeedTest = defineComponent<SpeedTestProps>({
         </div>
       )
     }
-  })
+  )
 
 export default
   <SpeedTest tileWidth={tileWidth} columnCount={columnCount} rowCount={rowCount}/>

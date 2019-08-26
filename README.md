@@ -33,6 +33,9 @@ const Counter = component('Counter')
       }
     }
   )
+  .defaultProps({
+    initialValue: 0
+  })
   .render(props => {
     const
       [counterValue, setCounterValue] = useState(props.initialValue),
@@ -86,9 +89,9 @@ render(<Demo/>, document.getElementById('main-content'))
   [js-spec](https://github.com/js-works/js-spec) can be used.
 
 - js-react-utils does support default properties (which will not be supported
-  by future versions of React out-of-the-box any longer)
+  by future versions of React for function components out of the box any longer)
 
-- Some helpful helper functions
+- Some additional helper functions
 
 ## Project status
 

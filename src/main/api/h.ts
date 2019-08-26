@@ -1,14 +1,9 @@
 import React, { ComponentType, ReactElement, ReactNode } from 'react'
-import Props from '../internal/types/Props'
-import Methods from '../internal/types/Methods'
 
 const SYMBOL_ITERATOR: any =
   typeof Symbol === 'function' && Symbol.iterator
     ? Symbol.iterator
     : '@@iterator'
-
-function h<P extends Props = {}, M extends Methods = {}>(
-  type: any, props?: any, ...children: any[]): ReactElement<any> // TODO
 
 function h(): ReactNode {
   let ret: ReactNode = null
