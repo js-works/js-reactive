@@ -12,7 +12,7 @@ type Actions<S extends State> =
 type SecondArgType<T> = T extends (arg1: any, arg2: infer A, ...args: any[]) => any ? A : never
 
 export default function useActions<S extends State, A extends Actions<S>>(initActions: (getState: StateGetter<S>, setState: StateSetter<S>) => A, initState: () => S):
-  [S, { [K in keyof A]: (payload?: SecondArgType<A[K]>) => void }] {
+  [{ [K in keyof A]: (payload?: SecondArgType<A[K]>) => void }, S] {
 
   const
     actionsRef = useRef(null as any),
@@ -41,6 +41,5 @@ export default function useActions<S extends State, A extends Actions<S>>(initAc
 
   stateRef.current = state
 
-  return [state, actionsRef.current] as any
+  return [actionsRef.current, state] as any
 }
-

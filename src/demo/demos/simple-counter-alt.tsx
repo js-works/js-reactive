@@ -34,7 +34,7 @@ const Counter = component<CounterProps>('Counter')
   })
   .render(props => {
     const
-      [state, actions] = useActions(initActions, () => ({ count: props.initialValue })),
+      [actions, state] = useActions(initActions, () => ({ count: props.initialValue })),
       onIncrement = useCallback(() => actions.increment(), [])
 
     useEffect(() => {
