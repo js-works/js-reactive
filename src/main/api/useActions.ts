@@ -4,7 +4,7 @@ const { useRef, useState } = React
 
 type State = Record<string, any>
 type StateGetter<S extends State> = () => S
-type StateSetter<S extends State> = (newState: S) => void
+type StateSetter<S extends State> = (newState: Partial<S>) => void
 
 type Actions<S extends State> = 
   { [name: string]: (state: S, ...args: any[]) => Partial<S> | null | void }
