@@ -3,25 +3,24 @@ import { component } from '../../main'
 
 const { useEffect, useState } = React
 
-const Clock = component('Clock')
-  .render(props => {
-    const
-      [time, setTime] = useState(() => new Date().toLocaleTimeString())
-  
-    useEffect(() => {
-      const id =
-        setInterval(
-          () => setTime(new Date().toLocaleTimeString()),
-          100)
+const Clock = component('Clock', props => {
+  const
+    [time, setTime] = useState(() => new Date().toLocaleTimeString())
 
-      return () => clearInterval(id)
-    }, [])
+  useEffect(() => {
+    const id =
+      setInterval(
+        () => setTime(new Date().toLocaleTimeString()),
+        100)
 
-    return (
-      <div>
-        Time: {time}
-      </div>
-    )
-  })
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <div>
+      Time: {time}
+    </div>
+  )
+})
 
 export default <Clock/>

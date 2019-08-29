@@ -12,43 +12,43 @@ type DemoAppProps = {
   demos?: [string, any][]
 }
 
-const DemoApp = component<DemoAppProps>('DemoApp')
-  .render(props => {
-    const
-      [demoIdx, setDemoIdx] = useState(getCurrentDemoIndex())
+const DemoApp = component<DemoAppProps>('DemoApp', ({
+  demos
+}) => {
+  const
+    [demoIdx, setDemoIdx] = useState(getCurrentDemoIndex())
 
-    function startDemo(idx: number) {
-      setDemoIdx(idx)
-      document.location.href = document.location.href.replace(/#.*$/, '') + '#idx=' + idx
-      console.clear()
-    }
+  function startDemo(idx: number) {
+    setDemoIdx(idx)
+    document.location.href = document.location.href.replace(/#.*$/, '') + '#idx=' + idx
+    console.clear()
+  }
 
-    const options = []
+  const options = []
 
-    for (let i = 0; i < props.demos.length; ++i) {
-      const demo = props.demos[i]
+  for (let i = 0; i < demos.length; ++i) {
+    const demo = demos[i]
 
-      options.push(<option key={i} value={i}>{demo[0]}</option>)
-    }
+    options.push(<option key={i} value={i}>{demo[0]}</option>)
+  }
 
-    return (
+  return (
+    <div>
+      <label>Select demo:</label>
+      <select
+        onChange={ (ev: any) => startDemo(ev.target.value) }
+        value={demoIdx}
+        autoFocus={true}
+      >
+        {options}
+      </select>
       <div>
-        <label>Select demo:</label>
-        <select
-          onChange={ (ev: any) => startDemo(ev.target.value) }
-          value={demoIdx}
-          autoFocus={true}
-        >
-          {options}
-        </select>
-        <div>
-          <h4>Example: {props.demos[demoIdx][0]}</h4>
-          {props.demos[demoIdx][1]}
-        </div>
+        <h4>Example: {demos[demoIdx][0]}</h4>
+        {demos[demoIdx][1]}
       </div>
-    )
-   }
-)
+    </div>
+  )
+})
 
 function getCurrentDemoIndex() {
   return parseInt(document.location.href.replace(/^.*idx=/, ''), 10) || 0

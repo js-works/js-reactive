@@ -7,6 +7,7 @@ import isNode from './api/isNode'
 import isRef from './api/isRef'
 import useActions from './api/useActions'
 import withChildren from './api/withChildren'
+import withDefaultProps from './api/withDefaultProps'
 import Html from './api/Html'
 import Svg from './api/Svg'
 
@@ -20,6 +21,7 @@ export {
   isRef,
   useActions,
   withChildren,
+  withDefaultProps,
   Html,
   Svg
 }

@@ -1,146 +1,28 @@
 import React, { FunctionComponent, ReactElement, ReactNode, RefAttributes } from 'react'
 import Props from './../internal/types/Props'
 import Methods from './../internal/types/Methods'
+import ComponentOptions from './../internal/types/ComponentOptions'
 import h from './h'
 
 type ComponentRef<M extends Methods> = { current: M } | ((ref: M) => void)
 
-export default function component<P extends Props = {}, M extends Methods = {}>(displayName: string) {
-  return new ComponentBuilder<P, M>(displayName)
-}
-
-// --- private ------------------------------------------------------
-
-type Component<P extends Props> = FunctionComponent<P & RefAttributes<any>> & { // TODO!!!
-  create(props?: Props, ...children: ReactNode[]): ReactElement<P>
-}
-
-type Renderer<P extends Props, M extends Methods> = (props: P, ref?: ComponentRef<M>) => ReactNode
-
-type PickOptionalProps<T> = {
-  [K in keyof T]-?: T extends Record<K, T[K]> ? never : T[K]
-}
-
-type PropsValidator<P extends Props> = (props: P) => boolean | null | Error
-
-class BuilderAttrs<P extends Props> {
-  displayName?: string
-  memoize?: boolean
-  validate?: PropsValidator<P>
-  defaultProps?: Partial<PickOptionalProps<P>>
-  
-  copy(): BuilderAttrs<P> {
-    const ret: BuilderAttrs<P> = new BuilderAttrs()
-
-    ret.displayName = this.displayName
-    ret.memoize = this.memoize
-    ret.validate = this.validate
-    ret.defaultProps = this.defaultProps
-
-    return ret
-  }
-}
-
-class ComponentBuilder<P extends Props, M extends Methods = {}> {
-  private _attrs: BuilderAttrs<P>
-
-  constructor(displayName: string) {
-    this._attrs = new BuilderAttrs()
-    this._attrs.displayName = displayName 
-  }
-
-  validate(validator: (props: P) => boolean | null | Error): ValidateBuilder<P, M> {
-    return new ValidateBuilder<P, M>(validator, this._attrs)
-  }
-
-  memoize(value: boolean = true): MemoizeBuilder<P, M> {
-    return new MemoizeBuilder<P, M>(value, this._attrs)
-  }
-
-  defaultProps<D extends Partial<PickOptionalProps<P>>>(defaultProps: D): DefaultPropsBuilder<P, M, D> {
-    return new DefaultPropsBuilder<P, M, D>(defaultProps, this._attrs)
-  }
-
-  render(renderer: Renderer<P, M>): Component<P> {
-    return createComponent<P, M>(renderer, this._attrs)
-  }
-}
-
-class ValidateBuilder<P extends Props, M extends Methods> {
-  private _attrs: BuilderAttrs<P>
-
-  constructor(validator: PropsValidator<P>, attrs: BuilderAttrs<P>) {
-    this._attrs = attrs.copy()
-    this._attrs.validate = validator
-  }
-
-  memoize(value: boolean = true): MemoizeBuilder<P, M> {
-    return new MemoizeBuilder<P, M>(value, this._attrs)
-  }
-
-  defaultProps<D extends Partial<PickOptionalProps<P>>>(defaultProps: D): DefaultPropsBuilder<P, M, D> {
-    return new DefaultPropsBuilder(defaultProps, this._attrs)
-  }
-  
-  render(renderer: Renderer<P, M>): Component<P> {
-    return createComponent(renderer, this._attrs)
-  }
-}
-
-class MemoizeBuilder<P extends Props, M extends Methods> {
-  private _attrs: BuilderAttrs<P>
-
-  constructor(value: boolean = true, attrs: BuilderAttrs<P>) {
-    this._attrs = attrs.copy()
-    this._attrs.memoize = value
-  }
-  
-  defaultProps<D extends Partial<PickOptionalProps<P>>>(defaultProps: D): DefaultPropsBuilder<P, M, D> {
-    return new DefaultPropsBuilder<P, M, D>(defaultProps, this._attrs)
-  }
-
-  render(renderer: Renderer<P, M>): Component<P> {
-    return createComponent(renderer, this._attrs)
-  }
-}
-
-
-class DefaultPropsBuilder<P extends Props, M extends Methods, D extends Partial<PickOptionalProps<P>>> {
-  private _attrs: BuilderAttrs<P>
-
-  constructor(defaultProps: D, attrs: BuilderAttrs<P>) {
-    this._attrs = attrs.copy()
-    this._attrs.defaultProps = defaultProps
-  }
-
-  render(renderer: Renderer<P, M>): Component<P> {
-    return createComponent(renderer as any, this._attrs)
-  }
-}
-
-function createComponent<P extends Props, M extends Methods, D extends Partial<PickOptionalProps<P>> = {}>(render: (props: P, ref: ComponentRef<M>) => any, attrs: BuilderAttrs<P>): Component<P> {
-  const
-    defaultProps =
-      attrs.defaultProps && Object.keys(attrs.defaultProps).length > 0
-        ? attrs.defaultProps
-        : null
-
+export default function component<P extends Props, M extends Methods = {}>(
+  displayName: string,
+  renderer: (props: P, ref?: ComponentRef<M>) => ReactNode,
+  options?: ComponentOptions
+): FunctionComponent<P & { ref?: ComponentRef<M> }> & { create: (props?: P & { ref?: ComponentRef<M> }) => ReactElement<P> } { // TODO: props?
   let ret: any = (props: P, ref?: ComponentRef<M>) => {
-    if (defaultProps) {
-      props = Object.assign({}, defaultProps, props)
-    }
-
-    return render(props, ref)
+    return renderer(props, ref)
   }
 
-  if (render.length > 1) {
+  if (renderer.length > 1) {
     ret = React.forwardRef(ret)
   }
 
-  ret.displayName = attrs.displayName
+  ret.displayName = displayName
 
-  if (attrs.validate) {
-    const validate = attrs.validate
+  if (options && options.validate) {
+    const validate = options.validate
 
     ret.propTypes = {
       '*'(props: any) {
@@ -158,12 +40,12 @@ function createComponent<P extends Props, M extends Methods, D extends Partial<P
           ? null
           : new TypeError(
             'Props validation error for component '
-            + `"${attrs.displayName}" => ${errorMsg}`)
+            + `"${displayName}" => ${errorMsg}`)
       }
     }
   }
 
-  if (attrs.memoize === true) {
+  if (options && options.memoize === true) {
     ret = React.memo(ret)
   }
 

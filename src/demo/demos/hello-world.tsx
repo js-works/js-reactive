@@ -8,21 +8,17 @@ type HelloWorldProps = {
   name?: string
 }
 
-const HelloWorld = component<HelloWorldProps>('HelloWorld')
-  .validate(
-    Spec.checkProps({
-      optional: {
-        name: Spec.string
-      }
-    })
-  )
-  .defaultProps({
-    name: 'world'
-  })
-  .render(props => {
-    return <div>Hello, {props.name}!</div>
-  })
-  .create
+const validateHelloWorldProps = Spec.checkProps({
+  optional: {
+    name: Spec.string
+  }
+})
+
+const HelloWorld = component<HelloWorldProps>('HelloWorld', ({
+  name = 'World'
+}) => {
+  return <div>Hello {name}!</div>
+}, { validate: validateHelloWorldProps }).create
 
 export default
   div(
