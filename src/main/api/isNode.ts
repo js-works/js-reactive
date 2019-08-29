@@ -1,5 +1,5 @@
-import { SYMBOL_ITERATOR } from '../internal/constant/constants'
-import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
+import { SYMBOL_ITERATOR } from '../internal/constants/constants'
+import setJsSpecValidator from '../internal/helpers/setJsSpecValidator'
 import React from 'react'
 
 export default function isNode(it: any) {

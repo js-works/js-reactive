@@ -1,4 +1,4 @@
-import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
+import setJsSpecValidator from '../internal/helpers/setJsSpecValidator'
 
 export default function isRef(it: any) {
   return  typeof it === 'function' || it && it.hasOwnProperty('current')

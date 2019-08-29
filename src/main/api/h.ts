@@ -1,9 +1,6 @@
 import React, { ComponentType, ReactElement, ReactNode } from 'react'
 
-const SYMBOL_ITERATOR: any =
-  typeof Symbol === 'function' && Symbol.iterator
-    ? Symbol.iterator
-    : '@@iterator'
+import { SYMBOL_ITERATOR } from '../internal/constants/constants'
 
 function h(): ReactNode {
   let ret: ReactNode = null

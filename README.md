@@ -15,28 +15,39 @@ const consoleLogger = {
   error: console.error
 }
 
-const LoggerCtx = context('LoggerCtx')
-  .validate(
+const LoggerCtx = context({
+  displayName: 'LoggerCtx',
+
+  validate:
     Spec.shape({
       debug: Spec.function,
       info: Spec.function,
       error: Spec.function
     })
-  )
-  .defaultValue(consoleLogger)
 
-const Counter = component('Counter')
-  .validate(
-    Spec.checkProps: {
-      optional: {
-        initialValue: Spec.integer
-      }
+  defaultValue: consoleLogger
+})
+
+// In case you prefer a shorter syntax just use:
+// context(displayName, defaultValue?, { validate }?)
+
+const Counter = component({
+  displayName: 'Counter',
+  memoize: true,
+
+  validate: Spec.checkProps: {
+    optional: {
+      initialValue: Spec.integer
     }
-  )
-  .defaultProps({
-    initialValue: 0
-  })
-  .render(props => {
+  },
+
+  // be aware that your linter may not like
+  // that you are using hooks inside of a function
+  // called "render" (due to the lower-case "r")
+  // In problematic cases use the shorter "compoenent" syntax 
+  // as described below or just use the following workaround:
+  //   render: function View(props) {...}
+  render(props) {
     const
       [counterValue, setCounterValue] = useState(props.initialValue),
       logger = useContext(LoggerCtx)
@@ -64,17 +75,18 @@ const Counter = component('Counter')
         </button>
       </div>
     )
-  })
+  }
+})
 
-const Demo = component('Demo')
-  .render(() => {
-    return (
-      <div>
-        <h3>Demo</h3>
-        <div><Counter/></div>
-      </div>
-    )
-  })
+// In case you prefer a shorter syntax use:
+// context(displayName, render, { memoize, validate }?)
+
+const Demo = component('Demo', () =>
+  <div>
+    <h3>Demo</h3>
+    <div><Counter/></div>
+  </div>
+)
 
 render(<Demo/>, document.getElementById('main-content'))
 ```
@@ -88,8 +100,8 @@ render(<Demo/>, document.getElementById('main-content'))
   Instead a general validation library like for example
   [js-spec](https://github.com/js-works/js-spec) can be used.
 
-- js-react-utils does support default properties (which will not be supported
-  by future versions of React for function components out of the box any longer)
+- Forces to define an explicite display name (which will also be available
+  in production)
 
 - Some additional helper functions
 

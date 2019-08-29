@@ -1,4 +1,4 @@
-import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
+import setJsSpecValidator from '../internal/helpers/setJsSpecValidator'
 import React from 'react'
 
 export default function isElement(it: any) {

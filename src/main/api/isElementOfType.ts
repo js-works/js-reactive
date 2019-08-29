@@ -1,4 +1,4 @@
-import setJsSpecValidator from '../internal/helper/setJsSpecValidator'
+import setJsSpecValidator from '../internal/helpers/setJsSpecValidator'
 import React, { FunctionComponent } from 'react'
 
 type Type = string | FunctionComponent<any> | (string | FunctionComponent<any>)[] // TODO? Classes?
