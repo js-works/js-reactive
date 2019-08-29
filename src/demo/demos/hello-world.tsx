@@ -20,6 +20,7 @@ const HelloWorld = component<HelloWorldProps>('HelloWorld', ({
   return <div>Hello {name}!</div>
 }, { validate: validateHelloWorldProps }).create
 
+
 export default
   div(
     div(

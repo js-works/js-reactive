@@ -29,7 +29,7 @@ const LoggerCtx = context({
 })
 
 // In case you prefer a shorter syntax just use:
-// context(displayName, defaultValue?, { validate }?)
+// context(displayName, defaultValue?, { validate? }?)
 
 const Counter = component({
   displayName: 'Counter',
@@ -79,7 +79,7 @@ const Counter = component({
 })
 
 // In case you prefer a shorter syntax use:
-// context(displayName, render, { memoize, validate }?)
+// context(displayName, render, { memoize?, validate? }?)
 
 const Demo = component('Demo', () =>
   <div>
@@ -103,7 +103,7 @@ render(<Demo/>, document.getElementById('main-content'))
 - Forces to define an explicite display name (which will also be available
   in production)
 
-- Some additional helper functions
+- Some additional useful helper functions
 
 ## Project status
 

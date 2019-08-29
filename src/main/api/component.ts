@@ -8,7 +8,7 @@ import ComponentConfig from '../internal/types/ComponentConfig'
 import ComponentOptions from '../internal/types/ComponentOptions'
 
 function component<P extends Props, M extends Methods = {}>
-  (config: ExtFunctionComponent<P>): ExtFunctionComponent<P>
+  (config: ComponentConfig<P>): ExtFunctionComponent<P>
 
 function component<P extends Props = {}, M extends Methods = {}>(
   displayName: string,
