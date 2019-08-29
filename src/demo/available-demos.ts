@@ -1,6 +1,5 @@
 import helloWorld from './demos/hello-world'
 import simpleCounter from './demos/simple-counter'
-import simpleCounterAlt from './demos/simple-counter-alt'
 import complexCounter from './demos/complex-counter'
 import stopWatch from './demos/stop-watch'
 import clock from './demos/clock'
@@ -10,7 +9,6 @@ import performanceTest from './demos/performance-test'
 const demos: [string, any][] = [
   ['Hello world', helloWorld],
   ['Simple counter', simpleCounter],
-  ['Simple counter (alt.)', simpleCounterAlt],
   ['Complex counter', complexCounter],
   ['Stop watch', stopWatch],
   ['Clock', clock],

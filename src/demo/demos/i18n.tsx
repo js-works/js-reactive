@@ -17,8 +17,11 @@ const translations: Record<string, Record<string, string>> = {
   }
 }
 
-const LocaleCtx = context<string>('LocaleCtx', 'en',
-  { validate: Spec.string })
+const LocaleCtx = context<string>({
+  displayName: 'LocaleCtx',
+  defaultValue: 'en',
+  validate: Spec.string
+})
 
 type AppProps = {
   defaultLocale: string

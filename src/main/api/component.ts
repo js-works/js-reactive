@@ -50,8 +50,8 @@ function component<P extends Props = {}, M extends Methods = {}>(
   }
 
   return typeof arg1 === 'string'
-    ? buildComponent(arg1, arg2, arg2.validate)
-    : buildComponent(arg1.displayName, arg2.defaultValue, arg2.validate)
+    ? buildComponent(arg1, arg2, arg2.validate, arg2.memoize)
+    : buildComponent(arg1.displayName, arg1.render, arg1.validate, arg1.memoize)
 }
 
 // --- locals -------------------------------------------------------
@@ -88,7 +88,8 @@ if (process.env.NODE_ENV) {
 function buildComponent<P extends Props, M extends Methods = {}>(
   displayName: string,
   renderer: (props: P, ref?: ComponentRef<M>) => ReactNode,
-  options?: ComponentOptions
+  validate?: (props: P) => boolean | null | Error,
+  memoize?: boolean
 ): FunctionComponent<P & { ref?: ComponentRef<M> }> & { create: (props?: P & { ref?: ComponentRef<M> }) => ReactElement<P> } { // TODO: props?
   let ret: any = (props: P, ref?: ComponentRef<M>) => {
     return renderer(props, ref)
@@ -100,9 +101,7 @@ function buildComponent<P extends Props, M extends Methods = {}>(
 
   ret.displayName = displayName
 
-  if (options && options.validate) {
-    const validate = options.validate
-
+  if (validate) {
     ret.propTypes = {
       '*'(props: any) {
         const
@@ -124,7 +123,7 @@ function buildComponent<P extends Props, M extends Methods = {}>(
     }
   }
 
-  if (options && options.memoize === true) {
+  if (memoize === true) {
     ret = React.memo(ret)
   }
 

@@ -44,8 +44,8 @@ function context<T>(arg1: any, arg2?: any, arg3?: any): Context<T> {
   }
 
   return typeof arg1 === 'string'
-    ? buildContext(arg1, arg2, arg2.validate)
-    : buildContext(arg1.displayName, arg2.defaultValue, arg2.validate)
+    ? buildContext(arg1, arg2, arg3.validate)
+    : buildContext(arg1.displayName, arg1.defaultValue, arg1.validate)
 }
 
 // --- locals -------------------------------------------------------
@@ -60,9 +60,8 @@ if (process.env.NODE_ENV === 'development' as any) {
   validateContextConfig =
     Spec.exact({
       displayName: Spec.match(REGEX_DISPLAY_NAME),
-      validate: Spec.optional(Spec.function),
-      memoize: Spec.optional(Spec.boolean),
-      render: Spec.function
+      defaultValue: Spec.optional(Spec.any),
+      validate: Spec.optional(Spec.function)
     })
 
   validateContextOptions =

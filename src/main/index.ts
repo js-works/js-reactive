@@ -6,7 +6,6 @@ import isElementOfType from './api/isElementOfType'
 import isNode from './api/isNode'
 import isRef from './api/isRef'
 import withChildren from './api/withChildren'
-import withDefaultProps from './api/withDefaultProps'
 import Html from './api/Html'
 import Svg from './api/Svg'
 
@@ -19,7 +18,6 @@ export {
   isElementOfType,
   isRef,
   withChildren,
-  withDefaultProps,
   Html,
   Svg
 }
