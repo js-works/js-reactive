@@ -1,11 +1,14 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 import Props from './Props'
+import Methods from './Methods'
 
-type ComponentConfig<P extends Props> = {
+type ComponentRef<M extends Methods> = { current: M } | ((ref: M) => void)
+
+type ComponentConfig<P extends Props, M extends Methods> = {
   displayName: string,
   memoize?: boolean,
   validate?(props: P): boolean | null | Error
-  render(props: P): ReturnType<FunctionComponent<P>>
+  render(props: P, ref?: ComponentRef<M>): ReturnType<FunctionComponent<P>> | ReactNode // TODO
 }
 
 export default ComponentConfig
