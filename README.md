@@ -28,9 +28,6 @@ const LoggerCtx = context({
   defaultValue: consoleLogger
 })
 
-// In case you prefer a shorter syntax just use:
-// context(displayName, defaultValue?, { validate? }?)
-
 const Counter = component({
   displayName: 'Counter',
   memoize: true,
@@ -41,46 +38,41 @@ const Counter = component({
     }
   },
 
-  // be aware that your linter may not like
-  // that you are using hooks inside of a function
-  // called "render" (due to the lower-case "r")
-  // In problematic cases use the shorter "compoenent" syntax 
-  // as described below or just use the following workaround:
-  //   render: function View(props) {...}
-  render(props) {
-    const
-      [counterValue, setCounterValue] = useState(props.initialValue),
-      logger = useContext(LoggerCtx)
-  
-    function increaseCounter(delta) {
-      logger.info(`Increasing counter by ${delta}`)
-
-      setCounterValue(counterValue + delta)
-    }
-
-    return (
-      <div className="counter">
-        <button
-          className="counter-decrement"
-          onClick={() => increaseCounter(-1)}>
-          -
-        </button>
-        <div className="counter-value">
-          {counterValue}
-        </div>
-        <button
-          className="counter-increment"
-          onClick={() => increaseCounter(1)}>
-          +
-        </button>
-      </div>
-    )
-  }
+  render: CounterView
 })
+
+function CounterView({ initialValue = 0, label = 'Counter' }) {
+  const
+    [counterValue, setCounterValue] = useState(initialValue),
+    logger = useContext(LoggerCtx)
+
+  function increaseCounter(delta) {
+    logger.info(`Increasing counter by ${delta}`)
+
+    setCounterValue(counterValue + delta)
+  }
+
+  return (
+    <div className="counter">
+      <button
+        className="counter-decrement"
+        onClick={() => increaseCounter(-1)}>
+        -
+      </button>
+      <div className="counter-value">
+        {counterValue}
+      </div>
+      <button
+        className="counter-increment"
+        onClick={() => increaseCounter(1)}>
+        +
+      </button>
+    </div>
+  )
+}
 
 // In case you prefer a shorter syntax use:
 // context(displayName, render, { memoize?, validate? }?)
-
 const Demo = component('Demo', () =>
   <div>
     <h3>Demo</h3>

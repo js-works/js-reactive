@@ -5,7 +5,6 @@ import h from './h'
 import Props from '../internal/types/Props'
 import Methods from '../internal/types/Methods'
 import ComponentConfig from '../internal/types/ComponentConfig'
-import ComponentOptions from '../internal/types/ComponentOptions'
 
 function component<P extends Props, M extends Methods = {}>
   (config: ComponentConfig<P, M>): ExtFunctionComponent<P>
@@ -13,11 +12,10 @@ function component<P extends Props, M extends Methods = {}>
 function component<P extends Props = {}, M extends Methods = {}>(
   displayName: string,
   renderer?: ComponentConfig<P, M>['render'], // TODO
-  options?: ComponentOptions
 ): ExtFunctionComponent<P>
 
 function component<P extends Props = {}, M extends Methods = {}>(
-  arg1: any, arg2?: any, arg3?: any
+  arg1: any, arg2?: any
 ): ExtFunctionComponent<P> {
   let errorMsg: string
 
@@ -34,14 +32,6 @@ function component<P extends Props = {}, M extends Methods = {}>(
       }
     } else if (typeof arg1 !== 'string') {
       errorMsg = 'Expected a string or an object as first argument'
-    } else if (arguments.length > 2 && (!arg3 || typeof arg3 !== 'object')) {
-      errorMsg = 'Expected an object as third argument'
-    } else if (arg3) {
-      const result = validateComponentOptions(arg3)
-
-      if (result) {
-        errorMsg = 'Invalid component options: ' + result.message
-      }
     }
 
     if (errorMsg) {
@@ -65,9 +55,7 @@ type ExtProps<P extends Props> = Props & {
 type ExtFunctionComponent<P extends Props> =
   FunctionComponent<ExtProps<P>> & { create(props?: P, ...children: ReactNode[]): ReactElement<P> }
 
-let
-  validateComponentConfig: (config: any) => null | Error,
-  validateComponentOptions: (options: any) => null | Error
+let validateComponentConfig: (config: any) => null | Error
 
 if (process.env.NODE_ENV) {
   const REGEX_DISPLAY_NAME = /^([a-z]+:)*[A-Z][a-zA-Z0-9.]*$/
@@ -77,11 +65,6 @@ if (process.env.NODE_ENV) {
     validate: Spec.optional(Spec.function),
     memoize: Spec.optional(Spec.boolean),
     render: Spec.function
-  })
-
-  validateComponentOptions = Spec.exact({
-    validate: Spec.optional(Spec.function),
-    memoize: Spec.optional(Spec.boolean),
   })
 }
 

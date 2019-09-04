@@ -18,7 +18,7 @@ const HelloWorld = component<HelloWorldProps>('HelloWorld', ({
   name = 'World'
 }) => {
   return <div>Hello {name}!</div>
-}, { validate: validateHelloWorldProps }).create
+}).create
 
 
 export default
