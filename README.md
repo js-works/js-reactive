@@ -18,12 +18,11 @@ const consoleLogger = {
 const LoggerCtx = context({
   displayName: 'LoggerCtx',
 
-  validate:
-    Spec.shape({
-      debug: Spec.function,
-      info: Spec.function,
-      error: Spec.function
-    })
+  validate: Spec.shape({
+    debug: Spec.function,
+    info: Spec.function,
+    error: Spec.function
+  })
 
   defaultValue: consoleLogger
 })
@@ -72,7 +71,7 @@ function CounterView({ initialValue = 0, label = 'Counter' }) {
 }
 
 // In case you prefer a shorter syntax use:
-// context(displayName, render, { memoize?, validate? }?)
+// context(displayName, render)
 const Demo = component('Demo', () =>
   <div>
     <h3>Demo</h3>
