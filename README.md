@@ -4,7 +4,7 @@ A bundle of utility functions to simplify component development with React
 ## Usage example
 
 ```jsx
-import React, { useState, useContext } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { render } from 'react-dom'
 import { component, context } from 'js-react-utils'
 import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
@@ -43,28 +43,24 @@ const Counter = component({
 
 function CounterView({ initialValue = 0, label = 'Counter' }) {
   const
-    [counterValue, setCounterValue] = useState(initialValue),
-    logger = useContext(LoggerCtx)
-
-  function increaseCounter(delta) {
-    logger.info(`Increasing counter by ${delta}`)
-
-    setCounterValue(counterValue + delta)
-  }
+    [counter, setCounter] = useState(initialValue),
+    logger = useContext(LoggerCtx),
+    onIncrement = useCallback(() => setCounter(it => it + 1)),
+    onDecrement = useCallback(() => setCounter(it => it - 1))
 
   return (
     <div className="counter">
       <button
         className="counter-decrement"
-        onClick={() => increaseCounter(-1)}>
+        onClick={onDecrement}>
         -
       </button>
       <div className="counter-value">
-        {counterValue}
+        {counter}
       </div>
       <button
         className="counter-increment"
-        onClick={() => increaseCounter(1)}>
+        onClick={onIncrement}>
         +
       </button>
     </div>
