@@ -4,7 +4,7 @@ A bundle of utility functions to simplify component development with React
 ## Usage example
 
 ```jsx
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { render } from 'react-dom'
 import { component, context } from 'js-react-utils'
 import { Spec } from 'js-spec/dev-only' // 3rd-party validation library
@@ -47,6 +47,10 @@ function CounterView({ initialValue = 0, label = 'Counter' }) {
     logger = useContext(LoggerCtx),
     onIncrement = useCallback(() => setCounter(it => it + 1)),
     onDecrement = useCallback(() => setCounter(it => it - 1))
+
+  useEffect(() => {
+    logger.info('Component has been rendered')
+  })
 
   return (
     <div className="counter">
