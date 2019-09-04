@@ -31,11 +31,12 @@ const Counter = component({
   displayName: 'Counter',
   memoize: true,
 
-  validate: Spec.checkProps: {
+  validate: Spec.checkProps({
     optional: {
-      initialValue: Spec.integer
+      initialValue: Spec.integer,
+      label: Spec.string
     }
-  },
+  }),
 
   render: CounterView
 })
