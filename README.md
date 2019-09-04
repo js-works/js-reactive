@@ -50,7 +50,7 @@ function CounterView({ initialValue = 0, label = 'Counter' }) {
 
   useEffect(() => {
     logger.info('Component has been rendered')
-  }, [logger])
+  })
 
   return (
     <div className="counter">
