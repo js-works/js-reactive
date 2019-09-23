@@ -3,20 +3,19 @@ import { Spec } from 'js-spec'
 
 import h from './h'
 import Props from '../internal/types/Props'
-import Methods from '../internal/types/Methods'
 import ComponentConfig from '../internal/types/ComponentConfig'
 
-function component<P extends Props, M extends Methods = {}>
-  (config: ComponentConfig<P, M>): ExtFunctionComponent<P>
+function component<P extends Props>
+  (config: ComponentConfig<P>): ExtFunctionComponent<P>
 
-function component<P extends Props = {}, M extends Methods = {}>(
+function component<P extends Props = {}>(
   displayName: string,
-  renderer?: ComponentConfig<P, M>['render'], // TODO
+  renderer?: ComponentConfig<P>['render'], // TODO
 ): ExtFunctionComponent<P>
 
-function component<P extends Props = {}, M extends Methods = {}>(
+function component<P extends Props = {}>(
   arg1: any, arg2?: any
-): ExtFunctionComponent<P> {
+): FunctionComponent<P> {
   let errorMsg: string
 
   if (process.env.NODE_ENV === 'development' as any) {
@@ -40,20 +39,14 @@ function component<P extends Props = {}, M extends Methods = {}>(
   }
 
   return typeof arg1 === 'string'
-    ? buildComponent(arg1, arg2, arg2.validate, arg2.memoize)
-    : buildComponent(arg1.displayName, arg1.render, arg1.validate, arg1.memoize)
+    ? buildComponent(arg1, arg2)
+    : buildComponent(arg1.displayName, arg1.render, arg1.validate, arg1.memoize, arg1.forwardRef)
 }
 
 // --- locals -------------------------------------------------------
 
-type ComponentRef<M extends Methods> = { current: M } | ((ref: M) => void)
-
-type ExtProps<P extends Props> = Props & {
-  ref?: any // TODO
-}
-
 type ExtFunctionComponent<P extends Props> =
-  FunctionComponent<ExtProps<P>> & { create(props?: P, ...children: ReactNode[]): ReactElement<P> }
+  FunctionComponent<P> & { create(props?: P, ...children: ReactNode[]): ReactElement<P> }
 
 let validateComponentConfig: (config: any) => null | Error
 
@@ -64,21 +57,31 @@ if (process.env.NODE_ENV) {
     displayName: Spec.match(REGEX_DISPLAY_NAME),
     validate: Spec.optional(Spec.function),
     memoize: Spec.optional(Spec.boolean),
+    forwardRef: Spec.optional(Spec.boolean),
     render: Spec.function
   })
 }
 
-function buildComponent<P extends Props, M extends Methods = {}>(
+function buildComponent<P extends Props>(
   displayName: string,
-  renderer: (props: P, ref?: ComponentRef<M>) => ReactNode,
+  renderer: (props: P) => ReactNode,
   validate?: (props: P) => boolean | null | Error,
-  memoize?: boolean
-): FunctionComponent<P & { ref?: ComponentRef<M> }> & { create: (props?: P & { ref?: ComponentRef<M> }) => ReactElement<P> } { // TODO: props?
-  let ret: any = (props: P, ref?: ComponentRef<M>) => {
-    return renderer(props, ref)
+  memoize?: boolean,
+  forwardRef?: boolean
+): FunctionComponent<P> & { create: (props?: P) => ReactElement<P> } { // TODO: props?
+  let ret: any
+  
+  if (!forwardRef) {
+    ret = (props: P) => {
+      return renderer(props)
+    }
+  } else {
+    ret = (props: P, ref: any) => {
+      return renderer({ ...props, ref })
+    }
   }
 
-  if (renderer.length > 1) {
+  if (forwardRef) {
     ret = React.forwardRef(ret)
   }
 

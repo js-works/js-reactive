@@ -2,7 +2,7 @@ import React from 'react'
 
 import { component, prepareActions } from '../../main'
 
-const { useCallback, useEffect, useState } = React
+const { useCallback, useEffect } = React
 
 type CounterProps = {
   initialValue?: number,

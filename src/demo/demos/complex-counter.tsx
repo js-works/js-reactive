@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Ref } from 'react'
 import { Spec } from 'js-spec'
 import { component, isRef } from '../../main'
 
@@ -6,17 +6,33 @@ const { useCallback, useImperativeHandle, useRef, useState } = React
 
 type CounterProps = {
   label?: string,
-  initialValue?: number
+  initialValue?: number,
+  ref?: Ref<CounterMethods>
 }
 
 type CounterMethods = {
   reset(n: number): void
 }
 
-const Counter = component<CounterProps, CounterMethods>('Counter', ({
+const Counter = component({
+  displayName: 'Counter',
+  forwardRef: true,
+
+  validate: Spec.checkProps<CounterProps>({
+    optional: {
+      initialValue: Spec.integer,
+      label: Spec.string
+    }
+  }),
+
+  render: CounterView
+})
+
+function CounterView({
   initialValue = 0,
-  label = 'Counter'
-}, ref) => {
+  label = 'Counter',
+  ref
+}: CounterProps) {
   const
     [count, setCount] = useState(initialValue),
     onIncrement = useCallback(() => setCount(count + 1), null),
@@ -36,7 +52,7 @@ const Counter = component<CounterProps, CounterMethods>('Counter', ({
       <button onClick={onIncrement}>+</button>
     </div>
   )
-})
+}
 
 const App = component('App', () => {
   const
