@@ -13,29 +13,25 @@ type CounterState = {
   count: number
 }
 
-const useCounterStore = prepareStore({
-  displayName: 'CounterStore',
+function initCounterState(initialValue: number) {
+  return { count: initialValue }
+}
 
-  initState(initialValue: number) {
-    return { count: initialValue }
-  },
+const useCounterStore = prepareStore((state: CounterState, setState) => {
+  return {
+    incrementCount() {
+      setState({ count: state.count + 1 })
+    },
 
-  initStore(state: CounterState, setState) {
-    return {
-      incrementCount() {
-        setState({ count: state.count + 1 })
-      },
+    decrementCount() {
+      setState({ count: state.count - 1 })
+    },
 
-      decrementCount() {
-        setState({ count: state.count - 1 })
-      },
-
-      getCount() {
-        return state.count
-      }
+    getCount() {
+      return state.count
     }
   }
-})
+}, initCounterState)
 
 const Counter = component<CounterProps>('Counter', ({
   initialValue = 0,
