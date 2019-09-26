@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { component, prepareActions } from '../../main'
+import { component, prepareStore } from '../../main'
 
 const { useCallback, useEffect } = React
 
@@ -13,14 +13,14 @@ type CounterState = {
   count: number
 }
 
-const useCounterActions = prepareActions({
-  displayName: 'CounterActions',
+const useCounterStore = prepareStore({
+  displayName: 'CounterStore',
 
   initState(initialValue: number) {
     return { count: initialValue }
   },
 
-  initActions(state: CounterState, setState) {
+  initStore(state: CounterState, setState) {
     return {
       incrementCount() {
         setState({ count: state.count + 1 })
@@ -28,6 +28,10 @@ const useCounterActions = prepareActions({
 
       decrementCount() {
         setState({ count: state.count - 1 })
+      },
+
+      getCount() {
+        return state.count
       }
     }
   }
@@ -38,23 +42,23 @@ const Counter = component<CounterProps>('Counter', ({
   label = 'Counter'
 }) => {
   const
-    [actions, state] = useCounterActions(initialValue),
-    onIncrement = useCallback(() => actions.incrementCount(), null),
-    onDecrement = useCallback(() => actions.decrementCount(), null)
+    store = useCounterStore(initialValue),
+    onIncrement = useCallback(() => store.incrementCount(), null),
+    onDecrement = useCallback(() => store.decrementCount(), null)
 
   useEffect(() => {
-    console.log('Component has been mounted - state:', state)
+    console.log('Component has been mounted - count:', store.getCount())
   }, [])
 
   useEffect(() => {
-    console.log('Component has been rendered - state: ', state)
+    console.log('Component has been rendered - count: ', store.getCount())
   })
 
   return (
     <div>
       <label>{label}: </label>
       <button onClick={onDecrement}>-</button>
-      <span> {state.count} </span>
+      <span> {store.getCount()} </span>
       <button onClick={onIncrement}>+</button>
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { Ref } from 'react'
 import { Spec } from 'js-spec'
-import { component, isRef } from '../../main'
+import { component } from '../../main'
 
 const { useCallback, useImperativeHandle, useRef, useState } = React
 
@@ -18,7 +18,7 @@ const Counter = component({
   displayName: 'Counter',
   forwardRef: true,
 
-  validate: Spec.checkProps<CounterProps>({
+  validate: Spec.checkProps({
     optional: {
       initialValue: Spec.integer,
       label: Spec.string

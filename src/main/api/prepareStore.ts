@@ -10,22 +10,9 @@ function prepareStore<
   S extends State,
   A extends any[],
   M extends { [k: string]: (...args: any[]) => any }
->(config: StoreConfig<S, A, M>): (...args: A) => [M, S] 
-
-function prepareStore<
-  S extends State
->(): <
-  A extends any[],
-  M extends { [k: string]: (...args: any[]) => any }
->(config: StoreConfig<S, A, M>) => (...args: A) => [M, S]
-
-function prepareStore(/* arguments */): any {
-  if (arguments.length === 0) {
-    return (config: any) => prepareStore(config)
-  }
+>(config: StoreConfig<S, A, M>): (...args: A) => M {
 
   const
-    config = arguments[0],
     displayName = config.displayName,
     hookName = 'use' + displayName[0].toUpperCase() + displayName.substr(1)
     

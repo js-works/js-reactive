@@ -10,22 +10,9 @@ function prepareActions<
   S extends State,
   A extends any[],
   M extends { [k: string]: (...args: any[]) => void }
->(config: ActionsConfig<S, A, M>): (...args: A) => [M, S] 
-
-function prepareActions<
-  S extends State
->(): <
-  A extends any[],
-  M extends { [k: string]: (...args: any[]) => void }
->(config: ActionsConfig<S, A, M>) => (...args: A) => [M, S]
-
-function prepareActions(/* arguments */): any {
-  if (arguments.length === 0) {
-    return (config: any) => prepareActions(config)
-  }
+>(config: ActionsConfig<S, A, M>): (...args: A) => [M, S] {
 
   const
-    config = arguments[0],
     displayName = config.displayName,
     hookName = 'use' + displayName[0].toUpperCase() + displayName.substr(1)
     
