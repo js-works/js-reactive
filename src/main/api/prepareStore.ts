@@ -23,10 +23,7 @@ function prepareStore<
 ): (...args: A) => M 
 
 function prepareStore(initStore: Function, initState?: Function): Function {
-  const hookName = 'useStore'
-    
-  
-  function useStore(...args: any[]): any {
+  return function useStore(...args: any[]): any {
     const
       [state, setState] = useState(() => 
         initState ? initState.apply(null, args) : args[0]),
@@ -55,12 +52,6 @@ function prepareStore(initStore: Function, initState?: Function): Function {
 
     return store
   }
-
-  Object.defineProperty(useStore, 'name', {
-    value: hookName
-  })
-
-  return useStore
 }
 
 // --- locals -------------------------------------------------------
