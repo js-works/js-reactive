@@ -17,13 +17,13 @@ function initCounterState(initialValue: number): CounterState {
   return { count: initialValue }
 }
 
-const useCounterActions = prepareActions((state: CounterState, setState) => {
+const useCounterActions = prepareActions(setState => {
   return {
-    incrementCount() {
+    incrementCount(state) {
       setState({ count: state.count + 1 })
     },
 
-    decrementCount() {
+    decrementCount(state) {
       setState({ count: state.count - 1 })
     }
   }

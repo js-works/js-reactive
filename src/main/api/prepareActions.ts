@@ -8,19 +8,19 @@ const { useState, useRef } = React
 
 function prepareActions<
   S extends State,
-  M extends Actions, 
+  M extends Actions<S>, 
 >(
   initActions: ActionsInitializer<S, M>
-): (initialState: S) => [M, S]
+): (initialState: S) => [ExternalActions<M, S>, S]
 
 function prepareActions<
   S extends State,
-  M extends Actions, 
+  M extends Actions<S>, 
   A extends any[],
 >(
   initActions: ActionsInitializer<S, M>,
   initState: StateInitializer<S, A>
-): (...args: A) => [M, S] 
+): (...args: A) => [ExternalActions<M, S>, S] 
 
 function prepareActions(initActions: Function, initState?: Function): Function {
   return function useActions(...args: any[]): any {
@@ -42,11 +42,25 @@ function prepareActions(initActions: Function, initState?: Function): Function {
         }
       },
 
-      [actions] = useState(() => initActions(
-        createStateProxy(stateRef),
-        updater,
-        getState
-      ))
+      [actions] = useState(() => {
+        const
+          actions = initActions(
+            updater,
+            getState
+          ),
+
+          keys = Object.keys(actions)
+
+        for (let i = 0; i < keys.length; ++i) {
+          const
+            key = keys[i],
+            f = actions[key]
+
+          actions[key] = (...args: any[]) => f(getState(), ...args)
+        }
+
+        return actions
+      })
 
     stateRef.current = state
 
@@ -57,28 +71,24 @@ function prepareActions(initActions: Function, initState?: Function): Function {
 // --- locals -------------------------------------------------------
 
 type State = { [key: string]: any }
-type Actions = { [k: string]: (...args: any[]) => void }
+type Actions<S extends State> = { [k: string]: (state: State, ...args: any[]) => void }
 type StateUpdate<S extends State> = Partial<S> | ((state: S) => Partial<S>)
 type StateSetter<S extends State> = (update: StateUpdate<S>) => void
 type StateGetter<S extends State> = () => S
 
-type ActionsInitializer<S extends State, M extends Actions> =
-  (state: S, setState: StateSetter<S>, getState: StateGetter<S>) => M
+type ActionsInitializer<S extends State, M extends Actions<S>> =
+  (setState: StateSetter<S>, getState: StateGetter<S>) => M
 
 type StateInitializer<S extends State, A extends any[]> =
   (...args: A) => S
 
-function createStateProxy<S extends State>(stateRef: { current: S }): S {
-  const ret: any = {}
-  
-  for (const k of Object.keys(stateRef.current)) {
-    Object.defineProperty(ret, k, {
-      get: () => stateRef.current[k]
-    })
-  }
+type ExternalActions<M extends Actions<S>, S extends State> =
+ { [K in keyof M]: WithoutFirstArgument<M[K]> }
 
-  return ret
-}
+type WithoutFirstArgument<F extends ((...args: any[]) => any)>
+  = F extends (firstArg: any, ...args: infer A) => infer R
+    ? (...args: A) => R
+    : never
 
 // --- exports ------------------------------------------------------
 
