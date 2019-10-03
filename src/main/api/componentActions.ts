@@ -73,7 +73,7 @@ function componentActions(initActions: Function, initState?: Function): Function
 // --- locals -------------------------------------------------------
 
 type State = { [key: string]: any }
-type Actions<S extends State> = { [k: string]: (state: State, ...args: any[]) => void }
+type Actions<S extends State> = { [k: string]: (state: S, ...args: any[]) => void }
 type StateUpdate<S extends State> = Partial<S> | ((state: S) => Partial<S>)
 type StateSetter<S extends State> = (update: StateUpdate<S>) => void
 type StateGetter<S extends State> = () => S
