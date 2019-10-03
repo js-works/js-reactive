@@ -4,16 +4,16 @@ import React from 'react'
 // derived imports
 const { useState, useRef } = React
 
-// --- prepareStore -------------------------------------------------
+// --- componentStore -------------------------------------------------
 
-function prepareStore<
+function componentStore<
   S extends State,
   M extends Store, 
 >(
   initStore: StoreInitializer<S, M>
 ): (initialState: S) => M
 
-function prepareStore<
+function componentStore<
   S extends State,
   M extends Store, 
   A extends any[],
@@ -22,7 +22,7 @@ function prepareStore<
   initState: StateInitializer<S, A>
 ): (...args: A) => M 
 
-function prepareStore(initStore: Function, initState?: Function): Function {
+function componentStore(initStore: Function, initState?: Function): Function {
   return function useStore(...args: any[]): any {
     const
       [state, setState] = useState(() => 
@@ -82,4 +82,4 @@ function createStateProxy<S extends State>(stateRef: { current: S }): S {
 
 // --- exports ------------------------------------------------------
 
-export default prepareStore
+export default componentStore

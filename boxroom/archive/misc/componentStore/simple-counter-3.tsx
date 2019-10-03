@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { component, prepareStore } from '../../main'
+import { component, componentStore } from '../../main'
 
 const { useCallback, useEffect } = React
 
@@ -17,7 +17,7 @@ function initCounterState(initialValue: number) {
   return { count: initialValue }
 }
 
-const useCounterStore = prepareStore((state: CounterState, setState) => {
+const useCounterStore = componentStore((state: CounterState, setState) => {
   return {
     incrementCount() {
       setState({ count: state.count + 1 })

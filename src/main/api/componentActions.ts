@@ -4,16 +4,9 @@ import React from 'react'
 // derived imports
 const { useState, useRef } = React
 
-// --- prepareActions ---------------------------------------------
+// --- componentActions ---------------------------------------------
 
-function prepareActions<
-  S extends State,
-  M extends Actions<S>, 
->(
-  initActions: ActionsInitializer<S, M>
-): (initialState: S) => [ExternalActions<M, S>, S]
-
-function prepareActions<
+function componentActions<
   S extends State,
   M extends Actions<S>, 
   A extends any[],
@@ -22,9 +15,10 @@ function prepareActions<
   initState: StateInitializer<S, A>
 ): (...args: A) => [ExternalActions<M, S>, S] 
 
-function prepareActions(initActions: Function, initState?: Function): Function {
-  return function useActions(...args: any[]): any {
+function componentActions(initActions: Function, initState?: Function): Function {
+  return function useActions(/* arguments */): any {
     const
+      args = arguments,
       [state, setState] = useState(() => 
         initState ? initState.apply(null, args) : args[0]),
 
@@ -56,7 +50,15 @@ function prepareActions(initActions: Function, initState?: Function): Function {
             key = keys[i],
             f = actions[key]
 
-          actions[key] = (...args: any[]) => f(getState(), ...args)
+          actions[key] = function (/* arguments */) {
+            const args = [getState()]
+
+            for (let i = 0; i < arguments.length; ++i) {
+              args.push(arguments[i])
+            }
+
+            return f.apply(null, args)
+          }
         }
 
         return actions
@@ -92,4 +94,4 @@ type WithoutFirstArgument<F extends ((...args: any[]) => any)>
 
 // --- exports ------------------------------------------------------
 
-export default prepareActions
+export default componentActions

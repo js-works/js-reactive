@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { component, prepareActions } from '../../main'
+import { component, componentActions } from '../../main'
 
 const { useCallback, useEffect } = React
 
@@ -17,17 +17,15 @@ function initCounterState(initialValue: number): CounterState {
   return { count: initialValue }
 }
 
-const useCounterActions = prepareActions(setState => {
-  return {
-    incrementCount(state) {
-      setState({ count: state.count + 1 })
-    },
+const useCounterActions = componentActions(setState => ({
+  incrementCount(state) {
+    setState({ count: state.count + 1 })
+  },
 
-    decrementCount(state) {
-      setState({ count: state.count - 1 })
-    }
+  decrementCount(state) {
+    setState({ count: state.count - 1 })
   }
-}, initCounterState)
+}), initCounterState)
 
 const Counter = component<CounterProps>('Counter', ({
   initialValue = 0,
