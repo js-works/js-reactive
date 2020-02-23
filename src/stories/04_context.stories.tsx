@@ -1,9 +1,14 @@
 import React from 'react'
-import { Spec } from 'js-spec'
-
-import { component, context } from '../../main/index'
+import * as Spec from 'js-spec/validators'
+import { component, context } from '../main/index'
 
 const { useState, useContext } = React
+
+export default {
+  title: 'Context'
+}
+
+// === i18n ==========================================================
 
 const translations: Record<string, Record<string, string>> = {
   en: {
@@ -18,7 +23,7 @@ const translations: Record<string, Record<string, string>> = {
 }
 
 const LocaleCtx = context<string>({
-  displayName: 'LocaleCtx',
+  name: 'LocaleCtx',
   defaultValue: 'en',
   validate: Spec.string
 })
@@ -71,4 +76,4 @@ const LocaleText = component<LocaleTextProps>('LocaleText', props => {
   )
 })
 
-export default <App defaultLocale="en"/>
+export const internationalization = () => <App defaultLocale="en"/>

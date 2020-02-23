@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactElement, ReactNode } from 'react'
-import { Spec } from 'js-spec'
+import * as Spec from 'js-spec/validators'
 
 import h from './h'
 import Props from '../internal/types/Props'
@@ -9,8 +9,8 @@ function component<P extends Props>
   (config: ComponentConfig<P>): ExtFunctionComponent<P>
 
 function component<P extends Props = {}>(
-  displayName: string,
-  renderer?: ComponentConfig<P>['render'], // TODO
+  name: string,
+  main?: ComponentConfig<P>['main'], // TODO
 ): ExtFunctionComponent<P>
 
 function component<P extends Props = {}>(
@@ -40,7 +40,7 @@ function component<P extends Props = {}>(
 
   return typeof arg1 === 'string'
     ? buildComponent(arg1, arg2)
-    : buildComponent(arg1.displayName, arg1.render, arg1.validate, arg1.memoize, arg1.forwardRef)
+    : buildComponent(arg1.name, arg1.main, arg1.validate, arg1.memoize, arg1.forwardRef)
 }
 
 // --- locals -------------------------------------------------------
@@ -54,17 +54,17 @@ if (process.env.NODE_ENV) {
   const REGEX_DISPLAY_NAME = /^([a-z]+:)*[A-Z][a-zA-Z0-9.]*$/
 
   validateComponentConfig = Spec.exact({
-    displayName: Spec.match(REGEX_DISPLAY_NAME),
-    validate: Spec.optional(Spec.function),
+    name: Spec.match(REGEX_DISPLAY_NAME),
+    validate: Spec.optional(Spec.func),
     memoize: Spec.optional(Spec.boolean),
     forwardRef: Spec.optional(Spec.boolean),
-    render: Spec.function
+    main: Spec.func
   })
 }
 
 function buildComponent<P extends Props>(
-  displayName: string,
-  renderer: (props: P) => ReactNode,
+  name: string,
+  main: (props: P) => ReactNode,
   validate?: (props: P) => boolean | null | Error,
   memoize?: boolean,
   forwardRef?: boolean
@@ -73,11 +73,11 @@ function buildComponent<P extends Props>(
   
   if (!forwardRef) {
     ret = (props: P) => {
-      return renderer(props)
+      return main(props)
     }
   } else {
     ret = (props: P, ref: any) => {
-      return renderer({ ...props, ref })
+      return main({ ...props, ref })
     }
   }
 
@@ -85,7 +85,7 @@ function buildComponent<P extends Props>(
     ret = React.forwardRef(ret)
   }
 
-  ret.displayName = displayName
+  ret.displayName = name
 
   if (validate) {
     ret.propTypes = {
@@ -104,7 +104,7 @@ function buildComponent<P extends Props>(
           ? null
           : new TypeError(
             'Props validation error for component '
-            + `"${displayName}" => ${errorMsg}`)
+            + `"${name}" => ${errorMsg}`)
       }
     }
   }

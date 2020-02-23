@@ -1,7 +1,13 @@
 import React from 'react'
-import { component }  from '../../main'
+import { component } from '../main/index'
 
 const { useCallback, useEffect, useRef, useState } = React
+
+export default {
+  title: 'Misc demos'
+}
+
+// === StopWatch =====================================================
 
 const StopWatch = component('StopWatch', () => {
   const
@@ -50,6 +56,7 @@ const StopWatch = component('StopWatch', () => {
 
   return (
     <div>
+      <h3>Stop Watch</h3>
       <div>Time: {time}</div>
       <br/>
       <button onClick={onStartStop}>
@@ -63,4 +70,29 @@ const StopWatch = component('StopWatch', () => {
   )
 })
 
-export default <StopWatch/>
+export const stopWatch = () => <StopWatch/>
+
+// === Clock =========================================================
+
+const Clock = component('Clock', props => {
+  const
+    [time, setTime] = useState(() => new Date().toLocaleTimeString())
+
+  useEffect(() => {
+    const id =
+      setInterval(
+        () => setTime(new Date().toLocaleTimeString()),
+        100)
+
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <div>
+      <h3>Clock</h3>
+      Time: {time}
+    </div>
+  )
+})
+
+export const clock = () => <Clock/>

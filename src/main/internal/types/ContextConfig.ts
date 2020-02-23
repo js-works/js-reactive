@@ -1,5 +1,5 @@
 type ContextConfig<T> = {
-  displayName: string,
+  name: string,
   defaultValue?: T,
   validate?: (value: T) => boolean | null | Error
 }

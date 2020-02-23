@@ -1,5 +1,5 @@
 import { createContext, Context } from 'react'
-import { Spec } from 'js-spec'
+import * as Spec from 'js-spec/validators'
 
 import ContextConfig from '../internal/types/ContextConfig'
 
@@ -25,9 +25,9 @@ if (process.env.NODE_ENV === 'development' as any) {
 
   validateContextConfig =
     Spec.exact({
-      displayName: Spec.match(REGEX_DISPLAY_NAME),
+      name: Spec.match(REGEX_DISPLAY_NAME),
       defaultValue: Spec.optional(Spec.any),
-      validate: Spec.optional(Spec.function)
+      validate: Spec.optional(Spec.func)
     })
 }
 
@@ -36,7 +36,7 @@ function buildContext<T>(config: ContextConfig<T>) {
     ret = createContext(config.defaultValue),
     provider: any = ret.Provider
 
-  provider.displayName = config.displayName
+  provider.displayName = config.name
 
   if (config.validate) {
     provider.propTypes = {
@@ -55,7 +55,7 @@ function buildContext<T>(config: ContextConfig<T>) {
           ? null
           : new TypeError(
             'Validation error for provider of context '
-            + `"${config.displayName}" => ${errorMsg}`)
+            + `"${config.name}" => ${errorMsg}`)
       }
     }
   }

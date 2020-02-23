@@ -1,8 +1,14 @@
 import React from 'react'
+import * as Spec from 'js-spec/validators'
+import { component, context } from '../main/index'
 
-import { component }  from '../../main'
+const { useEffect, useRef, useState } = React
 
-const { useState, useEffect, useRef } = React
+export default {
+  title: 'Performance'
+}
+
+// === PerformanceTest ===============================================
 
 function useForceUpdate() {
   const [, setState] = useState(false)
@@ -131,7 +137,7 @@ const SpeedTest = component<SpeedTestProps>('SpeedTest', ({
   )
 })
 
-export default
+export const performanceTest = () =>
   <SpeedTest
     tileWidth={prefs.tileWidth}
     columnCount={prefs.columnCount}
