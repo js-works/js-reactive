@@ -26,14 +26,14 @@ if (process.env.NODE_ENV === 'development' as any) {
   validateContextConfig =
     Spec.exact({
       name: Spec.match(REGEX_DISPLAY_NAME),
-      defaultValue: Spec.optional(Spec.any),
+      default: Spec.optional(Spec.any),
       validate: Spec.optional(Spec.func)
     })
 }
 
 function buildContext<T>(config: ContextConfig<T>) { 
   const
-    ret = createContext(config.defaultValue),
+    ret = createContext(config.default),
     provider: any = ret.Provider
 
   provider.displayName = config.name

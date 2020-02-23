@@ -71,13 +71,12 @@ function buildComponent<P extends Props>(
 ): FunctionComponent<P> & { create: (props?: P) => ReactElement<P> } { // TODO: props?
   let ret: any
   
+
   if (!forwardRef) {
-    ret = (props: P) => {
-      return main(props)
-    }
+    ret = main.bind(null) // TODO: This is because of DeveloperTools
   } else {
     ret = (props: P, ref: any) => {
-      return main({ ...props, ref })
+      return main({ ...props, ref }) // TODO: Does not look nice in DeveloperTools
     }
   }
 

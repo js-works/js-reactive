@@ -128,7 +128,7 @@ type ComplexCounterMethods = {
 }
 
 const Counter = component({
-  name: 'Counter',
+  name: 'ComplexCounterCounter',
   forwardRef: true,
 
   validate: Spec.checkProps({

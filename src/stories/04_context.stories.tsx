@@ -24,19 +24,13 @@ const translations: Record<string, Record<string, string>> = {
 
 const LocaleCtx = context<string>({
   name: 'LocaleCtx',
-  defaultValue: 'en',
+  default: 'en',
   validate: Spec.string
 })
 
 type AppProps = {
   defaultLocale: string
 }
-
-const validateAppProps = Spec.checkProps({
-  optional: {
-    defaultLocale: Spec.oneOf('en', 'fr', 'de')
-  }
-})
 
 const App = component<AppProps>('App', props => {
   const [locale, setLocale] = useState(() => props.defaultLocale)
@@ -59,12 +53,6 @@ const App = component<AppProps>('App', props => {
 type LocaleTextProps = {
   id: string
 }
-
-const validateLocaleTextProps = Spec.checkProps({
-  required: {
-    id: Spec.string
-  }
-})
 
 const LocaleText = component<LocaleTextProps>('LocaleText', props => {
   const locale = useContext(LocaleCtx)
