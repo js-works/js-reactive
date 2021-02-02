@@ -47,7 +47,7 @@ render(<Counter />, document.getElementById('app'))
 ## Features
 
 - Support for framework agnostic props validation.
-  No need to use 'prop-types' library: As component props can be validated in a more general way, js-react-utils is not depending on a React specific or other specific prop validation library.
+  No need to use 'prop-types' library: As component props can be validated in a more general way, js-react-utils is not depending on a React specific or other specific props validation library.
   Instead a general and more sophisticated validation library like for example [js-spec](https://github.com/js-works/js-spec) can be used.
 
 - Some additional useful helper functions.
