@@ -7,7 +7,6 @@ Currently the main purpose is to provide an alternative way to validate componen
 
 ```tsx
 import React, { useCallback, useState } from 'react'
-import { render } from 'react-dom'
 import { convertValidation } from 'js-react-utils'
 import * as Spec from 'js-spec/validators' // 3rd-party validation library
 
@@ -16,7 +15,10 @@ type CounterProps = {
   label?: string
 }
 
-function Counter({ initialValue = 0, label = 'Counter' }: CounterProps) {
+export default function Counter({
+  initialValue = 0,
+  label = 'Counter'
+}: CounterProps) {
   const [counter, setCounter] = useState(initialValue)
   const onClick = useCallback(() => setCounter((it) => it + 1), [])
 
@@ -27,6 +29,9 @@ function Counter({ initialValue = 0, label = 'Counter' }: CounterProps) {
   )
 }
 
+// This will allow a run-time props validation that's
+// useful when the Counter component is used in JavaScript
+// instead of TypeScript.
 const validateCounterProps = Spec.checkProps({
   optional: {
     initialValue: Spec.number,
@@ -40,8 +45,6 @@ Object.assign(Counter, {
   ...(process.env.NODE_ENV === ('development' as string) &&
     convertValidation(validateCounterProps))
 })
-
-render(<Counter />, document.getElementById('app'))
 ```
 
 ## Features
