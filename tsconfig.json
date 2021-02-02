@@ -11,21 +11,10 @@
     "lib": ["es5", "es6", "dom"],
     "esModuleInterop": true,
     "baseUrl": ".",
-
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-
-    "types": [
-      "node", "react", "react-dom", "mocha", "chai"
-    ]
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "react", "react-dom", "mocha", "chai"]
   },
 
-  "files": [
-    "src/main/index.ts"
-  ],
-
-  "include": [
-		"./src/main/**/*.ts*"
-  ]
+  "files": ["src/main/js-react-utils.ts"],
+  "include": ["./src/main/**/*.ts*"]
 }

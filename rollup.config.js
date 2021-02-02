@@ -20,7 +20,7 @@ export default configs
 
 function createConfig(moduleFormat, productive) {
   return {
-    input: 'src/main/index.ts',
+    input: 'src/main/js-react-utils.ts',
 
     output: {
       file: productive
@@ -28,11 +28,11 @@ function createConfig(moduleFormat, productive) {
         : `dist/js-react-utils.${moduleFormat}.development.js`,
 
       format: moduleFormat,
-      name: 'jsReactUtils', 
+      name: 'jsReactUtils',
       sourcemap: productive ? false : 'inline',
 
       globals: {
-        'react': 'React',
+        react: 'React',
         'js-spec': 'jsSpec'
       }
     },
@@ -44,7 +44,7 @@ function createConfig(moduleFormat, productive) {
       commonjs(),
       replace({
         exclude: 'node_modules/**',
-        
+
         values: {
           'process.env.NODE_ENV': productive ? "'production'" : "'development'"
         }
@@ -54,6 +54,6 @@ function createConfig(moduleFormat, productive) {
       }),
       productive && (moduleFormat === 'esm' ? terser() : uglify()),
       productive && gzip()
-    ],
+    ]
   }
 }
